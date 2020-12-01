@@ -21,6 +21,8 @@ flip a coin
 
 roulette (vibrate while moving)
 
+blow the ball
+
 special event game playable only in certain locations
 
 random game button
