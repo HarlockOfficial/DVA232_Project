@@ -2,41 +2,31 @@
 
 # Link to latex document
 
-# TODO Select a (valid) project name
+# <ADD NAME HERE>
 
-https://www.we-heart.com/2020/07/28/how-online-casinos-make-you-spend-more/
+ - annoying song
 
-we need EULA
-https://www.termsfeed.com/eula-generator/
-
-we have small games that let you win real money in form of game coins
-
-toc tac toe
-
-rock paper scissors
-
-dices (uses accelerometer for vibrations)
-
-flip a coin
-
-roulette (vibrate while moving)
-
-blow the ball
-
-special event game playable only in certain locations
-
+(internet){
+ - toc tac toe
+ - rock paper scissors (vibrate before showing the winner)
+ - dices (accelerometer)
+ - flip a coin (also online) //weird
+ - blow the ball (microphone)
+}
 random game button
+l8r{
+ - more games
+ - bluetooth later
+}
 
-
-settings to block vibrations and staff like that
-report a problem
-
-
-backdoor access to edit coins (just for test purposes)(eg. cut-off paypal)
-
-# make an e-mail
-we need paypal or payment method
-# make a paypal account
+settings {
+ - music volume
+ - block vibrations
+ - report a problem
+}
+l8r{
+ - dark mode
+}
 
 we need a website for bots and DB (php, MySQL)
 # for website https://www.000webhost.com/
