@@ -57,4 +57,3 @@ Hi, after a fast meet we made some changes to the original idea.
 	- landscape
    each of them have to be for the home screen,
    for every one of the games and one for settings
-what do you think about it? is ok, or we should change smth
