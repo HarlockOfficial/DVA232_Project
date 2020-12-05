@@ -1,7 +1,4 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/androidstudio,android,kotlin
-# Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,android,kotlin
-
+*/.idea
 ### Android ###
 # Built application files
 *.apk
