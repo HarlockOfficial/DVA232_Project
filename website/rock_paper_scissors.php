@@ -1,8 +1,6 @@
 <?php
-	if ($_SERVER['REQUEST_METHOD'] != "GET") {
-		die(json_encode(["response"=>"method not valid"]));
+	function rps(){
+		$choices = array("rock","paper","scissors");
+		return json_encode(["response" => $choices[random(3)]]);
 	}
-	require_once("bot_base.php");
-	$choices = array("rock","paper","scissors");
-	echo json_encode(["response" => $choices[random(3)]]);
 ?>
