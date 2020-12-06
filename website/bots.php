@@ -1,4 +1,5 @@
 <?php
+	//TODO fix
     require_once("bot_base.php");
 	switch($_GET['bot']){
         case "rps":
