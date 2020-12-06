@@ -1,4 +1,5 @@
 <?php
+	//completely not working
 	function add_player($player_code, $game_code){
 		require "query.php";
 		$sql = "insert into multiplayer_queue('player_code','game_code') values(:player, :game)";
