@@ -7,7 +7,7 @@
 #website: https://dva232-project-group-7.000webhostapp.com/
 
 1. there will be no account or currency or EXP or <add similar things here>
-2. we will have a web server (without database), this is needed to provide bots and
+2. we will have a web server (with database), this is needed to provide bots and
 	some logic
 3. bots are stupid (just play random)
 4. game list (all will be playable through internet):
