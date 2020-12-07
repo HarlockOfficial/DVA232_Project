@@ -29,6 +29,14 @@
 		}else if($game_code=="rps"){
 			//get the player choice and store to last move table
 			//check if win
+			$sql = "select id from current_matches where game_code='rps' and (player_code_1 = :player or player_code_2 = :player)";
+			$arr[':player']=$player_code;
+			$stmt = query($sql, $arr);
+			if($stmt->rowCount()>0){
+				$stmt = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+				
+			}
+			return json_encode(["response"=>"request parameter not valid"]);
 		}
 		return json_encode(["response"=>"request parameter not valid"]);
 	}
