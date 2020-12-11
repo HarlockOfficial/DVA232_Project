@@ -7,54 +7,42 @@
 	//$move = <number of dices>
 	function add_move($game_code, $player_code, $move){
 		require "query.php";
-		if($game_code=="ttt"){
-			$sql = "select field from current_matches where game_code=:game ".
-					"and player_code=:player";
-			$arr[':player']=$player_code;
-			$arr[':game']=$game_code;
-			$stmt = query($sql, $arr);
-			if($stmt->rowCount()>0){
-				$stmt = explode(",",$stmt->fetch(PDO::FETCH_ASSOC)['field']);
-				$stmt[3*$move[0]+$move[1]]=$move[2];
-				$sql = "update current_matches set field=:field where game_code=:game ".
-					"and player_code=:player";
-				$arr[':field']=implode(",",$stmt);
-				query($sql, $arr);
-				return json_encode(["response"=>check_field($stmt)]);
-			}
-			return json_encode(["response"=>"request parameter not valid"]);
-		}else if($game_code=="dice"){
-			//get quantity of dices, roll them and store the result to table
-			//check if win
-		}else if($game_code=="rps"){
-			//get the player choice and store to last move table
-			//check if win
-			$sql = "select id from current_matches where game_code='rps' and (player_code_1 = :player or player_code_2 = :player)";
-			$arr[':player']=$player_code;
-			$stmt = query($sql, $arr);
-			if($stmt->rowCount()>0){
-				$stmt = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
-				
-			}
+		$sql = "select add_move(:player, :game, :position, :move) as move";
+		$arr[':player'] = $player_code;
+		$arr[':game'] = $game_code;
+		if($game_code == "ttt"){
+			$arr[':position'] = 3*$move[0]+$move[1];
+			$arr[':move'] = $move[2];
+		}else if($game_code == "rps"){
+			$arr[':position'] = 0;
+			$arr[':move'] = $move;
+		}else if($game_code == "dice"){
+			$arr[':position'] = 0;
+			$arr[':move'] = $move;
+		}else{
 			return json_encode(["response"=>"request parameter not valid"]);
 		}
-		return json_encode(["response"=>"request parameter not valid"]);
+		$ret = query($sql, $arr)->fetch(PDO::FETCH_ASSOC)['move'];
+		return json_encode(["response"=>$ret]);
 	}
 	function get_move($game_code, $player_code){
 		require "query.php";
-		//TODO code not valid
-		/*$sql = "select id,move from last_move where player_code=:player and game_code=:game order by id desc limit 1";
+		$sql = "select get_move(:player, :game) as move";
 		$arr[':player']=$player_code;
 		$arr[':game']=$game_code;
-		$stmt = query($sql, $arr);
-		if($stmt->rowCount()>0){
-			$stmt = $stmt->fetch(PDO::FETCH_ASSOC);
-			$sql = "delete from last_move where id=:id";
-			$arr=array(":id"=>$stmt['id']);
-			query($sql, $arr);
-			return json_encode(["response"=>$stmt['move']]);
-		}*/
-		return json_encode(["response"=>null]);
+		$ret = query($sql, $arr)->fetch(PDO::FETCH_ASSOC)['move'];
+		if($game_code=="ttt" && $ret!="request parameter not valid"){
+			$response = check_field(explode(",",$ret));
+			$tmp['field']=$ret;
+			$tmp['winner']="";
+			if($response!="ok"){
+				$sql = "delete from current_matches where game_code=:code and (player_code_1=:player or player_code_2=:player)";
+				query($sql, array(":code"=>$game_code, ":player"=>$player_code));
+				$tmp['winner']=$response;
+			}
+			$ret = json_encode($tmp);
+		}
+		return json_encode(["response"=>$ret]);
 	}
 	
 	//used for tic tac toe
