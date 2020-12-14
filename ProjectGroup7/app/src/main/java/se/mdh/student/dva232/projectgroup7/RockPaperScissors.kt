@@ -23,13 +23,13 @@ class RockPaperScissors : AppCompatActivity() {
             var ret:JSONObject = CommunicationLayer.addPlayerMove(rpsData)
             if(ret.getString("response") == "ok"){
                 runOnUiThread {
-                    val drowable = (v as ImageView).drawable
-                    myChoice.setImageDrawable(drowable)
+                    val drawable = (v as ImageView).drawable
+                    myChoice.setImageDrawable(drawable)
                 }
                 do {
                     delay(10)
                     ret = CommunicationLayer.getOpponentMove(rpsData)
-                }while(ret.getString("respose")=="in_queue")
+                }while(ret.getString("response")=="in_queue")
                 when {
                     ret.getString("response") == "rock" -> {
                         runOnUiThread {
