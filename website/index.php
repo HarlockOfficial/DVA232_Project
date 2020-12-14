@@ -23,7 +23,7 @@
 			}
 			$move = $_GET['move'];
 			if($game_code == "ttt"){
-				//in order: x,y,symbol
+				//in order: position,symbol
 				$move = explode(",", $move);
 			}
 			echo add_move($player_code, $game_code, $move);
