@@ -70,9 +70,9 @@ class TicTacToeBot(Thread):
                     print("draw")
                     exit(0)
                 if r['winner'] == self.__sign:
-                    print("winner")
+                    print("win")
                     exit(0)
-                print("looser")
+                print("lose")
                 exit(0)
             for i in range(len(self.__field)):
                 if tmp[i] != self.__field[i]:
