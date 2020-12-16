@@ -26,7 +26,10 @@ class WaitingRoom : AppCompatActivity() {
         }else if(gameCode == GameType.DICES){
             out = "Tic Tac Toe"
             Dices::class.java
-        }else{
+        }else if(gameCode == GameType.FLIP_A_COIN){
+            out = "Flip A Coin"
+            Coin::class.java
+        }else{  //TODO: if game not present add "else if" here
             out = "Unrecognized Game"
             null
         }
@@ -43,6 +46,8 @@ class WaitingRoom : AppCompatActivity() {
             }else if(gameCode == GameType.TIC_TAC_TOE){
                 Data()    // TODO: when created add here the correct data Implementation
             }else if(gameCode == GameType.DICES){
+                Data()    // TODO: when created add here the correct data Implementation
+            }else if(gameCode == GameType.FLIP_A_COIN){
                 Data()    // TODO: when created add here the correct data Implementation
             }else{
                 Data()    // TODO: when created add here the correct data Implementation

@@ -25,6 +25,7 @@ import java.util.UUID
  *  @NOTE 2: '6.' and '7.' order might depend on the starting player (if present), switch accordingly
  *  @NOTE 3: all game rooms are temporary, after the winner is decided, the game is over,
  *              impossible to play multiple times!!!
+ *  @NOTE 4: server logic and bots for Flip A Coin, not implemented yet!! (Only grade 3 implemented)
  */
 
 object CommunicationLayer {

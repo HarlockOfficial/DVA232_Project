@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
             openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
         }
     }
-    fun openWaitingRoom(game: GameType){
+    private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)
         intent.putExtra("GAME_CODE", game.code)
         startActivity(intent)
