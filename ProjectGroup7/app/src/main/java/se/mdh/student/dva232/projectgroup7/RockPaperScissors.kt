@@ -1,9 +1,13 @@
 package se.mdh.student.dva232.projectgroup7
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.transition.Visibility
+import android.util.JsonReader
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
@@ -16,20 +20,21 @@ class RockPaperScissors : AppCompatActivity() {
     private lateinit var myChoice: ImageView
     private lateinit var opponentChoice: ImageView
     private lateinit var context: Context
+    private lateinit var result: TextView
     private val clickListener = View.OnClickListener { v ->
         GlobalScope.launch(Dispatchers.IO){
             val choice: String = v.tag as String
             val rpsData = RockPaperScissorsData(choice)
-            var ret:JSONObject = CommunicationLayer.addPlayerMove(rpsData)
-            if(ret.getString("response") == "ok"){
+            if(CommunicationLayer.addPlayerMove(rpsData).getString("response") == "ok"){
                 runOnUiThread {
                     val drawable = (v as ImageView).drawable
                     myChoice.setImageDrawable(drawable)
                 }
+                lateinit var ret: JSONObject
                 do {
                     delay(10)
                     ret = CommunicationLayer.getOpponentMove(rpsData)
-                }while(ret.getString("response")=="in_queue")
+                }while(ret.getString("response")!="NULL")   //TODO check, not sure if NULL is accepted as string like this
                 when {
                     ret.getString("response") == "rock" -> {
                         runOnUiThread {
@@ -38,17 +43,20 @@ class RockPaperScissors : AppCompatActivity() {
                         when (choice) {
                             "rock" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.draw), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.draw)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             "paper" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.win), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.win)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             "scissors" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.lose), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.lose)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             else -> {
@@ -65,17 +73,20 @@ class RockPaperScissors : AppCompatActivity() {
                         when (choice) {
                             "paper" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.draw), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.draw)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             "scissors" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.win), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.win)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             "rock" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.lose), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.lose)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             else -> {
@@ -92,17 +103,20 @@ class RockPaperScissors : AppCompatActivity() {
                         when (choice) {
                             "scissors" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.draw), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.draw)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             "rockr" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.win), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.win)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             "paper" -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.lose), Toast.LENGTH_SHORT).show()
+                                    result.text=getString(R.string.lose)
+                                    result.visibility = View.VISIBLE
                                 }
                             }
                             else -> {
@@ -129,10 +143,15 @@ class RockPaperScissors : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rock_paper_scissors)
 
-        context = this.baseContext
+        context = baseContext
 
         myChoice = findViewById(R.id.my_choice)
         opponentChoice = findViewById(R.id.opponent_choice)
+
+        result = findViewById(R.id.result)
+        result.setOnClickListener{
+            startActivity(Intent(context, MainActivity::class.java))
+        }
 
         findViewById<ImageView>(R.id.rock).setOnClickListener(clickListener)
         findViewById<ImageView>(R.id.paper).setOnClickListener(clickListener)
