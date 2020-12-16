@@ -10,10 +10,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        openTTT()
     }
 
     fun openRPS(view: View) {
         val intent = Intent(this, RockPaperScissors::class.java)
+        startActivity(intent)
+    }
+
+    fun openTTT() {
+        val intent = Intent(this, TicTacToeActivity::class.java)
         startActivity(intent)
     }
 }

@@ -49,12 +49,11 @@ object CommunicationLayer {
      *          for all the other games is only useful to understand that
      *          the game is started and the player is no more in the waiting queue
      */
-    suspend fun addPlayerToMultiplayerQueue(data: Data): JSONObject {
+    suspend fun addPlayerToMultiplayerQueue(data: Data): String {
         return withContext(Dispatchers.IO) {
             uuid = UUID.randomUUID().toString()
-            return@withContext JSONObject(
-                URL("$url$uuid&action=add_queue&game=${data.game.name}").readText()
-            )
+            return@withContext URL("$url$uuid&action=add_queue&game=${data.game.name}").readText()
+
         }
     }
     /**
