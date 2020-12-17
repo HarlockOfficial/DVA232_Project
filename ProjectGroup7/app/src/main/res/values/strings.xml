@@ -7,6 +7,7 @@
     <string name="win">Win</string>
     <string name="lose">Lose</string>
     <string name="open_rps">Open Rock Paper Scissors</string>
+    <string name="open_dices">Open Dices Game</string>
     <string name="waiting_room">Please wait here, we are searching a game room for: %1$s</string>
     <string name="waiting_room_game_error">Unknown Error while opening the game</string>
 </resources>

@@ -22,13 +22,15 @@ class WaitingRoom : AppCompatActivity() {
             RockPaperScissors::class.java
         }else if(gameCode == GameType.TIC_TAC_TOE){
             out = "Tic Tac Toe"
-            TicTacToe::class.java
+            // TODO: TicTacToe::class.java
+            null
         }else if(gameCode == GameType.DICES){
             out = "Tic Tac Toe"
-            Dices::class.java
+            DicesActivity::class.java
         }else if(gameCode == GameType.FLIP_A_COIN){
             out = "Flip A Coin"
-            Coin::class.java
+            // TODO: Coin::class.java
+            null
         }else{  //TODO: if game not present add "else if" here
             out = "Unrecognized Game"
             null
@@ -44,13 +46,13 @@ class WaitingRoom : AppCompatActivity() {
             val data: Data = if(gameCode == GameType.ROCK_PAPER_SCISSORS){
                 RockPaperScissorsData("")
             }else if(gameCode == GameType.TIC_TAC_TOE){
-                Data()    // TODO: when created add here the correct data Implementation
+                TicTacToeFakeData()    // TODO: when created add here the correct data Implementation
             }else if(gameCode == GameType.DICES){
-                Data()    // TODO: when created add here the correct data Implementation
+                DicesData(-1)    // TODO: when created add here the correct data Implementation
             }else if(gameCode == GameType.FLIP_A_COIN){
-                Data()    // TODO: when created add here the correct data Implementation
+                FlipACoinFakeData()    // TODO: when created add here the correct data Implementation
             }else{
-                Data()    // TODO: when created add here the correct data Implementation
+                OtherFakeData()    // TODO: when created add here the correct data Implementation
             }
             var ret: JSONObject = CommunicationLayer.addPlayerToMultiplayerQueue(data)
             val uuid: String = CommunicationLayer.uuid
@@ -58,7 +60,7 @@ class WaitingRoom : AppCompatActivity() {
                 do{
                     delay(10)
                     ret = CommunicationLayer.checkMultiplayerQueue(data)
-                }while (ret["response"]=="in_queue");
+                }while (ret["response"]=="in_queue")
             }
             ret = JSONObject(ret["response"] as String)
 

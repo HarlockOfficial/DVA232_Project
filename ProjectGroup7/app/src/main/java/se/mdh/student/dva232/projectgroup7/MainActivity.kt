@@ -14,15 +14,14 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.open_RPS).setOnClickListener {
             openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
         }
+        findViewById<Button>(R.id.open_Dices).setOnClickListener {
+            openWaitingRoom(GameType.DICES)
+        }
+        // TODO: after adding a button, give the button an ID and do like ↑
     }
     private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)
         intent.putExtra("GAME_CODE", game.code)
-        startActivity(intent)
-    }
-
-    fun openDices(view: View) {
-        val intent = Intent(this, DicesActivity::class.java)
         startActivity(intent)
     }
 }

@@ -6,7 +6,7 @@ class DicesData(private val amountOfDices: Int) : Data {
 
 
     override fun moveToCsv(): String {
-        return amountOfDices.toString() //this alright?
+        return amountOfDices.toString()
     }
 
 }
