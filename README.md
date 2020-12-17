@@ -1,41 +1,13 @@
-# DVA232_Project
+# DVA232_Project_Group_7
 
 # Link to latex document
 
 # <ADD NAME HERE>
 
- - annoying song
+#website: https://dva232-project-group-7.000webhostapp.com/
 
-(internet){
- - toc tac toe
- - rock paper scissors (vibrate before showing the winner)
- - dices (accelerometer)
- - flip a coin (also online) //weird
- - blow the ball (microphone)
-}
-random game button
-l8r{
- - more games
- - bluetooth later
-}
-
-settings {
- - music volume
- - block vibrations
- - report a problem
-}
-l8r{
- - dark mode
-}
-
-we need a website for bots and DB (php, MySQL)
-# for website https://www.000webhost.com/
-
-
-
-Hi, after a fast meet we made some changes to the original idea.
 1. there will be no account or currency or EXP or <add similar things here>
-2. we will have a web server (without database), this is needed to provide bots and
+2. we will have a web server (with database), this is needed to provide bots and
 	some logic
 3. bots are stupid (just play random)
 4. game list (all will be playable through internet):
