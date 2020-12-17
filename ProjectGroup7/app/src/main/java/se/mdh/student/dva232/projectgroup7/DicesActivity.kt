@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import org.json.JSONObject
@@ -90,13 +91,15 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
             val diceData = DicesData(amount)
             var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
 
-
+                Log.e("Log00", ret.getString("response"));
             if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
                 mySum = ret.getString("response").toInt()                                                        //Is this really right? Redundant toInt?
 
                 ret  = CommunicationLayer.getOpponentMove(diceData)
                 delay(10)
                 opponentSum = ret.getString("response").toInt()
+                runOnUiThread {
+
 
                 ownsumView.text = mySum.toString()
 
@@ -108,6 +111,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
                 }
                 if (opponentSum == mySum) {
                     winnerView.text = "Draw!"
+                }
                 }
             }
 
