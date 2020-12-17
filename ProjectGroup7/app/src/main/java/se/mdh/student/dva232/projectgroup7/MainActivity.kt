@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)
-        intent.putExtra("GAME_CODE", game.code)
+        intent.putExtra("GAME_CODE", game.name)
         startActivity(intent)
     }
 }
