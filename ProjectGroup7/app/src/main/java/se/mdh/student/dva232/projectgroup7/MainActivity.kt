@@ -20,4 +20,9 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("GAME_CODE", game.code)
         startActivity(intent)
     }
+
+    fun openDices(view: View) {
+        val intent = Intent(this, DicesActivity::class.java)
+        startActivity(intent)
+    }
 }
