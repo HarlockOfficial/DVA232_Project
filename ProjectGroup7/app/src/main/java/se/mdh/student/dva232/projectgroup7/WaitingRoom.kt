@@ -2,7 +2,6 @@ package se.mdh.student.dva232.projectgroup7
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +15,7 @@ class WaitingRoom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.waiting_room)
-        var temp = intent.getStringExtra("GAME_CODE")!!
-        Log.e("aa",GameType.valueOf(temp).toString())
-        val gameCode: GameType = GameType.valueOf(temp)
+        val gameCode: GameType = GameType.valueOf(intent.getStringExtra("GAME_CODE")!!)
         lateinit var out: String
         val gameClass = if(gameCode == GameType.ROCK_PAPER_SCISSORS){
             out = "Rock Paper Scissors"

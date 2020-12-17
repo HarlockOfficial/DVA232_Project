@@ -3,8 +3,6 @@ package se.mdh.student.dva232.projectgroup7
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Visibility
-import android.util.JsonReader
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
