@@ -1,7 +1,9 @@
 package se.mdh.student.dva232.projectgroup7
 
-enum class GameType( val code: String) {
+enum class GameType(val code: String) {
     TIC_TAC_TOE("ttt"),
     ROCK_PAPER_SCISSORS("rps"),
-    DICES("dices")
+    DICES("dices"),
+    FLIP_A_COIN("coin")
+    // TODO: if game not present, add here
 }

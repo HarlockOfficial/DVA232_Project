@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
-import java.util.UUID
+import java.util.*
 
 
 /**
@@ -25,13 +25,14 @@ import java.util.UUID
  *  @NOTE 2: '6.' and '7.' order might depend on the starting player (if present), switch accordingly
  *  @NOTE 3: all game rooms are temporary, after the winner is decided, the game is over,
  *              impossible to play multiple times!!!
+ *  @NOTE 4: server logic and bots for Flip A Coin, not implemented yet!! (Only grade 3 implemented)
  */
 
 object CommunicationLayer {
     /**
      * UUID (Universal Unique IDentifier) public parameter containing the player UUID
      */
-    var uuid = UUID.randomUUID().toString()
+    var uuid = createUUID()
         private set
     private const val url: String = "https://dva232-project-group-7.000webhostapp.com/?player="
 
@@ -51,7 +52,7 @@ object CommunicationLayer {
      */
     suspend fun addPlayerToMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
-            uuid = UUID.randomUUID().toString()
+            uuid = createUUID()
             return@withContext JSONObject(
                 URL("$url$uuid&action=add_queue&game=${data.game.code}").readText()
             )
@@ -127,5 +128,13 @@ object CommunicationLayer {
                     URL("$url$uuid&action=get_move&game=${data.game.code}").readText()
             )
         }
+    }
+
+    /**
+     * private function, non necessary for the games, used to generate a 20character UUID
+     */
+    private fun createUUID(): String{
+        val alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+        return (1..20).map{alphabet.random()}.joinToString("")
     }
 }
