@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
-import java.util.UUID
+import java.util.*
 
 
 /**
@@ -32,7 +32,7 @@ object CommunicationLayer {
     /**
      * UUID (Universal Unique IDentifier) public parameter containing the player UUID
      */
-    var uuid = UUID.randomUUID().toString()
+    var uuid = createUUID()
         private set
     private const val url: String = "https://dva232-project-group-7.000webhostapp.com/?player="
 
@@ -52,7 +52,7 @@ object CommunicationLayer {
      */
     suspend fun addPlayerToMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
-            uuid = UUID.randomUUID().toString()
+            uuid = createUUID()
             return@withContext JSONObject(
                 URL("$url$uuid&action=add_queue&game=${data.game.name}").readText()
             )
@@ -128,5 +128,13 @@ object CommunicationLayer {
                     URL("$url$uuid&action=get_move&game=${data.game.name}").readText()
             )
         }
+    }
+
+    /**
+     * private function, non necessary for the games, used to generate a 20character UUID
+     */
+    private fun createUUID(): String{
+        val alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+        return (1..20).map{alphabet.random()}.joinToString("")
     }
 }
