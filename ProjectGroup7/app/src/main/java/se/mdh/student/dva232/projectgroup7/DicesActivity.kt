@@ -89,6 +89,8 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
         GlobalScope.launch {
             val diceData = DicesData(amount)
             var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
+
+
             if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
                 mySum = ret.getString("response").toInt()                                                        //Is this really right? Redundant toInt?
 
