@@ -5,6 +5,8 @@ import time
 import random
 from enum import Enum
 
+from Pinger import Pinger
+
 
 class Possibilities(Enum):
     rock = 1
@@ -17,9 +19,12 @@ class RockPaperScissorsBot(Thread):
         super().__init__()
         self.__uuid = "".join(random.choices(ascii_letters + digits + "_", k=20))
         self.__url = "https://dva232-project-group-7.000webhostapp.com/?game=rps&player=" + self.__uuid
+        self.__pinger = Pinger("rps", self.__uuid)
 
     def run(self) -> None:
         r = requests.get(self.__url + "&action=add_queue")
+        # pinger started only once after the add queue
+        self.__pinger.start()
         if r.json()['response'] == "in_queue":
             print("Rock Paper Scissors Bot In Queue")
             while True:
@@ -43,6 +48,7 @@ class RockPaperScissorsBot(Thread):
             print("lose")
         else:
             print("draw")
+        self.__pinger.stop()
 
     def __set_move(self):
         choice = Possibilities(random.randint(1, 3))
