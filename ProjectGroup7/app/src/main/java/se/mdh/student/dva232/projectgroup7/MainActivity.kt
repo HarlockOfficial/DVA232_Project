@@ -1,10 +1,9 @@
 package se.mdh.student.dva232.projectgroup7
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 
 // TODO: guide how to make Hamburger Menu -> https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
 class MainActivity : AppCompatActivity() {
@@ -16,6 +15,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         openTTT()
+        findViewById<Button>(R.id.open_Dices).setOnClickListener {
+            openWaitingRoom(GameType.DICES)
+        }
+        // TODO: after adding a button, give the button an ID and do like ↑
     }
     private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)

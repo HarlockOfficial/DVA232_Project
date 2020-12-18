@@ -3,8 +3,6 @@ package se.mdh.student.dva232.projectgroup7
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Visibility
-import android.util.JsonReader
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,7 +14,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class RockPaperScissors : AppCompatActivity() {
+                        // Must implement interface ↓
+class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     private lateinit var myChoice: ImageView
     private lateinit var opponentChoice: ImageView
     private lateinit var context: Context
@@ -142,7 +141,12 @@ class RockPaperScissors : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rock_paper_scissors)
-
+        // restarting pinger with new data
+        Pinger.stop()
+        Pinger.current_activity=this
+        Pinger.current_data=RockPaperScissorsData("")
+        Pinger.start()
+        // ---------------------------------------------------
         context = baseContext
 
         myChoice = findViewById(R.id.my_choice)
@@ -156,5 +160,29 @@ class RockPaperScissors : AppCompatActivity() {
         findViewById<ImageView>(R.id.rock).setOnClickListener(clickListener)
         findViewById<ImageView>(R.id.paper).setOnClickListener(clickListener)
         findViewById<ImageView>(R.id.scissors).setOnClickListener(clickListener)
+    }
+
+    //necessary function that have to be in all games ↓
+    override fun quit() {
+        runOnUiThread {
+            //blocks the player from playing more
+            result.text=getString(R.string.opponent_left)
+            result.visibility = View.VISIBLE
+            //-------------------------------------------------
+            //change this function ↑ accordingly to archieve the same result
+        }
+    }
+    //this has to be the same
+    override fun onPause() {
+        Pinger.stop()
+        super.onPause()
+    }
+    //here ↓ you have to change the data class to the correct one
+    override fun onResume() {
+        Pinger.current_activity=this
+        Pinger.current_data=RockPaperScissorsData("")
+        //             here ↑
+        Pinger.start()
+        super.onResume()
     }
 }
