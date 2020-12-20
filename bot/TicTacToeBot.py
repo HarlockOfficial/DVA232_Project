@@ -5,8 +5,6 @@ import time
 import json
 import random
 
-from Pinger import Pinger
-
 
 class TicTacToeBot(Thread):
     def __init__(self):
@@ -15,11 +13,9 @@ class TicTacToeBot(Thread):
         self.__url = "https://dva232-project-group-7.000webhostapp.com/?game=ttt&player=" + self.__uuid
         self.__field = []
         self.__sign = None
-        self.__pinger = Pinger("ttt", self.__uuid)
 
     def run(self) -> None:
         r = requests.get(self.__url + "&action=add_queue")
-        self.__pinger.start()
         if r.json()['response'] == "in_queue":
             print("Tic Tac Toe Bot In Queue")
             while True:
@@ -70,7 +66,6 @@ class TicTacToeBot(Thread):
             r = json.loads(r.json()['response'])
             tmp = r['field'].split(",")
             if r['winner'] != "":
-                self.__pinger.stop()
                 if r['winner'] == "draw":
                     print("draw")
                     exit(0)

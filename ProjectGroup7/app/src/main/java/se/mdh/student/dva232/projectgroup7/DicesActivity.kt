@@ -1,18 +1,20 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 
 class DicesActivity : AppCompatActivity(), SensorEventListener {
 
@@ -82,14 +84,14 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
         //get opponents move -> get opponents sum back
         //compare sums, declare winner
 
-        var mySum: Int
-        var opponentSum: Int
+        var mySum = 0
+        var opponentSum = 0
 
         GlobalScope.launch {
             val diceData = DicesData(amount)
             var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
 
-                Log.e("Log00", ret.getString("response"))
+                Log.e("Log00", ret.getString("response"));
             if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
                 mySum = ret.getString("response").toInt()                                                        //Is this really right? Redundant toInt?
 
@@ -102,13 +104,13 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
                 ownsumView.text = mySum.toString()
 
                 if (opponentSum > mySum) {
-                    winnerView.text = getString(R.string.lose)
+                    winnerView.text = "Opponent wins..."
                 }
                 if (opponentSum < mySum) {
-                    winnerView.text = getString(R.string.win)
+                    winnerView.text = "You win!"
                 }
                 if (opponentSum == mySum) {
-                    winnerView.text = getString(R.string.draw)
+                    winnerView.text = "Draw!"
                 }
                 }
             }
