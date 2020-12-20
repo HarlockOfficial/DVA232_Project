@@ -11,7 +11,7 @@ class DicesBot(Thread):
     def __init__(self, num_of_dices: int):
         super(DicesBot, self).__init__()
         self.__dices_number = num_of_dices
-        self.__uuid = "".join(random.choices(ascii_letters + digits + "_", k=20))
+        self.__uuid = "bot_"+"".join(random.choices(ascii_letters + digits + "_", k=14))
         self.__url = "https://dva232-project-group-7.000webhostapp.com/?game=dices&player=" + self.__uuid
         self.__pinger = Pinger("dices", self.__uuid)
 

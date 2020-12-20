@@ -28,8 +28,12 @@ BEGIN
     if _affected_rows>0 then
         -- player is playing
         set _affected_rows = 0;
-        -- can assume that timestamp exists, is created during multiplayer queue
-        update game_ping set timestamp=NOW() where game_code=_gameCode and player_code=_playerCode;
+        select id, count(1) into _id, _affected_rows from game_ping where game_code=_gameCode and player_code=_playerCode;
+        if _affected_rows>0 then
+            update game_ping set timestamp=NOW() where id=_id;
+        else
+            insert into game_ping(player_code, game_code, timestamp) values(_playerCode, _gameCode, NOW());
+        end if;
         -- opponent ping is within 10 seconds? return "ok": return "error"
         if player1=_gameCode then
             set player1=player2;

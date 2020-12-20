@@ -43,7 +43,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         }
         val label = findViewById<TextView>(R.id.waiting_room_label)
         label.text = getString(R.string.waiting_room, out)
-        Pinger.current_activity=this
+        Pinger.currentActivity=this
         GlobalScope.launch(Dispatchers.IO) {
             data = if(gameCode == GameType.ROCK_PAPER_SCISSORS){
                 RockPaperScissorsData("")
@@ -58,7 +58,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             }
             var ret: JSONObject = CommunicationLayer.addPlayerToMultiplayerQueue(data)
             // singleton pinger started
-            Pinger.current_data=data
+            Pinger.currentData=data
             Pinger.start()
             //-------------------------
             val uuid: String = CommunicationLayer.uuid
@@ -88,8 +88,8 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
     }
 
     override fun onResume() {
-        Pinger.current_activity=this
-        Pinger.current_data=data
+        Pinger.currentActivity=this
+        Pinger.currentData=data
         Pinger.start()
         super.onResume()
     }

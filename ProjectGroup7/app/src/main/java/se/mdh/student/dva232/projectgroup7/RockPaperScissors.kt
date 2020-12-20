@@ -143,8 +143,8 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
         setContentView(R.layout.rock_paper_scissors)
         // restarting pinger with new data
         Pinger.stop()
-        Pinger.current_activity=this
-        Pinger.current_data=RockPaperScissorsData("")
+        Pinger.currentActivity=this
+        Pinger.currentData=RockPaperScissorsData("")
         Pinger.start()
         // ---------------------------------------------------
         context = baseContext
@@ -179,8 +179,8 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     }
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
-        Pinger.current_activity=this
-        Pinger.current_data=RockPaperScissorsData("")
+        Pinger.currentActivity=this
+        Pinger.currentData=RockPaperScissorsData("")
         //             here ↑
         Pinger.start()
         super.onResume()
