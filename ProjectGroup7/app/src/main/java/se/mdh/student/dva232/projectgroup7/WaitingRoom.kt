@@ -89,7 +89,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
 
     override fun onResume() {
         Pinger.current_activity=this
-        Pinger.current_data=data
+        Pinger.current_data = data
         Pinger.start()
         super.onResume()
     }
