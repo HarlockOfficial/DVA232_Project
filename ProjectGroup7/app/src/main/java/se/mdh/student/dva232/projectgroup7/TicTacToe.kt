@@ -1,27 +1,45 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class TicTacToe : AppCompatActivity() {
-    private val BUTTONS_COUNT = 9
+class TicTacToe : AppCompatActivity(), ActivityInterface {
+    private val buttonsCount = 9
     lateinit var data: TicTacToeData
-    var buttons = arrayOfNulls<Button>(BUTTONS_COUNT)
+    var buttons = arrayOfNulls<Button>(buttonsCount)
     var isPlayersTurn = false
-    var gameState: Array<String?> = arrayOfNulls<String>(BUTTONS_COUNT)
+    var gameState: Array<String?> = arrayOfNulls<String>(buttonsCount)
     lateinit var symbol: TicTacToeData.PlayersSymbol
+    lateinit var result: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tic_tac_toe)
+
+        // setup ping
+        Pinger.changeContext(this, GameType.TIC_TAC_TOE)
+
+        result = findViewById(R.id.result_tic_tac_toe)
+        result.setOnClickListener {
+            startActivity(Intent(baseContext, MainActivity::class.java))
+        }
+
         isPlayersTurn = intent.getBooleanExtra("isStarting", false)
+
+        // prepare clean game field
+        gameState = intent.getStringExtra("field")!!.split(",").toTypedArray()
+
         symbol = if (isPlayersTurn) {
             TicTacToeData.PlayersSymbol.CIRCLE
         } else {
@@ -31,18 +49,16 @@ class TicTacToe : AppCompatActivity() {
         // TODO do a catch clause
         data = TicTacToeData(symbol)
 
-        // prepare clean game field
-        gameState.fill("-")
 
         setupButtonsOnclicks()
         if (!isPlayersTurn) {
-            GlobalScope.launch { waitForOpponentsMove() }
+            GlobalScope.launch(Dispatchers.IO) { waitForOpponentsMove() }
         }
     }
 
     private fun setupButtonsOnclicks() {
         val idPrefix = "field_"
-        for (i in 1..BUTTONS_COUNT) {
+        for (i in 1..buttonsCount) {
             val id = resources.getIdentifier(idPrefix + i, "id", packageName)
             val button = findViewById<Button>(id)
             button.tag = i.toString()
@@ -50,7 +66,13 @@ class TicTacToe : AppCompatActivity() {
                 run {
                     data.move = (view.tag as String).toInt()
                     println("Sending move " + data.move)
-                    GlobalScope.launch { handleMove(CommunicationLayer.addPlayerMove(data)) }
+                    GlobalScope.launch(Dispatchers.IO) {
+                        handleMove(
+                            CommunicationLayer.addPlayerMove(
+                                data
+                            )
+                        )
+                    }
                 }
             }
             buttons[i - 1] = button
@@ -101,23 +123,35 @@ class TicTacToe : AppCompatActivity() {
 
     private fun isEndOfGame(response: JSONObject): Boolean {
         val winner = JSONObject(response["response"] as String)["winner"]
-        return if (winner == "") {
-            false
+        if (winner == "") {
+            return false
         } else if (winner == this.symbol) {
             // TODO visualize win
-            true
+            runOnUiThread {
+                result.text = getString(R.string.win)
+                result.visibility = View.VISIBLE
+            }
+            return true
         } else if (winner == "draw") {
             // TODO visualize draw
-            true
+            runOnUiThread {
+                result.text = getString(R.string.draw)
+                result.visibility = View.VISIBLE
+            }
+            return true
         } else {
             // TODO visualize loss
-            true
+            runOnUiThread {
+                result.text = getString(R.string.lose)
+                result.visibility = View.VISIBLE
+            }
+            return true
         }
     }
 
     private fun updateGameField() {
         runOnUiThread {
-            for (i in 0 until BUTTONS_COUNT) {
+            for (i in 0 until buttonsCount) {
                 if (gameState[i] == TicTacToeData.PlayersSymbol.CROSS.symbol) {
                     buttons[i]?.setBackgroundResource(R.drawable.tic_tac_toe_cross_field)
                 } else if (gameState[i] == TicTacToeData.PlayersSymbol.CIRCLE.symbol) {
@@ -132,5 +166,26 @@ class TicTacToe : AppCompatActivity() {
     private fun parseGameStateFromJSON(state: JSONObject): Array<String?> {
         return (JSONObject(state["response"] as String)["field"] as String).split(",")
             .toTypedArray()
+    }
+
+    //necessary function that have to be in all games ↓
+    override fun quit() {
+        runOnUiThread {
+            //blocks the player from playing more
+            result.text = getString(R.string.opponent_left)
+            result.visibility = View.VISIBLE
+            //-------------------------------------------------
+            //change this function ↑ accordingly to archieve the same result
+        }
+    }
+
+    override fun onResume() {
+        Pinger.changeContext(this, GameType.TIC_TAC_TOE)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Pinger.stop()
+        super.onPause()
     }
 }
