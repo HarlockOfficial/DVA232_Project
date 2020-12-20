@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ProjectGroup7">
         <activity android:name=".DicesActivity" />
         <activity android:name=".WaitingRoom" />
-        <activity android:name=".TicTacToeActivity"></activity>
+        <activity android:name=".TicTacToe"/>
         <activity android:name=".RockPaperScissors" />
         <activity android:name=".MainActivity">
             <intent-filter>

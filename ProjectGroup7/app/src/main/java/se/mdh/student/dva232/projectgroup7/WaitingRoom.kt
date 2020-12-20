@@ -23,8 +23,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             RockPaperScissors::class.java
         }else if(gameCode == GameType.TIC_TAC_TOE){
             out = "Tic Tac Toe"
-            // TODO: TicTacToe::class.java
-            null
+            TicTacToe::class.java
         }else if(gameCode == GameType.DICES){
             out = "Tic Tac Toe"
             DicesActivity::class.java
@@ -48,14 +47,46 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             data = if(gameCode == GameType.ROCK_PAPER_SCISSORS){
                 RockPaperScissorsData("")
             }else if(gameCode == GameType.TIC_TAC_TOE){
-                TicTacToeFakeData()    // TODO: when created add here the correct data Implementation
+                object : Data {
+                    override val game: GameType
+                        get() = GameType.TIC_TAC_TOE
+
+                    override fun moveToCsv(): String {
+                        return ""
+                    }
+                }
             }else if(gameCode == GameType.DICES){
-                DicesData(-1)    // TODO: when created add here the correct data Implementation
+                // DO NOT MERGE!!
+                object : Data {
+                    override val game: GameType
+                        get() = GameType.DICES
+
+                    override fun moveToCsv(): String {
+                        return ""
+                    }
+                }    // TODO: when created add here the correct data Implementation
             }else if(gameCode == GameType.FLIP_A_COIN){
-                FlipACoinFakeData()    // TODO: when created add here the correct data Implementation
+                // DO NOT MERGE!!
+                object : Data {
+                    override val game: GameType
+                        get() = GameType.FLIP_A_COIN
+
+                    override fun moveToCsv(): String {
+                        return ""
+                    }
+                }     // TODO: when created add here the correct data Implementation
             }else{
-                OtherFakeData()    // TODO: when created add here the correct data Implementation
+                // DO NOT MERGE!!
+                object : Data {
+                    override val game: GameType
+                        get() = GameType.FLIP_A_COIN //??????
+
+                    override fun moveToCsv(): String {
+                        return ""
+                    }
+                }     // TODO: when created add here the correct data Implementation
             }
+            // DO NOT MERGE!! return back to JSONObject
             var ret: JSONObject = CommunicationLayer.addPlayerToMultiplayerQueue(data)
             // singleton pinger started
             Pinger.current_data=data

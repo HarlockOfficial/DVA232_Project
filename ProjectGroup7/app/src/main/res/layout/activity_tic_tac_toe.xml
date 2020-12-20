@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TicTacToeActivity">
+    tools:context=".TicTacToe">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -22,22 +22,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/field_0"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
-                app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
-
-            <Button
                 android:id="@+id/field_1"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
+                app:backgroundTintMode="add"
                 app:elevation="0dp"
                 tools:backgroundTint="@android:color/transparent" />
 
@@ -47,7 +37,17 @@
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
+                app:backgroundTintMode="add"
+                app:elevation="0dp"
+                tools:backgroundTint="@android:color/transparent" />
+
+            <Button
+                android:id="@+id/field_3"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/tic_tac_toe_blank_field"
+                app:backgroundTintMode="add"
                 app:elevation="0dp"
                 tools:backgroundTint="@android:color/transparent" />
         </LinearLayout>
@@ -58,22 +58,12 @@
             android:layout_weight="3">
 
             <Button
-                android:id="@+id/field_3"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
-                app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
-
-            <Button
                 android:id="@+id/field_4"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
+                app:backgroundTintMode="add"
                 app:elevation="0dp"
                 tools:backgroundTint="@android:color/transparent" />
 
@@ -83,7 +73,17 @@
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
+                app:backgroundTintMode="add"
+                app:elevation="0dp"
+                tools:backgroundTint="@android:color/transparent" />
+
+            <Button
+                android:id="@+id/field_6"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/tic_tac_toe_blank_field"
+                app:backgroundTintMode="add"
                 app:elevation="0dp"
                 tools:backgroundTint="@android:color/transparent" />
 
@@ -95,33 +95,33 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/field_6"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
-                app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
-
-            <Button
                 android:id="@+id/field_7"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
+                app:backgroundTintMode="add"
                 app:elevation="0dp"
                 tools:backgroundTint="@android:color/transparent" />
 
             <Button
                 android:id="@+id/field_8"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/tic_tac_toe_blank_field"
+                app:backgroundTintMode="add"
+                app:elevation="0dp"
+                tools:backgroundTint="@android:color/transparent" />
+
+            <Button
+                android:id="@+id/field_9"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/tic_tac_toe_blank_field"
-                app:backgroundTintMode="src_over"
+                app:backgroundTintMode="add"
                 app:elevation="0dp"
                 tools:backgroundTint="@android:color/transparent" />
         </LinearLayout>

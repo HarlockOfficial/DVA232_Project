@@ -1,17 +1,21 @@
 package se.mdh.student.dva232.projectgroup7
 
-class TicTacToeData : Data {
+class TicTacToeData(symbol: PlayersSymbol) : Data {
     override val game: GameType
         get() = GameType.TIC_TAC_TOE
 
-    val FIELD_SIZE = 3
+    val FIELD_SIZE = 9
     var symbol: PlayersSymbol? = null
-    var moveXCoordinate: Int = -1
-    var moveYCoordinate: Int = -1
+
+    var move = -1
+
+    init {
+        this.symbol = symbol
+    }
 
     override fun moveToCsv(): String {
-        return if ((symbol != null) && (moveXCoordinate in 0..FIELD_SIZE) && (moveYCoordinate in 0..FIELD_SIZE)) {
-            String.format("%d,%d,%s", moveXCoordinate, moveYCoordinate, symbol!!.symbol)
+        return if ((symbol != null) && (move in 0..FIELD_SIZE)) {
+            String.format("%d,%s", move, symbol!!.symbol)
         } else {
             // TODO make check here or in the function above
             ""
@@ -21,6 +25,7 @@ class TicTacToeData : Data {
 
     enum class PlayersSymbol(val symbol: String) {
         CIRCLE("o"),
-        CROSS("x")
+        CROSS("x"),
+        EMPTY_FIELD("-")
     }
 }

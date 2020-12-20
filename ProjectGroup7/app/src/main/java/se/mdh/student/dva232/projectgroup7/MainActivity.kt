@@ -14,20 +14,18 @@ class MainActivity : AppCompatActivity() {
             openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
         }
 
-        openTTT()
         findViewById<Button>(R.id.open_Dices).setOnClickListener {
             openWaitingRoom(GameType.DICES)
+        }
+        findViewById<Button>(R.id.open_tic_tac_toe).setOnClickListener {
+            openWaitingRoom(GameType.TIC_TAC_TOE)
         }
         // TODO: after adding a button, give the button an ID and do like ↑
     }
     private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)
-        intent.putExtra("GAME_CODE", game.code)
+        intent.putExtra("GAME_CODE", game.name)
         startActivity(intent)
     }
 
-    fun openTTT() {
-        val intent = Intent(this, TicTacToeActivity::class.java)
-        startActivity(intent)
-    }
 }
