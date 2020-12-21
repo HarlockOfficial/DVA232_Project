@@ -3,6 +3,7 @@ package se.mdh.student.dva232.projectgroup7
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,7 +34,8 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                 do {
                     delay(10)
                     ret = CommunicationLayer.getOpponentMove(rpsData)
-                }while(ret.getString("response")!="NULL")   //TODO check, not sure if NULL is accepted as string like this
+                    Log.e("eee", ret.toString())
+                }while(ret.get("response")==null)   //TODO check, not sure if NULL is accepted as string like this
                 when {
                     ret.getString("response") == "rock" -> {
                         runOnUiThread {
@@ -141,11 +143,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rock_paper_scissors)
-        // restarting pinger with new data
-        Pinger.stop()
-        Pinger.currentActivity=this
-        Pinger.currentData=RockPaperScissorsData("")
-        Pinger.start()
+
         // ---------------------------------------------------
         context = baseContext
 
@@ -179,10 +177,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     }
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
-        Pinger.currentActivity=this
-        Pinger.currentData=RockPaperScissorsData("")
-        //             here ↑
-        Pinger.start()
+        Pinger.changeContext(this, GameType.ROCK_PAPER_SCISSORS)
         super.onResume()
     }
 }

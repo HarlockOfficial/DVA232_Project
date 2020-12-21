@@ -13,8 +13,12 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.open_RPS).setOnClickListener {
             openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
         }
+
         findViewById<Button>(R.id.open_Dices).setOnClickListener {
             openWaitingRoom(GameType.DICES)
+        }
+        findViewById<Button>(R.id.open_tic_tac_toe).setOnClickListener {
+            openWaitingRoom(GameType.TIC_TAC_TOE)
         }
         // TODO: after adding a button, give the button an ID and do like ↑
     }
@@ -23,4 +27,5 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("GAME_CODE", game.name)
         startActivity(intent)
     }
+
 }
