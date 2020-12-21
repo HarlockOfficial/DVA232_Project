@@ -62,7 +62,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                 }
             }
         } else if (gameCode == GameType.DICES) {
-            // DO NOT MERGE!!
             object : Data {
                 override val game: GameType
                     get() = GameType.DICES
@@ -72,7 +71,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                 }
             }    // TODO: when created add here the correct data Implementation
         } else if (gameCode == GameType.FLIP_A_COIN) {
-            // DO NOT MERGE!!
             object : Data {
                 override val game: GameType
                     get() = GameType.FLIP_A_COIN
@@ -82,7 +80,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                 }
             }     // TODO: when created add here the correct data Implementation
         } else {
-            // DO NOT MERGE!!
             object : Data {
                 override val game: GameType
                     get() = GameType.FLIP_A_COIN //??????
