@@ -5,22 +5,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Semaphore
 
 object Pinger {
-    var current_activity: ActivityInterface? = null
-    var current_data: Data? = null
-    private var run: Boolean = true
+    var currentActivity: ActivityInterface? = null
+    var currentData: Data? = null
+    private var run: Boolean= true
     var isPlayerAdded = false
 
     fun stop() {
         run = false
-        current_activity = null
+        currentData=null
+        currentActivity=null
     }
 
-    fun start() {
-        Log.e("Pinger", "Pinger started " + current_activity.toString())
-        if (current_activity != null && current_data != null) {
+    fun start(){
+        Log.e("Pinger", "Pinger started " + currentActivity.toString())
+        if(currentActivity != null && currentData!=null){
             Log.e("Pinger", "Pinger entered THE IF")
             GlobalScope.launch(Dispatchers.IO) {
                 run = true
@@ -30,12 +30,12 @@ object Pinger {
 
                 while (run) {
                     try {
-                        Log.e("Pinger", "trying to get response ${(current_data as Data).game.code}")
-                        val response = CommunicationLayer.ping(current_data!!).getString("response")
+                        Log.e("Pinger", "trying to get response ${(currentData as Data).game.code}")
+                        val response = CommunicationLayer.ping(currentData!!).getString("response")
                         Log.e("Pinger", "response: $response")
-                        if (response != "ok") {
+                        if(response != "ok") {
                             run = false
-                            current_activity!!.quit()
+                            currentActivity!!.quit()
                         }
                         delay(1000)
                     } catch (e: java.lang.NullPointerException) {
@@ -51,8 +51,8 @@ object Pinger {
 
     fun changeContext(newContext: ActivityInterface, gameType: GameType) {
         this.stop()
-        this.current_activity = newContext
-        this.current_data = object : Data {
+        this.currentActivity = newContext
+        this.currentData = object : Data {
             override val game: GameType
                 get() = gameType
 
@@ -60,8 +60,8 @@ object Pinger {
                 return ""
             }
         }
-        Log.e("Pinger", "Asigned data: " + (this.current_data as Data).game.code)
-        Log.e("Pinger", "Asigned game type: " + (this.current_data as Data).game.code)
+        Log.e("Pinger", "Asigned data: " + (this.currentData as Data).game.code)
+        Log.e("Pinger", "Asigned game type: " + (this.currentData as Data).game.code)
         this.start()
     }
 }
