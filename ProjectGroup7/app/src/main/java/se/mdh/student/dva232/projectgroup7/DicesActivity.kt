@@ -25,10 +25,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dices2)
-        Pinger.stop()
-        Pinger.current_activity = this
-        Pinger.current_data = DicesData(0)
-        Pinger.start()
+
         //Accelerometer
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         val accelerometer: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -60,9 +57,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     override fun onResume() { //No idea if this is working properly
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
-        Pinger.current_activity = this
-        Pinger.current_data = DicesData(0)
-        Pinger.start()
+        Pinger.changeContext(this, GameType.DICES)
     }
 
     override fun onPause() {

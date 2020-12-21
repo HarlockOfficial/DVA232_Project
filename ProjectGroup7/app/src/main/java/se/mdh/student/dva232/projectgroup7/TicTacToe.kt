@@ -27,9 +27,6 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tic_tac_toe)
 
-        // setup ping
-        Pinger.changeContext(this, GameType.TIC_TAC_TOE)
-
         result = findViewById(R.id.result_tic_tac_toe)
         result.setOnClickListener {
             startActivity(Intent(baseContext, MainActivity::class.java))

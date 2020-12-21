@@ -14,7 +14,6 @@ object Pinger {
 
     fun stop() {
         run = false
-        currentData=null
         currentActivity=null
     }
 
@@ -41,6 +40,8 @@ object Pinger {
                     } catch (e: java.lang.NullPointerException) {
                         delay(100)
                         continue
+                    } catch (e: org.json.JSONException) {
+                        Log.e("Pinger", e.message)
                     }
                 }
             }
