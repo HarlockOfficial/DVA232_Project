@@ -17,7 +17,7 @@ class Possibilities(Enum):
 class RockPaperScissorsBot(Thread):
     def __init__(self):
         super().__init__()
-        self.__uuid = "".join(random.choices(ascii_letters + digits + "_", k=20))
+        self.__uuid = "bot_"+"".join(random.choices(ascii_letters + digits + "_", k=14))
         self.__url = "https://dva232-project-group-7.000webhostapp.com/?game=rps&player=" + self.__uuid
         self.__pinger = Pinger("rps", self.__uuid)
 

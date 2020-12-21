@@ -5,25 +5,25 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 object Pinger {
-    var current_activity: ActivityInterface? = null
-    var current_data: Data? = null
+    var currentActivity: ActivityInterface? = null
+    var currentData: Data? = null
     private var run: Boolean= true
 
     fun stop(){
         run = false
-        current_data=null
-        current_activity=null
+        currentData=null
+        currentActivity=null
     }
 
     fun start(){
-        if(current_activity != null && current_data!=null){
+        if(currentActivity != null && currentData!=null){
             run=true
             GlobalScope.launch(Dispatchers.IO) {
                 while (run) {
-                    val response = CommunicationLayer.ping(current_data!!).getString("response")
+                    val response = CommunicationLayer.ping(currentData!!).getString("response")
                     if(response!="ok"){
                         run = false
-                        current_activity!!.quit()
+                        currentActivity!!.quit()
                     }
                 }
             }
