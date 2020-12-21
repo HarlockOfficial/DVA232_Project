@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
-import java.util.UUID
+import java.util.*
 
 
 /**
@@ -25,15 +25,16 @@ import java.util.UUID
  *  @NOTE 2: '6.' and '7.' order might depend on the starting player (if present), switch accordingly
  *  @NOTE 3: all game rooms are temporary, after the winner is decided, the game is over,
  *              impossible to play multiple times!!!
+ *  @NOTE 4: server logic and bots for Flip A Coin, not implemented yet!! (Only grade 3 implemented)
  */
 
 object CommunicationLayer {
     /**
      * UUID (Universal Unique IDentifier) public parameter containing the player UUID
      */
-    var uuid = UUID.randomUUID().toString()
+    var uuid = createUUID()
         private set
-    private const val url: String = "https://dva232-project-group-7.000webhostapp.com/?player="
+    private const val url: String = "https://dva232-project-group-7.000webhostapp.com/"
 
     /**
      * function used to add a player to the waiting queue should be called before the user reaches
@@ -51,9 +52,9 @@ object CommunicationLayer {
      */
     suspend fun addPlayerToMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
-            uuid = UUID.randomUUID().toString()
+            uuid = createUUID()
             return@withContext JSONObject(
-                URL("$url$uuid&action=add_queue&game=${data.game.name}").readText()
+                URL("$url?player=$uuid&action=add_queue&game=${data.game.code}").readText()
             )
         }
     }
@@ -75,7 +76,7 @@ object CommunicationLayer {
     suspend fun checkMultiplayerQueue(data: Data): JSONObject{
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("$url$uuid&action=get_queue&game=${data.game.name}").readText()
+                    URL("$url?player=$uuid&action=get_queue&game=${data.game.code}").readText()
             )
         }
     }
@@ -95,7 +96,7 @@ object CommunicationLayer {
     suspend fun addPlayerMove(data: Data):JSONObject {
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("$url$uuid&action=add_move&game=${data.game.name}&move=${data.moveToCsv()}").readText()
+                    URL("$url?player=$uuid&action=add_move&game=${data.game.code}&move=${data.moveToCsv()}").readText()
             )
         }
     }
@@ -124,8 +125,28 @@ object CommunicationLayer {
     suspend fun getOpponentMove(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("$url$uuid&action=get_move&game=${data.game.name}").readText()
+                    URL("$url?player=$uuid&action=get_move&game=${data.game.code}").readText()
             )
         }
+    }
+    /**
+     * function used to let the server know that user is still online.
+     * called automatically by @object Pinger, setup it correctly.
+     * for reference on how to use that class look at @class RockPaperScissor
+     */
+    suspend fun ping(data: Data): JSONObject {
+        return withContext(Dispatchers.IO) {
+            return@withContext JSONObject(
+                    URL("${url}ping.php?player=$uuid&game=${data.game.code}").readText()
+            )
+        }
+    }
+
+    /**
+     * private function, non necessary for the games, used to generate a 20character UUID
+     */
+    private fun createUUID(): String{
+        val alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+        return (1..20).map{alphabet.random()}.joinToString("")
     }
 }

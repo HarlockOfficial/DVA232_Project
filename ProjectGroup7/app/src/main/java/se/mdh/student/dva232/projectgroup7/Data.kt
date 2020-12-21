@@ -1,5 +1,7 @@
 package se.mdh.student.dva232.projectgroup7
 
+import se.mdh.student.dva232.projectgroup7.GameType
+
 
 interface Data {
     /**
