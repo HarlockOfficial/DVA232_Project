@@ -2,6 +2,7 @@ package se.mdh.student.dva232.projectgroup7
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,66 +13,101 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class WaitingRoom : AppCompatActivity(), ActivityInterface {
-    private lateinit var data: Data
+    private lateinit var gameCode: GameType
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("WaitingRoom", "onCreate started\n")
         setContentView(R.layout.waiting_room)
-        val gameCode: GameType = GameType.valueOf(intent.getStringExtra("GAME_CODE")!!)
+        gameCode = GameType.valueOf(intent.getStringExtra("GAME_CODE")!!)
         lateinit var out: String
-        val gameClass = if(gameCode == GameType.ROCK_PAPER_SCISSORS){
+        val gameClass = if (gameCode == GameType.ROCK_PAPER_SCISSORS) {
             out = "Rock Paper Scissors"
             RockPaperScissors::class.java
-        }else if(gameCode == GameType.TIC_TAC_TOE){
+        } else if (gameCode == GameType.TIC_TAC_TOE) {
             out = "Tic Tac Toe"
-            // TODO: TicTacToe::class.java
-            null
-        }else if(gameCode == GameType.DICES){
+            TicTacToe::class.java
+        } else if (gameCode == GameType.DICES) {
             out = "Tic Tac Toe"
             DicesActivity::class.java
-        }else if(gameCode == GameType.FLIP_A_COIN){
+        } else if (gameCode == GameType.FLIP_A_COIN) {
             out = "Flip A Coin"
             // TODO: Coin::class.java
             null
-        }else{  //TODO: if game not present add "else if" here
+        } else {  //TODO: if game not present add "else if" here
             out = "Unrecognized Game"
             null
         }
-        if(out == "Unrecognized Game"){
-            Toast.makeText(baseContext, getString(R.string.waiting_room_game_error), Toast.LENGTH_SHORT).show()
+        if (out == "Unrecognized Game") {
+            Toast.makeText(
+                baseContext,
+                getString(R.string.waiting_room_game_error),
+                Toast.LENGTH_SHORT
+            ).show()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         val label = findViewById<TextView>(R.id.waiting_room_label)
         label.text = getString(R.string.waiting_room, out)
-        Pinger.currentActivity=this
-        GlobalScope.launch(Dispatchers.IO) {
-            data = if(gameCode == GameType.ROCK_PAPER_SCISSORS){
-                RockPaperScissorsData("")
-            }else if(gameCode == GameType.TIC_TAC_TOE){
-                TicTacToeFakeData()    // TODO: when created add here the correct data Implementation
-            }else if(gameCode == GameType.DICES){
-                DicesData(-1)    // TODO: when created add here the correct data Implementation
-            }else if(gameCode == GameType.FLIP_A_COIN){
-                FlipACoinFakeData()    // TODO: when created add here the correct data Implementation
-            }else{
-                OtherFakeData()    // TODO: when created add here the correct data Implementation
+
+        val data = if (gameCode == GameType.ROCK_PAPER_SCISSORS) {
+            RockPaperScissorsData("")
+        } else if (gameCode == GameType.TIC_TAC_TOE) {
+            object : Data {
+                override val game: GameType
+                    get() = GameType.TIC_TAC_TOE
+
+                override fun moveToCsv(): String {
+                    return ""
+                }
             }
+        } else if (gameCode == GameType.DICES) {
+            // DO NOT MERGE!!
+            object : Data {
+                override val game: GameType
+                    get() = GameType.DICES
+
+                override fun moveToCsv(): String {
+                    return ""
+                }
+            }    // TODO: when created add here the correct data Implementation
+        } else if (gameCode == GameType.FLIP_A_COIN) {
+            // DO NOT MERGE!!
+            object : Data {
+                override val game: GameType
+                    get() = GameType.FLIP_A_COIN
+
+                override fun moveToCsv(): String {
+                    return ""
+                }
+            }     // TODO: when created add here the correct data Implementation
+        } else {
+            // DO NOT MERGE!!
+            object : Data {
+                override val game: GameType
+                    get() = GameType.FLIP_A_COIN //??????
+
+                override fun moveToCsv(): String {
+                    return ""
+                }
+            }     // TODO: when created add here the correct data Implementation
+        }
+        GlobalScope.launch(Dispatchers.IO) {
             var ret: JSONObject = CommunicationLayer.addPlayerToMultiplayerQueue(data)
-            // singleton pinger started
-            Pinger.currentData=data
-            Pinger.start()
-            //-------------------------
+            Pinger.isPlayerAdded = true
+            Log.e("WaitingRoom Coroutine", "Player added to queue")
             val uuid: String = CommunicationLayer.uuid
-            if(ret["response"] == "in_queue"){
-                do{
+
+            if (ret["response"] == "in_queue") {
+                do {
                     delay(10)
                     ret = CommunicationLayer.checkMultiplayerQueue(data)
-                }while (ret["response"]=="in_queue")
+                } while (ret["response"] == "in_queue")
             }
             ret = JSONObject(ret["response"] as String)
 
             val intent = Intent(this@WaitingRoom, gameClass)
-            intent.putExtra("isStarting", ret["starting_player"]==uuid)
+            intent.putExtra("isStarting", ret["starting_player"] == uuid)
             intent.putExtra("field", ret["field"].toString())
             startActivity(intent)
         }
@@ -83,14 +119,14 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
     }
 
     override fun onPause() {
+        Log.e("WatingRoom", "onPause started\n")
         Pinger.stop()
         super.onPause()
     }
 
     override fun onResume() {
-        Pinger.currentActivity=this
-        Pinger.currentData=data
-        Pinger.start()
+        Log.e("WaitingRoom", "onResume started\n")
+        Pinger.changeContext(this, gameCode)
         super.onResume()
     }
 }
