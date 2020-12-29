@@ -14,12 +14,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class DicesActivity : AppCompatActivity(), SensorEventListener {
+class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterface {
 
 
     private var dicesMap: HashMap<String, Int> = HashMap()
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
+    private var thrown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +34,10 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
 
         val button = findViewById<Button>(R.id.button_rtd)
         button.setOnClickListener {
-            //setDicesMap(4)
+            Log.e("Log00", "aaaaa")
             displayResult(4)
+
+
         }
 
 
@@ -43,8 +46,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
             if (event.values[0] > 5 || event.values[1] > 10 || event.values[2] > 1)
-                //setDicesMap(4)
-            displayResult(4)
+                displayResult(4)
         }
 
     }
@@ -55,11 +57,13 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
     override fun onResume() { //No idea if this is working properly
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
+        Pinger.changeContext(this, GameType.DICES)
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
+        Pinger.stop()
     }
 
     //sets dice map and applies results from
@@ -74,53 +78,63 @@ class DicesActivity : AppCompatActivity(), SensorEventListener {
 
     //Displays the sum of all dices. This is the only visual change for the user. https://developer.android.com/guide/topics/sensors/sensors_motion for sensors. Sensor calibration? 
     private fun displayResult(amount: Int) {
+        if (!thrown) {
+            val ownsumView = findViewById<TextView>(R.id.resulttext)
+            val winnerView = findViewById<TextView>(R.id.winnertext)
 
-        val ownsumView = findViewById<TextView>(R.id.resulttext)
-        val winnerView = findViewById<TextView>(R.id.winnertext)
-
-        //sendmove -> get the sum back
-        //get opponents move -> get opponents sum back
-        //compare sums, declare winner
-
-        var mySum: Int
-        var opponentSum: Int
-
-        GlobalScope.launch {
-            val diceData = DicesData(amount)
-            var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
-
-                Log.e("Log00", ret.getString("response"))
-            if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
-                mySum = ret.getString("response").toInt()                                                        //Is this really right? Redundant toInt?
-
-                ret  = CommunicationLayer.getOpponentMove(diceData)
-                delay(10)
-                opponentSum = ret.getString("response").toInt()
-                runOnUiThread {
+            var mySum = 0
+            var opponentSum = 0
+            //sendmove -> get the sum back
+            //get opponents move -> get opponents sum back
+            //compare sums, declare winner
 
 
-                ownsumView.text = mySum.toString()
+            GlobalScope.launch {
+                val diceData = DicesData(amount)
+                var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
 
-                if (opponentSum > mySum) {
-                    winnerView.text = getString(R.string.lose)
-                }
-                if (opponentSum < mySum) {
-                    winnerView.text = getString(R.string.win)
-                }
-                if (opponentSum == mySum) {
-                    winnerView.text = getString(R.string.draw)
-                }
+                Log.e("Log00", ret.getString("response"));
+                if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
+                    mySum = ret.getString("response")
+                        .toInt()                                                        //Is this really right? Redundant toInt?
+                    Log.e("Log00", ret.getString("response"))
+                    if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
+                        mySum = ret.getString("response")
+                            .toInt()                                                        //Is this really right? Redundant toInt?
+
+                        ret = CommunicationLayer.getOpponentMove(diceData)
+                        delay(10)
+                        opponentSum = ret.getString("response").toInt()
+                        runOnUiThread {
+
+
+                            ownsumView.text = mySum.toString()
+
+                            if (opponentSum > mySum) {
+                                winnerView.text = getString(R.string.lose)
+                            }
+                            if (opponentSum < mySum) {
+                                winnerView.text = getString(R.string.win)
+                            }
+                            if (opponentSum == mySum) {
+                                winnerView.text = getString(R.string.draw)
+                            }
+                        }
+                    }
+
                 }
             }
 
 
-
         }
+        thrown = true
+    }
+
+    override fun quit() {
+        //Notify user that game is over
+        // Runs on disconnection
 
     }
 
-    //Get data from JSON file.
-    private fun getData(): Int {
-        TODO("get information from API, then return the int.")
-    }
+
 }
