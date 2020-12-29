@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         findViewById<Button>(R.id.open_RPS).setOnClickListener {
             openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
         }
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.open_tic_tac_toe).setOnClickListener {
             openWaitingRoom(GameType.TIC_TAC_TOE)
+        }
+
+        findViewById<Button>(R.id.open_blow).setOnClickListener {
+            val intent2 = Intent(this, BlowActivity::class.java) //Only for now
+            startActivity(intent2)
+            //openWaitingRoom(GameType.BLOW)
         }
         // TODO: after adding a button, give the button an ID and do like ↑
     }
