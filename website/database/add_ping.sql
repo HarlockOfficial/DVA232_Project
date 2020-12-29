@@ -16,9 +16,9 @@ BEGIN
         -- create or update the ping
         select id, count(1) into _id, _affected_rows from game_ping where game_code=_gameCode and player_code=_playerCode;
         if _affected_rows>0 then
-            update game_ping set timestamp=NOW() where id=_id;
+            update game_ping set `timestamp`=NOW() where id=_id;
         else
-            insert into game_ping(player_code, game_code, timestamp) values(_playerCode, _gameCode, NOW());
+            insert into game_ping(player_code, game_code, `timestamp`) values(_playerCode, _gameCode, NOW());
         end if;
         -- ok is always returned, just a check for the user that ping was successfull
         return "ok";
@@ -30,15 +30,16 @@ BEGIN
         set _affected_rows = 0;
         select id, count(1) into _id, _affected_rows from game_ping where game_code=_gameCode and player_code=_playerCode;
         if _affected_rows>0 then
-            update game_ping set timestamp=NOW() where id=_id;
+            update game_ping set `timestamp`=NOW() where id=_id;
         else
-            insert into game_ping(player_code, game_code, timestamp) values(_playerCode, _gameCode, NOW());
+            insert into game_ping(player_code, game_code, `timestamp`) values(_playerCode, _gameCode, NOW());
         end if;
         -- opponent ping is within 10 seconds? return "ok": return "error"
         if player1=_gameCode then
             set player1=player2;
         end if;
-        select now()-timestamp into time_elapsed from game_ping where game_code=_gameCode and player_code=player1;
+        select `timestamp` into time_elapsed from game_ping where game_code=_gameCode and player_code=player1;
+        set time_elapsed = now()-time_elapsed;
         if time_elapsed>10 then
             return "error";
         end if;
