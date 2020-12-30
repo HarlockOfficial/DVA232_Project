@@ -6,8 +6,14 @@ import android.media.MediaRecorder.AudioSource.MIC
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.util.jar.Manifest
 
 //Two users. Start with a value of 100, can go up to 200 in which case the user wins
@@ -19,7 +25,9 @@ import java.util.jar.Manifest
 //Borrowed request permissions from https://developer.android.com/guide/topics/media/mediarecorder
 
 
-
+//
+//Get peak value from mic -> save peak value -> send peak value -> retrieve calculated score
+//Normalize the score to a value between 0 and 100? Percentages?
 
 
 //Request permission for mic
@@ -34,15 +42,17 @@ class BlowActivity : AppCompatActivity() {
         setContentView(R.layout.activity_blow)
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
-        val file = "${externalCacheDir?.absolutePath}/test.ogg"
+        val file = "${externalCacheDir?.absolutePath}/test.ts"
 
 
         val mediaRecorder : MediaRecorder = MediaRecorder()
         mediaRecorder.setAudioSource(MIC) //This mic has some sort of processing on the input.
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.OGG) //Not sure which one to use to be honest
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_2_TS) //Not sure which one to use to be honest
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
-        mediaRecorder.setOutputFile(file) //Read only file system
+        mediaRecorder.setOutputFile(file) //Read only file system, permissions to write to "disk"?
         mediaRecorder.prepare()
+
+        startGame(mediaRecorder)
 
         findViewById<Button>(R.id.record_start).setOnClickListener{
             startGame(mediaRecorder) //Error on this, failed to start: -21 "Is a directory"?
@@ -58,6 +68,19 @@ class BlowActivity : AppCompatActivity() {
 
     private fun startGame (mediaRecorder: MediaRecorder) {
         mediaRecorder.start()
+        val amplitude : Int = mediaRecorder.maxAmplitude
+
+        val view =  findViewById<TextView>(R.id.textView)
+
+        view.text = amplitude.toString()
+
+
+
+        GlobalScope.launch {
+            var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData)
+
+        }
+
         //recording to value
     }
 
