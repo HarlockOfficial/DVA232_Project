@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -53,6 +54,7 @@ object CommunicationLayer {
     suspend fun addPlayerToMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
             uuid = createUUID()
+            Log.e("yo", uuid)
             return@withContext JSONObject(
                 URL("$url?player=$uuid&action=add_queue&game=${data.game.code}").readText()
             )

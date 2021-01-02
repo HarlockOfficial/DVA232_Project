@@ -14,7 +14,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.io.File
+import java.util.*
 import java.util.jar.Manifest
+import kotlin.concurrent.timerTask
 
 //Two users. Start with a value of 100, can go up to 200 in which case the user wins
 //User blows into microphone, which will then be transformed into a numeric value
@@ -42,50 +45,64 @@ class BlowActivity : AppCompatActivity() {
         setContentView(R.layout.activity_blow)
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
-        val file = "${externalCacheDir?.absolutePath}/test.ts"
 
+        val timer = Timer()
 
         val mediaRecorder : MediaRecorder = MediaRecorder()
-        mediaRecorder.setAudioSource(MIC) //This mic has some sort of processing on the input.
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_2_TS) //Not sure which one to use to be honest
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
-        mediaRecorder.setOutputFile(file) //Read only file system, permissions to write to "disk"?
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC) //This mic has some sort of processing on the input.
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4) //Not sure which one to use to be honest
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+        val temp = File.createTempFile("audio", "tmp", cacheDir)
+        mediaRecorder.setOutputFile(temp) //Read only file system, permissions to write to "disk"?, requires min API lvl 26, current min is 19
+        mediaRecorder.setAudioSamplingRate(48000)
+        mediaRecorder.setAudioEncodingBitRate(48000)
         mediaRecorder.prepare()
 
-        startGame(mediaRecorder)
 
         findViewById<Button>(R.id.record_start).setOnClickListener{
-            startGame(mediaRecorder) //Error on this, failed to start: -21 "Is a directory"?
+            startGame(mediaRecorder, timer)
         }
 
         findViewById<Button>(R.id.record_stop).setOnClickListener{
-            endGame(mediaRecorder)
+            endGame(mediaRecorder, timer)
         }
 
 
 
     }
 
-    private fun startGame (mediaRecorder: MediaRecorder) {
+    //https://stackoverflow.com/questions/3928202/get-microphone-volume
+    //https://stackoverflow.com/questions/7197798/get-the-microphone-sound-level-decibel-level-in-android/51815138
+    private fun startGame (mediaRecorder: MediaRecorder, timer: Timer) {
         mediaRecorder.start()
-        val amplitude : Int = mediaRecorder.maxAmplitude
-
+        //Start timer here, includes updating amplitude, updating value (temp), running the globalscope
         val view =  findViewById<TextView>(R.id.textView)
+        timer.purge()               //Should not be needed, just in case
 
-        view.text = amplitude.toString()
+        val task = timerTask {
+            val amplitude : Int = mediaRecorder.maxAmplitude
+            this@BlowActivity.runOnUiThread(java.lang.Runnable {
+                view.text = amplitude.toString()
+            })
 
-
-
-        GlobalScope.launch {
-            var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData)
-
+            GlobalScope.launch {
+                // var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData)
+                TODO("Send values back and forth. Why is mic not picking up any noise? Normalize the input. Implement checks to avoid crashes.")
+            }
         }
+
+        timer.schedule(task,10,20)
+
 
         //recording to value
     }
 
-    private fun endGame (mediaRecorder: MediaRecorder) {
+    private fun endGame (mediaRecorder: MediaRecorder, timer: Timer) {
+        timer.cancel()
         mediaRecorder.stop()
+        val view =  findViewById<TextView>(R.id.textView)           //DEBUG
+        view.text = "STOPPED"                                       //DEBUG
+
     }
 
     private var permissionAccepted = false
@@ -107,3 +124,6 @@ class BlowActivity : AppCompatActivity() {
 
 
 }
+
+
+//Normalize number (percent)
