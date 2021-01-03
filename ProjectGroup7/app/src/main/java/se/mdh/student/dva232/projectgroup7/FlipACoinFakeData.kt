@@ -2,9 +2,9 @@ package se.mdh.student.dva232.projectgroup7
 
 class FlipACoinFakeData: Data {
     override val game: GameType
-        get() = TODO("Not yet implemented")
+        get() = GameType.FLIP_A_COIN
 
     override fun moveToCsv(): String {
-        TODO("Not yet implemented")
+        return ""
     }
 }

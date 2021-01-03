@@ -2,7 +2,6 @@ package se.mdh.student.dva232.projectgroup7
 
 import android.content.Intent
 import android.os.Bundle
-//i
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
@@ -29,9 +28,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent2)
             //openWaitingRoom(GameType.BLOW)
         }
-        // TODO: after adding a button, give the button an ID and do like ↑
+        findViewById<Button>(R.id.open_flip_a_coin).setOnClickListener {
+            val intent3 = Intent(this, FlipACoinActivity::class.java) //Only for now
+            startActivity(intent3)
+            //openWaitingRoom(GameType.BLOW)
+        }
+        // TODO: after adding a open_flip_a_coin, give the open_flip_a_coin an ID and do like ↑
     }
-    private fun openWaitingRoom(game: GameType){
+
+    private fun openWaitingRoom(game: GameType) {
         val intent = Intent(this, WaitingRoom::class.java)
         intent.putExtra("GAME_CODE", game.name)
         startActivity(intent)
