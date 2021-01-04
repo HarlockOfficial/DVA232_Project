@@ -47,7 +47,8 @@ class BlowingGameBot(Thread):
             self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:
                 print("in the end the field is:", self.__field)
-                if abs(self.__field-self.__limit) >= 0:
+                if (self.__limit == 200 and self.__field >= self.__limit) \
+                        or (self.__limit == 0 and self.__field <= self.__limit):
                     print("winner")
                 else:
                     print("looser")
@@ -63,7 +64,9 @@ class BlowingGameBot(Thread):
         try:
             self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:
-                if abs(self.__limit - self.__field) <= 0:
+                print("in the end the field is:", self.__field)
+                if (self.__limit == 200 and self.__field >= self.__limit) \
+                        or (self.__limit == 0 and self.__field <= self.__limit):
                     print("winner")
                 else:
                     print("looser")
