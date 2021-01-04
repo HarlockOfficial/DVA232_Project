@@ -82,6 +82,17 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                     return ""
                 }
             }     // TODO: when created add here the correct data Implementation
+
+        } else if (gameCode == GameType.BLOW) {
+            object : Data {
+                override val game: GameType
+                    get() = GameType.BLOW
+
+                override fun moveToCsv(): String {
+                    return ""
+                }
+            }     // TODO: when created add here the correct data Implementation
+
         } else {
             object : Data {
                 override val game: GameType

@@ -14,25 +14,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.open_RPS).setOnClickListener {
-            openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
+            //openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
+            openPop(GameType.ROCK_PAPER_SCISSORS)
         }
 
         findViewById<Button>(R.id.open_Dices).setOnClickListener {
-            openWaitingRoom(GameType.DICES)
+            //openWaitingRoom(GameType.DICES)
+            openPop(GameType.DICES)
+
         }
         findViewById<Button>(R.id.open_tic_tac_toe).setOnClickListener {
-            openWaitingRoom(GameType.TIC_TAC_TOE)
+            //openWaitingRoom(GameType.TIC_TAC_TOE)
+            openPop(GameType.TIC_TAC_TOE)
         }
 
         findViewById<Button>(R.id.open_blow).setOnClickListener {
-            val intent2 = Intent(this, BlowActivity::class.java) //Only for now
-            startActivity(intent2)
-            //openWaitingRoom(GameType.BLOW)
-        }
-
-        findViewById<Button>(R.id.button_pop).setOnClickListener {
-            val intent = Intent(this, PopUp::class.java)
-            startActivity(intent)
+            //val intent2 = Intent(this, BlowActivity::class.java) //Only for now
+            //startActivity(intent2)
+            openPop(GameType.BLOW)
         }
 
         // TODO: after adding a button, give the button an ID and do like ↑
@@ -40,6 +39,12 @@ class MainActivity : AppCompatActivity() {
     private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)
         intent.putExtra("GAME_CODE", game.name)
+        startActivity(intent)
+    }
+
+    private fun openPop(game: GameType){
+        val intent = Intent(this, PopUp::class.java)
+        intent.putExtra("GAME", game.name)
         startActivity(intent)
     }
 

@@ -66,8 +66,8 @@ class BlowActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.record_start).setOnClickListener{
             if (!started) {
-                startGame(mediaRecorder, timer)
-                //temporary()
+                //startGame(mediaRecorder, timer)
+                temporary()
             }
 
         }
@@ -100,7 +100,6 @@ class BlowActivity : AppCompatActivity() {
 
             //GlobalScope.launch {
                 // var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData)
-            //    TODO("Send values back and forth. Why is mic not picking up any noise? Normalize the input. Implement checks to avoid crashes.")
            // }
 
         }
