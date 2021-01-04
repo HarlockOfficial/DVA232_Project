@@ -28,12 +28,15 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             out = "Tic Tac Toe"
             TicTacToe::class.java
         } else if (gameCode == GameType.DICES) {
-            out = "Tic Tac Toe"
+            out = "Dices"
             DicesActivity::class.java
         } else if (gameCode == GameType.FLIP_A_COIN) {
             out = "Flip A Coin"
             // TODO: Coin::class.java
             null
+        } else if (gameCode == GameType.BLOW) {
+            out = "Blow"
+            BlowActivity::class.java
         } else {  //TODO: if game not present add "else if" here
             out = "Unrecognized Game"
             null

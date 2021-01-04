@@ -36,7 +36,7 @@ import kotlin.concurrent.timerTask
 //Request permission for mic
 
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
-
+private val standing: Int = 100
 
 
 class BlowActivity : AppCompatActivity() {
@@ -61,6 +61,7 @@ class BlowActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.record_start).setOnClickListener{
             startGame(mediaRecorder, timer)
+            //temporary()
         }
 
         findViewById<Button>(R.id.record_stop).setOnClickListener{
@@ -85,16 +86,36 @@ class BlowActivity : AppCompatActivity() {
                 view.text = amplitude.toString()
             })
 
-            GlobalScope.launch {
+
+            //GlobalScope.launch {
                 // var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData)
-                TODO("Send values back and forth. Why is mic not picking up any noise? Normalize the input. Implement checks to avoid crashes.")
-            }
+            //    TODO("Send values back and forth. Why is mic not picking up any noise? Normalize the input. Implement checks to avoid crashes.")
+           // }
+
         }
 
-        timer.schedule(task,10,20)
 
 
-        //recording to value
+        timer.schedule(task,1,500) //Bleh
+                    //recording to value
+    }
+
+    private fun temporary () {
+        var retValue : Int
+        var oppValue : Int
+        var blowData = BlowData (1)
+        GlobalScope.launch {
+            var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData) //Our data is sent
+
+            if (ret.getString("response") !=null ) {
+                Log.e("Our new data:", ret.getString("response"))
+                retValue = ret.getString("response").toInt()        //We get our new data
+                ret = CommunicationLayer.getOpponentMove(blowData)
+                Log.e("Opponents new data:", ret.getString("response"))
+                oppValue = ret.getString("response").toInt()        //We get the opponents data
+            }
+
+        }
     }
 
     private fun endGame (mediaRecorder: MediaRecorder, timer: Timer) {
