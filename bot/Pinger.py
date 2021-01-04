@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 from threading import Thread
@@ -17,7 +18,7 @@ class Pinger(Thread):
             r = requests.get(self.__url)
             if r.json()["response"] != "ok":
                 print(r.text)
-                sys.exit(1)
+                os._exit(1)
             time.sleep(2)
 
     def stop(self):

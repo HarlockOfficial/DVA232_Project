@@ -66,14 +66,14 @@ CREATE DEFINER=`id15598586_root`@`%` FUNCTION `add_move` (`_playerCode` VARCHAR(
 				select `move`, count(1) into _field_tmp, _affected_rows from last_move where game_id=_game_id and player_code!=_playerCode; 
 				if _affected_rows > 0 then
 					delete from last_move where game_id=_game_id and player_code!=_playerCode; 
-					select convert(_field, integer) into _field;
-					if _field<=0 or _field>=200 then
+					select convert(_field, int) into _temporary;
+					if _temporary<=0 or _temporary>=200 then
 						return "match is already over";
 					end if;
-					select convert(_field_tmp, integer) into _field_tmp;
-					set _field = _field+(_position-_field_tmp);
-					update current_matches set field=_field where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
-					return _field;
+					select convert(_field_tmp, int) into _dice_sum;
+					set _temporary = _temporary+(_position-_dice_sum);
+					update current_matches set field=_temporary where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+					return _temporary;
 				end if;
 				return "waiting for opponent move";
 			end if;

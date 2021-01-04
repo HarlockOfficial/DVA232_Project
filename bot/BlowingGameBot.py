@@ -1,3 +1,4 @@
+import os
 from threading import Thread
 import requests
 from string import ascii_letters, digits
@@ -43,7 +44,11 @@ class BlowingGameBot(Thread):
         if ret == "waiting for opponent move":
             self.__get_move()
         else:
-            self.__field = int(ret)
+            try:
+                self.__field = int(ret)
+            except ValueError as e:
+                print(e)
+                os._exit(2)
             if self.__field >= 200 or self.__field <= 0:
                 if abs(self.__field - self.__limit) <= 0:
                     print("winner")
@@ -59,9 +64,6 @@ class BlowingGameBot(Thread):
         if ret == "waiting for opponent move":
             self.__get_move()
         else:
-            # TODO test, may give errors i'm not testing, Server query quantity hour limit reached
-            # Maybe field is in ret['field'] not in ret
-            print(ret)
             self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:
                 if abs(self.__field - self.__limit) <= 0:
@@ -69,5 +71,4 @@ class BlowingGameBot(Thread):
                 else:
                     print("looser")
                 exit(0)
-
             self.__set_move()
