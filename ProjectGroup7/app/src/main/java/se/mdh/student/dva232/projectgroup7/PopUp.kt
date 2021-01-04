@@ -83,6 +83,15 @@ class PopUp : AppCompatActivity() {                                     //Inform
             startButton.setOnClickListener {
                 openWaitingRoom(GameType.FLIP_A_COIN)
             }
+        } else {
+
+            header.text = "Something went wrong"
+            infoText.text = "You should not be seeing this"
+            //image                 set image, look up
+
+            startButton.setOnClickListener {
+                openWaitingRoom(GameType.FLIP_A_COIN)
+            }
         }
 
     }

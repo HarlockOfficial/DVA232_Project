@@ -40,7 +40,7 @@ class BlowingGameBot(Thread):
 
     def __set_move(self):
         print(self.__field)
-        move = random.randint(0, 100)
+        move = random.randint(0, 30)
         r = requests.get(self.__url + "&action=add_move&move=" + str(move))
         ret = r.json()['response']
         try:

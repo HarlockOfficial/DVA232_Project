@@ -15,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.File
+import java.lang.NumberFormatException
 import java.util.*
 import java.util.jar.Manifest
 import kotlin.concurrent.timerTask
@@ -38,9 +39,12 @@ import kotlin.concurrent.timerTask
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
 private var standing: Int = 100
 private var started: Boolean = false
+private var isPlayerTurn: Boolean = false
 
 
-class BlowActivity : AppCompatActivity() {
+class BlowActivity : AppCompatActivity(), ActivityInterface {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blow)
@@ -48,6 +52,8 @@ class BlowActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
 
         val timer = Timer()
+
+        isPlayerTurn = intent.getBooleanExtra("isStarting", false)
 
         val mediaRecorder : MediaRecorder = MediaRecorder()
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC) //This mic has some sort of processing on the input.
@@ -59,22 +65,18 @@ class BlowActivity : AppCompatActivity() {
         mediaRecorder.setAudioEncodingBitRate(48000)
         mediaRecorder.prepare()
 
-        if (standing == 0 || standing == 200) {
-            endGame(mediaRecorder, timer)
-            //The game is over, who won?
-        }
 
         findViewById<Button>(R.id.record_start).setOnClickListener{
             if (!started) {
-                //startGame(mediaRecorder, timer)
-                temporary()
+                startGame(mediaRecorder, timer)
+                //temporary()
             }
 
         }
 
         findViewById<Button>(R.id.record_stop).setOnClickListener{
             if (started) {
-                endGame(mediaRecorder, timer)
+                endGame(mediaRecorder, timer, false)
             }
         }
 
@@ -91,16 +93,62 @@ class BlowActivity : AppCompatActivity() {
         val view =  findViewById<TextView>(R.id.textView)
         timer.purge()               //Should not be needed, just in case
 
+        var retValue : Int
+        var oppValue : Int
         val task = timerTask {
-            val amplitude : Int = mediaRecorder.maxAmplitude
+            val amplitude : Int = mediaRecorder.maxAmplitude%100
             this@BlowActivity.runOnUiThread(java.lang.Runnable {
                 view.text = amplitude.toString()
             })
 
 
-            //GlobalScope.launch {
-                // var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData)
-           // }
+            var blowData = BlowData (amplitude)
+            GlobalScope.launch {
+                var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData) //Our data is sent
+                    Log.e("Our new data:", ret.getString("response"))
+
+                try {
+                    retValue = ret.getString("response").toInt()        //We get our new data
+                    if (isPlayerTurn) {
+                        if (retValue >= 200) {
+                            endGame(mediaRecorder,timer,true)
+                            //endgame on all of these
+                        }
+                        else if (retValue <= 0) {
+                            endGame(mediaRecorder,timer,false)
+                        }
+                    } else {
+                        if (retValue <= 0) {
+                            endGame(mediaRecorder,timer,true)
+                        }
+                        else if (retValue >= 200) {
+                            endGame(mediaRecorder,timer,false)
+                        }
+                    }
+                }
+                catch(e: NumberFormatException ) {
+                    ret = CommunicationLayer.getOpponentMove(blowData)
+                    Log.e("Opponents new data:", ret.getString("response"))
+                    oppValue = ret.getString("response").toInt()        //We get the opponents data
+                    if (isPlayerTurn) {
+                        if (oppValue >= 200) {
+                            endGame(mediaRecorder,timer,true)
+                        }
+                        else if (oppValue <= 0) {
+                            endGame(mediaRecorder,timer,false)
+                        }
+                    } else {
+                        if (oppValue <= 0) {
+                            endGame(mediaRecorder,timer,true)
+                        }
+                        else if (oppValue >= 200) {
+                            endGame(mediaRecorder,timer,false)
+                        }
+                    }
+
+                }
+
+            }
 
         }
 
@@ -110,30 +158,15 @@ class BlowActivity : AppCompatActivity() {
                     //recording to value
     }
 
-    private fun temporary () {
-        var retValue : Int
-        var oppValue : Int
-        var blowData = BlowData (1)
-        GlobalScope.launch {
-            var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData) //Our data is sent
-
-            if (ret.getString("response") !=null ) {
-                Log.e("Our new data:", ret.getString("response"))
-                retValue = ret.getString("response").toInt()        //We get our new data
-                ret = CommunicationLayer.getOpponentMove(blowData)
-                Log.e("Opponents new data:", ret.getString("response"))
-                oppValue = ret.getString("response").toInt()        //We get the opponents data
-            }
-
-        }
-    }
-
-    private fun endGame (mediaRecorder: MediaRecorder, timer: Timer) {
+    private fun endGame (mediaRecorder: MediaRecorder, timer: Timer, standing : Boolean) {
         timer.cancel()
         mediaRecorder.stop()
-        val view =  findViewById<TextView>(R.id.textView)           //DEBUG
-        view.text = "STOPPED"                                       //DEBUG
-
+        val view =  findViewById<TextView>(R.id.textView)
+        if (standing) {
+            view.text = "You won!"
+        }else {
+            view.text = "You lost..."
+        }
     }
 
     private var permissionAccepted = false
@@ -153,8 +186,20 @@ class BlowActivity : AppCompatActivity() {
         if (!permissionAccepted) finish()
     }
 
+    override fun quit() {
+        TODO("Tell user it's over")
+    }
+
+    //this has to be the same
+    override fun onPause() {
+        Pinger.stop()
+        super.onPause()
+    }
+    //here ↓ you have to change the data class to the correct one
+    override fun onResume() {
+        Pinger.changeContext(this, GameType.BLOW)
+        super.onResume()
+    }
+
 
 }
-
-
-//Normalize number (percent)
