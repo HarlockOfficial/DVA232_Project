@@ -34,41 +34,40 @@ class BlowingGameBot(Thread):
             self.__limit = 200
         else:
             self.__limit = 0
+        print("bot must reach", self.__limit, "to win")
         self.__field = int(ret['field'])
         self.__set_move()
 
     def __set_move(self):
-        move = random.randint(0, 101)
+        print(self.__field)
+        move = random.randint(0, 100)
         r = requests.get(self.__url + "&action=add_move&move=" + str(move))
         ret = r.json()['response']
-        if ret == "waiting for opponent move":
-            self.__get_move()
-        else:
-            try:
-                self.__field = int(ret)
-            except ValueError as e:
-                print(e)
-                os._exit(2)
+        try:
+            self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:
-                if abs(self.__field - self.__limit) <= 0:
+                print("in the end the field is:", self.__field)
+                if abs(self.__field-self.__limit) >= 0:
                     print("winner")
                 else:
                     print("looser")
-                exit(0)
+                os._exit(0)
+            self.__get_move()
+        except ValueError:
             self.__get_move()
 
     def __get_move(self):
         time.sleep(0.5)
         r = requests.get(self.__url + "&action=get_move")
         ret = r.json()['response']
-        if ret == "waiting for opponent move":
-            self.__get_move()
-        else:
+        try:
             self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:
-                if abs(self.__field - self.__limit) <= 0:
+                if abs(self.__limit - self.__field) <= 0:
                     print("winner")
                 else:
                     print("looser")
-                exit(0)
+                os._exit(0)
             self.__set_move()
+        except ValueError:
+            self.__get_move()

@@ -8,7 +8,7 @@ def main():
     ttt = TicTacToeBot()
     ttt.start()
     rps = RockPaperScissorsBot()
-    ps.start()
+    rps.start()
     num = input("insert the number of dices to roll >")
     dices = DicesBot(int(num))
     dices.start()
