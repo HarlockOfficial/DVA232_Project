@@ -11,13 +11,14 @@ CREATE DEFINER=`id15598586_root`@`%` FUNCTION `add_move` (`_playerCode` VARCHAR(
 	declare _dice_sum int default 0;
     declare _game_id int;
 	declare _field_tmp varchar(100);
+	declare player2 varchar(20);
     if _gameCode = "ttt" then
-        select field, COUNT(1) into _field, _affected_rows from current_matches where game_code='ttt' and (player_code_1=_playerCode or player_code_2=_playerCode);
+        select field, player_code_2, COUNT(1) into _field, player2, _affected_rows from current_matches where game_code='ttt' and player_code_1=_playerCode;
 		if _affected_rows > 0 then
             select insert(_field, _position, 1, _move) into _field_tmp;
 			set _field = _field_tmp;
-			update current_matches set field=_field where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
-            return "ok";
+			update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and player_code_1=_playerCode;
+			return "ok";
         end if;
         return "request parameter not valid";
     elseif _gameCode = "dices" then
@@ -55,7 +56,31 @@ CREATE DEFINER=`id15598586_root`@`%` FUNCTION `add_move` (`_playerCode` VARCHAR(
             return "cannot add more than one move";
         end if;
         return "request parameter not valid";
-    end if;
+    elseif _gameCode = "blow" then
+		set _affected_rows = 0;
+		select id, field, count(1) into _game_id, _field, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
+		if _affected_rows>0 then
+			set _affected_rows = 0;
+            select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
+			if _affected_rows = 0 then
+				select `move`, count(1) into _field_tmp, _affected_rows from last_move where game_id=_game_id and player_code!=_playerCode; 
+				if _affected_rows > 0 then
+					delete from last_move where game_id=_game_id and player_code!=_playerCode; 
+					select convert(_field, integer) into _field;
+					if _field<=0 or _field>=200 then
+						return "match is already over";
+					end if;
+					select convert(_field_tmp, integer) into _field_tmp;
+					set _field = _field+(_position-_field_tmp);
+					update current_matches set field=_field where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+					return _field;
+				end if;
+				return "waiting for opponent move";
+			end if;
+			return "cannot add more than one move";
+		end if;
+		return "request parameter not valid";
+	end if;
     return "request parameter not valid";
 END$$
 
@@ -67,7 +92,7 @@ CREATE DEFINER=`id15598586_root`@`%` FUNCTION `get_move` (`_playerCode` VARCHAR(
     select id, count(1), field into _id, _affected_rows, _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
 
     if _affected_rows>0 THEN
-        if _gameCode != "ttt" THEN
+        if _gameCode != "ttt" and _gameCode != "blow" THEN
             select move into _field from last_move where game_id=_id and player_code!=_playerCode;
             DELETE from last_move where game_id=_id and player_code!=_playerCode and move=_field;
         end if;
@@ -126,7 +151,10 @@ CREATE DEFINER=`id15598586_root`@`%` FUNCTION `new_player` (`_playerCode` VARCHA
 		END IF ; 
 		IF _gameCode = "ttt" THEN 
 			SET _field = "-,-,-,-,-,-,-,-,-" ; 
-		ELSE 
+		
+		ELSEIF _gameCode = "blow" then
+			set _field = "100";
+		else 
 			SET _field = NULL ;
 		END IF ;
 		INSERT INTO current_matches(
