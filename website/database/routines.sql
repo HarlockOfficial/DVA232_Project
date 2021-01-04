@@ -61,7 +61,7 @@ CREATE DEFINER=`id15598586_root`@`%` FUNCTION `add_move` (`_playerCode` VARCHAR(
 		select id, field, count(1) into _game_id, _field, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows>0 then
 			set _affected_rows = 0;
-            select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_player_code;
+            select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
 			if _affected_rows = 0 then
 				select `move`, count(1) into _field_tmp, _affected_rows from last_move where game_id=_game_id and player_code!=_playerCode; 
 				if _affected_rows > 0 then

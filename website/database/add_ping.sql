@@ -8,7 +8,8 @@ BEGIN
     declare _affected_rows int default 0;
     declare player1 varchar(20);
     declare player2 varchar(20);
-    declare time_elapsed timestamp;
+    declare other_player_timestamp timestamp;
+    declare time_elapsed int;
     select count(1) into _affected_rows from multiplayer_queue where player_code=_playerCode and game_code=_gameCode;
     if _affected_rows>0 then
         -- player is in multiplayer queue
@@ -38,8 +39,8 @@ BEGIN
         if player1=_gameCode then
             set player1=player2;
         end if;
-        select `timestamp` into time_elapsed from game_ping where game_code=_gameCode and player_code=player1;
-        set time_elapsed = now()-time_elapsed;
+        select `timestamp` into other_player_timestamp from game_ping where game_code=_gameCode and player_code=player1;
+        set time_elapsed = now()-other_player_timestamp;
         if time_elapsed>10 then
             return "error";
         end if;
