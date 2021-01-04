@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
+import org.w3c.dom.Text
 
 class PopUp : AppCompatActivity() {                                     //Information about pop ups from : https://www.youtube.com/watch?v=fn5OlqQuOCk
 
@@ -27,6 +30,11 @@ class PopUp : AppCompatActivity() {                                     //Inform
         var header = findViewById<TextView>(R.id.name_header)
         var infoText = findViewById<TextView>(R.id.text_info)
         var image = findViewById<ImageView>(R.id.image_game)
+        var field = findViewById<EditText>(R.id.field_numDices)
+        var amntDicesText = findViewById<TextView>(R.id.text_amnt)
+
+        field.isVisible = false
+        amntDicesText.isVisible = false
 
         if (game == GameType.BLOW) {
 
@@ -37,11 +45,13 @@ class PopUp : AppCompatActivity() {                                     //Inform
             startButton.setOnClickListener {
                 openWaitingRoom(GameType.BLOW)
             }
-        } else if (game == GameType.DICES) {
+        } else if (game == GameType.DICES) {                    //Set Dices amount
 
             header.text = "DICE GAME"
             infoText.text = "This is the dice game temporary info text"
             //image                 set image, look up
+            field.isVisible = true
+            amntDicesText.isVisible = true
 
             startButton.setOnClickListener {
                 openWaitingRoom(GameType.DICES)
