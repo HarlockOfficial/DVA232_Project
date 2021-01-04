@@ -2,10 +2,12 @@ package se.mdh.student.dva232.projectgroup7
 
 import android.content.Intent
 import android.os.Bundle
+
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
 // TODO: guide how to make Hamburger Menu -> https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
