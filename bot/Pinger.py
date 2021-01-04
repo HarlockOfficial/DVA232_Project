@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 from threading import Thread
@@ -16,8 +17,8 @@ class Pinger(Thread):
         while self.__playing:
             r = requests.get(self.__url)
             if r.json()["response"] != "ok":
-                print(r.text)
-                sys.exit(1)
+                print("Enemy ping stopped, exiting")
+                os._exit(1)
             time.sleep(2)
 
     def stop(self):
