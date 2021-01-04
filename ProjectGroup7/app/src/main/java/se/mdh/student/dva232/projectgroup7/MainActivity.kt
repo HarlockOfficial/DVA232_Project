@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent2)
             //openWaitingRoom(GameType.BLOW)
         }
+
+        findViewById<Button>(R.id.button_pop).setOnClickListener {
+            val intent = Intent(this, PopUp::class.java)
+            startActivity(intent)
+        }
+
         // TODO: after adding a button, give the button an ID and do like ↑
     }
     private fun openWaitingRoom(game: GameType){

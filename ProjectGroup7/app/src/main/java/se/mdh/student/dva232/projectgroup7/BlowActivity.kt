@@ -36,7 +36,8 @@ import kotlin.concurrent.timerTask
 //Request permission for mic
 
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
-private val standing: Int = 100
+private var standing: Int = 100
+private var started: Boolean = false
 
 
 class BlowActivity : AppCompatActivity() {
@@ -58,14 +59,23 @@ class BlowActivity : AppCompatActivity() {
         mediaRecorder.setAudioEncodingBitRate(48000)
         mediaRecorder.prepare()
 
+        if (standing == 0 || standing == 200) {
+            endGame(mediaRecorder, timer)
+            //The game is over, who won?
+        }
 
         findViewById<Button>(R.id.record_start).setOnClickListener{
-            startGame(mediaRecorder, timer)
-            //temporary()
+            if (!started) {
+                startGame(mediaRecorder, timer)
+                //temporary()
+            }
+
         }
 
         findViewById<Button>(R.id.record_stop).setOnClickListener{
-            endGame(mediaRecorder, timer)
+            if (started) {
+                endGame(mediaRecorder, timer)
+            }
         }
 
 
@@ -75,6 +85,7 @@ class BlowActivity : AppCompatActivity() {
     //https://stackoverflow.com/questions/3928202/get-microphone-volume
     //https://stackoverflow.com/questions/7197798/get-the-microphone-sound-level-decibel-level-in-android/51815138
     private fun startGame (mediaRecorder: MediaRecorder, timer: Timer) {
+        started = true
         mediaRecorder.start()
         //Start timer here, includes updating amplitude, updating value (temp), running the globalscope
         val view =  findViewById<TextView>(R.id.textView)
