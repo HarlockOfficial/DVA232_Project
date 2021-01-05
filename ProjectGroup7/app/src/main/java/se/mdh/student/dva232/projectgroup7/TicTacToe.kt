@@ -122,7 +122,7 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
         val winner = JSONObject(response["response"] as String)["winner"]
         if (winner == "") {
             return false
-        } else if (winner == this.symbol) {
+        } else if (winner == this.symbol.symbol) {
             // TODO visualize win
             runOnUiThread {
                 result.text = getString(R.string.win)
@@ -184,5 +184,11 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
     override fun onPause() {
         Pinger.stop()
         super.onPause()
+    }
+
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
