@@ -21,6 +21,7 @@
         <activity android:name=".WaitingRoom" />
         <activity android:name=".TicTacToe" />
         <activity android:name=".RockPaperScissors" />
+        <activity android:name=".FlipACoinActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
