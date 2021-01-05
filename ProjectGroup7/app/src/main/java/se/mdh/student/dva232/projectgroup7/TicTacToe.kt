@@ -122,7 +122,7 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
         val winner = JSONObject(response["response"] as String)["winner"]
         if (winner == "") {
             return false
-        } else if (winner == this.symbol) {
+        } else if (winner == this.symbol.symbol) {
             // TODO visualize win
             runOnUiThread {
                 result.text = getString(R.string.win)
