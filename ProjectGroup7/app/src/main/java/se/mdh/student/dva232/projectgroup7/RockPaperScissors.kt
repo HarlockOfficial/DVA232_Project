@@ -180,4 +180,10 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
         Pinger.changeContext(this, GameType.ROCK_PAPER_SCISSORS)
         super.onResume()
     }
+
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }

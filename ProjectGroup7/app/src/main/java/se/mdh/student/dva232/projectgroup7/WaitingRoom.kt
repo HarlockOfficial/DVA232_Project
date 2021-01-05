@@ -31,10 +31,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         } else if (gameCode == GameType.DICES) {
             out = "Dices"
             DicesActivity::class.java
-        } else if (gameCode == GameType.FLIP_A_COIN) {
-            out = "Flip A Coin"
-            // TODO: Coin::class.java
-            null
         } else if (gameCode == GameType.BLOW) {
             out = "Blow"
             BlowActivity::class.java
@@ -74,17 +70,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                     return ""
                 }
             }    // TODO: when created add here the correct data Implementation
-        } else if (gameCode == GameType.FLIP_A_COIN) {
-            object : Data {
-                override val game: GameType
-                    get() = GameType.FLIP_A_COIN
-
-                override fun moveToCsv(): String {
-                    return ""
-                }
-            }     // TODO: when created add here the correct data Implementation
-
-        } else if (gameCode == GameType.BLOW) {
+        }  else if (gameCode == GameType.BLOW) {
             object : Data {
                 override val game: GameType
                     get() = GameType.BLOW
@@ -126,6 +112,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         findViewById<Button>(R.id.leave_queue_btn).setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 CommunicationLayer.delPlayerFromMultiplayerQueue(data)
+                onBackPressed()
             }
         }
     }
@@ -145,5 +132,11 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         Log.e("WaitingRoom", "onResume started\n")
         Pinger.changeContext(this, gameCode)
         super.onResume()
+    }
+
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
