@@ -3,6 +3,7 @@ package se.mdh.student.dva232.projectgroup7
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -107,6 +108,11 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             intent.putExtra("isStarting", ret["starting_player"] == uuid)
             intent.putExtra("field", ret["field"].toString())
             startActivity(intent)
+        }
+        findViewById<Button>(R.id.leave_queue_btn).setOnClickListener {
+            GlobalScope.launch(Dispatchers.IO) {
+                CommunicationLayer.delPlayerFromMultiplayerQueue(data)
+            }
         }
     }
 

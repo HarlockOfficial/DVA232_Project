@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `id15598586_dva232_project_group_7`
+-- Database: `epiz_27618281_project_group_7`
 --
-CREATE DATABASE IF NOT EXISTS `id15598586_dva232_project_group_7` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `id15598586_dva232_project_group_7`;
+-- CREATE DATABASE IF NOT EXISTS `epiz_27618281_project_group_7` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+-- USE `epiz_27618281_project_group_7`;

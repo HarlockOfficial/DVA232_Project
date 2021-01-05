@@ -12,4 +12,5 @@
     <string name="waiting_room">Please wait here, we are searching a game room for: %1$s</string>
     <string name="waiting_room_game_error">Unknown Error while opening the game</string>
     <string name="opponent_left">Opponent left the game, you win</string>
+    <string name="leave_queue">Leave the Waiting Queue</string>
 </resources>
