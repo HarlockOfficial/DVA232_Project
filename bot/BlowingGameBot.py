@@ -13,6 +13,7 @@ class BlowingGameBot(Thread):
     def __init__(self):
         super().__init__()
         self.__uuid = "bot_" + "".join(random.choices(ascii_letters + digits + "_", k=14))
+        #self.__url = "http://localhost/?game=blow&player=" + self.__uuid
         self.__url = "http://dva232-project-group-7.atwebpages.com/?game=blow&player=" + self.__uuid
         self.__pinger = Pinger("blow", self.__uuid)
         self.__limit = None
@@ -20,6 +21,7 @@ class BlowingGameBot(Thread):
 
     def run(self) -> None:
         r = requests.get(self.__url + "&action=add_queue")
+        print(r.text)
         self.__pinger.start()
         if r.json()['response'] == "in_queue":
             print("Blowing Game Bot In Queue")
@@ -40,9 +42,10 @@ class BlowingGameBot(Thread):
 
     def __set_move(self):
         print(self.__field)
-        move = random.randint(0, 30)
+        move = random.randint(0, 20)
         r = requests.get(self.__url + "&action=add_move&move=" + str(move))
         ret = r.json()['response']
+        print(ret)
         try:
             self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:

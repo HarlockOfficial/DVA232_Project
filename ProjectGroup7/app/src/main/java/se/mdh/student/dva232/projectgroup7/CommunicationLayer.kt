@@ -36,6 +36,7 @@ object CommunicationLayer {
     var uuid = createUUID()
         private set
     private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
+    //private const val url: String = "http://192.168.1.195/"
 
     /**
      * function used to add a player to the waiting queue should be called before the user reaches
@@ -55,8 +56,9 @@ object CommunicationLayer {
         return withContext(Dispatchers.IO) {
             uuid = createUUID()
             Log.e("yo", uuid)
-            return@withContext JSONObject(
-                URL("$url?player=$uuid&action=add_queue&game=${data.game.code}").readText()
+            val temp =  URL("$url?player=$uuid&action=add_queue&game=${data.game.code}").readText()
+            Log.e("AAAAAAAAAAAH",temp)
+            return@withContext JSONObject( temp
             )
         }
     }

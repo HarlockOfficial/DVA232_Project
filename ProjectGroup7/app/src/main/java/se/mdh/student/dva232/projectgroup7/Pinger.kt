@@ -36,11 +36,12 @@ object Pinger {
                             run = false
                             currentActivity!!.quit()
                         }
-                        delay(1000)
+                        delay(4000)
                     } catch (e: java.lang.NullPointerException) {
-                        delay(100)
+                        delay(1000)
                         continue
                     } catch (e: org.json.JSONException) {
+                        delay(1000)
                         Log.e("Pinger", e.message)
                     }
                 }

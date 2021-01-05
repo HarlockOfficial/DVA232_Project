@@ -2,23 +2,21 @@ package se.mdh.student.dva232.projectgroup7
 
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
-import android.media.MediaRecorder.AudioSource.MIC
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.File
-import java.lang.NumberFormatException
 import java.util.*
-import java.util.jar.Manifest
 import kotlin.concurrent.timerTask
+
 
 //Two users. Start with a value of 100, can go up to 200 in which case the user wins
 //User blows into microphone, which will then be transformed into a numeric value
@@ -86,23 +84,23 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
 
     //https://stackoverflow.com/questions/3928202/get-microphone-volume
     //https://stackoverflow.com/questions/7197798/get-the-microphone-sound-level-decibel-level-in-android/51815138
-    private fun startGame (mediaRecorder: MediaRecorder, timer: Timer) {
+    private fun startGame(mediaRecorder: MediaRecorder, timer: Timer) {
         started = true
         mediaRecorder.start()
         //Start timer here, includes updating amplitude, updating value (temp), running the globalscope
-        val view =  findViewById<TextView>(R.id.textView)
+        val view =  findViewById<TextView>(R.id.ball)
         timer.purge()               //Should not be needed, just in case
 
         var retValue : Int
         var oppValue : Int
         val task = timerTask {
-            val amplitude : Int = mediaRecorder.maxAmplitude%100
+            val amplitude : Int = (mediaRecorder.maxAmplitude/32762f * 100f).toInt()
             this@BlowActivity.runOnUiThread(java.lang.Runnable {
                 view.text = amplitude.toString()
             })
 
 
-            var blowData = BlowData (amplitude)
+            var blowData = BlowData(amplitude)
             GlobalScope.launch {
                 var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData) //Our data is sent
                     Log.e("Our new data:", ret.getString("response"))
@@ -111,38 +109,86 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
                     retValue = ret.getString("response").toInt()        //We get our new data
                     if (isPlayerTurn) {
                         if (retValue >= 200) {
-                            endGame(mediaRecorder,timer,true)
-                            //endgame on all of these
+                            Log.e("Game is over:", ("Player wins"))
+                            endGame(mediaRecorder, timer, true)
                         }
                         else if (retValue <= 0) {
-                            endGame(mediaRecorder,timer,false)
+                            Log.e("Game is over:", ("Player loses"))
+                            endGame(mediaRecorder, timer, false)
+                        } else {
+                            runOnUiThread{
+
+                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                val set = ConstraintSet()
+                                set.clone(constraintLayout)
+                                set.setVerticalBias(R.id.ball, 1-(retValue/200f))
+                                set.applyTo(constraintLayout)
+
+                            }
                         }
                     } else {
                         if (retValue <= 0) {
-                            endGame(mediaRecorder,timer,true)
+                            Log.e("Game is over:", ("Player wins"))
+                            endGame(mediaRecorder, timer, true)
                         }
                         else if (retValue >= 200) {
-                            endGame(mediaRecorder,timer,false)
+                            Log.e("Game is over:", ("Player loses"))
+                            endGame(mediaRecorder, timer, false)
+                        } else {
+                            runOnUiThread{
+
+                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                val set = ConstraintSet()
+                                set.clone(constraintLayout)
+                                set.setVerticalBias(R.id.ball, retValue/200f)
+                                set.applyTo(constraintLayout)
+
+                            }
                         }
                     }
                 }
-                catch(e: NumberFormatException ) {
+                catch (e: NumberFormatException) {
+                    Log.e("AAA:", ("ENTERED THE CATCH"))
                     ret = CommunicationLayer.getOpponentMove(blowData)
                     Log.e("Opponents new data:", ret.getString("response"))
                     oppValue = ret.getString("response").toInt()        //We get the opponents data
                     if (isPlayerTurn) {
                         if (oppValue >= 200) {
-                            endGame(mediaRecorder,timer,true)
+                            Log.e("Game is over:", ("Player wins"))
+                            endGame(mediaRecorder, timer, true)
                         }
                         else if (oppValue <= 0) {
-                            endGame(mediaRecorder,timer,false)
+                            Log.e("Game is over:", ("Player loses"))
+                            endGame(mediaRecorder, timer, false)
+                        }  else {
+                            runOnUiThread{
+
+                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                val set = ConstraintSet()
+                                set.clone(constraintLayout)
+                                set.setVerticalBias(R.id.ball, 1-(oppValue/200f))
+                                set.applyTo(constraintLayout)
+
+                            }
                         }
                     } else {
                         if (oppValue <= 0) {
-                            endGame(mediaRecorder,timer,true)
+                            Log.e("Game is over:", ("Player wins"))
+                            endGame(mediaRecorder, timer, true)
                         }
                         else if (oppValue >= 200) {
-                            endGame(mediaRecorder,timer,false)
+                            Log.e("Game is over:", ("Player loses"))
+                            endGame(mediaRecorder, timer, false)
+                        }  else {
+                            runOnUiThread{
+
+                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                val set = ConstraintSet()
+                                set.clone(constraintLayout)
+                                set.setVerticalBias(R.id.ball, oppValue/200f)
+                                set.applyTo(constraintLayout)
+
+                            }
                         }
                     }
 
@@ -154,19 +200,22 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
 
 
 
-        timer.schedule(task,1,500) //Bleh
+        timer.schedule(task, 1, 500) //Bleh
                     //recording to value
     }
 
-    private fun endGame (mediaRecorder: MediaRecorder, timer: Timer, standing : Boolean) {
+    //True if a user has won
+    private fun endGame(mediaRecorder: MediaRecorder, timer: Timer, standing: Boolean) {
         timer.cancel()
         mediaRecorder.stop()
-        val view =  findViewById<TextView>(R.id.textView)
+        Pinger.stop()
+        val view =  findViewById<TextView>(R.id.ball)
         if (standing) {
             view.text = "You won!"
         }else {
             view.text = "You lost..."
         }
+        
     }
 
     private var permissionAccepted = false

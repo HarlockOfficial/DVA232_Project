@@ -1,6 +1,7 @@
 package se.mdh.student.dva232.projectgroup7
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -40,7 +41,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
 
             header.text = "BLOW GAME"
             infoText.text = "This is the blow game temporary info text"
-            //image                 set image, look up
+            image.setImageResource(R.drawable.ic_tumbleweed)
 
             startButton.setOnClickListener {
                 openWaitingRoom(GameType.BLOW)
@@ -49,7 +50,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
 
             header.text = "DICE GAME"
             infoText.text = "This is the dice game temporary info text"
-            //image                 set image, look up
+            image.setImageResource(R.drawable.ic_dice)         //set image, look up
             field.isVisible = true
             amntDicesText.isVisible = true
 
