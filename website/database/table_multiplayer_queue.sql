@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS `multiplayer_queue` (
   `player_code` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `game_code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

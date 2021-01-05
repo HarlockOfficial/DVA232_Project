@@ -13,7 +13,7 @@ class BlowingGameBot(Thread):
     def __init__(self):
         super().__init__()
         self.__uuid = "bot_" + "".join(random.choices(ascii_letters + digits + "_", k=14))
-        self.__url = "https://dva232-project-group-7.000webhostapp.com/?game=blow&player=" + self.__uuid
+        self.__url = "http://dva232-project-group-7.atwebpages.com/?game=blow&player=" + self.__uuid
         self.__pinger = Pinger("blow", self.__uuid)
         self.__limit = None
         self.__field = None
@@ -47,7 +47,8 @@ class BlowingGameBot(Thread):
             self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:
                 print("in the end the field is:", self.__field)
-                if abs(self.__field-self.__limit) >= 0:
+                if (self.__limit == 200 and self.__field >= self.__limit) \
+                        or (self.__limit == 0 and self.__field <= self.__limit):
                     print("winner")
                 else:
                     print("looser")
@@ -63,7 +64,9 @@ class BlowingGameBot(Thread):
         try:
             self.__field = int(ret)
             if self.__field >= 200 or self.__field <= 0:
-                if abs(self.__limit - self.__field) <= 0:
+                print("in the end the field is:", self.__field)
+                if (self.__limit == 200 and self.__field >= self.__limit) \
+                        or (self.__limit == 0 and self.__field <= self.__limit):
                     print("winner")
                 else:
                     print("looser")

@@ -35,7 +35,7 @@ object CommunicationLayer {
      */
     var uuid = createUUID()
         private set
-    private const val url: String = "https://dva232-project-group-7.000webhostapp.com/"
+    private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
 
     /**
      * function used to add a player to the waiting queue should be called before the user reaches
@@ -131,7 +131,13 @@ object CommunicationLayer {
             )
         }
     }
-    /**
+    suspend fun delPlayerFromMultiplayerQueue(data: Data): JSONObject {
+        return withContext(Dispatchers.IO) {
+            return@withContext JSONObject(
+                    URL("$url?player=$uuid&action=del_queue&game=${data.game.code}").readText()
+            )
+        }
+    }/**
      * function used to let the server know that user is still online.
      * called automatically by @object Pinger, setup it correctly.
      * for reference on how to use that class look at @class RockPaperScissor
@@ -143,7 +149,6 @@ object CommunicationLayer {
             )
         }
     }
-
     /**
      * private function, non necessary for the games, used to generate a 20character UUID
      */
