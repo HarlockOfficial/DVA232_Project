@@ -1,6 +1,6 @@
 # DVA232_Project_Group_7
 
-# Link to latex document
+# https://www.overleaf.com/read/pbyrtqhvntxm
 
 PROJECT REPORT checklist:
 - The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”.
