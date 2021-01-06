@@ -68,16 +68,16 @@
 	- user experience
 - user interface - ERNEST
 	- activity diagram
+	- user experience
 	> -- what decisions did we make? -- </br>
 	> -- why we made those decisions? -- </br>
-	- user experience
 - system
 	- overview with components diagram - MICHAL
 	- bots (functionality and user experience) - FRANCESCO
 	- database and ER diagram - FRANCESCO
+	- user experience
 	>-- what decisions did we make? -- </br>
 	>-- why we made those decisions? -- </br>
-	- user experience
 ### 6. THE APP - ALFONS
 - (functionality)
 - screenshots of the app/activities
@@ -90,7 +90,7 @@
 	- less data bandwidth
 	- more games
 	- more functionaliteis
-	> removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal)
+		- removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal)
 ### 8. GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
 ### 9. REFERENCES
 
