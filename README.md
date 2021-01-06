@@ -45,7 +45,8 @@
 	> why we chose this idea? </br>
 	> why we chose these games? </br>
 - first sketch of the system
-	- insert  picture figure 1. first draft how we imagine the system
+	> how we imagine the system at first?
+	> insert  picture figure 1. first draft
 - comparison to other games on the appstore
 ### 4. WORKFLOW - MARKO
 - ways of working
