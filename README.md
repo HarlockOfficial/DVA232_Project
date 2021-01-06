@@ -29,7 +29,7 @@
 ## SECTIONS
 ### 1. ABSTRACT
 ### 2. INTRODUCTION 
-{ a brief summary }
+	{ a brief summary }
 - IDEA - MARKO
 	- brainstorming process {
 		how did we come up with the idea?
