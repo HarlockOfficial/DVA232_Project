@@ -1,8 +1,9 @@
 # DVA232_Project_Group_7
 
-# https://www.overleaf.com/read/pbyrtqhvntxm
+### PROJECT GROUP 7 $UPER AWE$OME GAMES BAM! 🔫🔪💣💥
+#### https://www.overleaf.com/read/pbyrtqhvntxm
 
-PROJECT REPORT checklist:
+### PROJECT REPORT checklist:
 - The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”.
 - The format of the report should follow ACM journal guidelines. Pick any ACM journal that you like.
 - The minimum size for the paper is 3000 words. Use as much figures, tables, etc. as you need.
@@ -14,7 +15,7 @@ PROJECT REPORT checklist:
 - Does the content miss any of the required points?
 
 
-PROJECT REPORT REQUIREMENTS
+### PROJECT REPORT REQUIREMENTS
 - The goals of the project.
 - The tools that you used for developing the project.
 - The design process of the interface and reasoning behind the design choices.
@@ -25,9 +26,9 @@ PROJECT REPORT REQUIREMENTS
 
 
 
-SECTIONS
-- ABSTRACT
-- INTRODUCTION {
+## SECTIONS
+### 1. ABSTRACT
+### 1. INTRODUCTION {
 	a brief summary
 }
 - IDEA - MARKO
@@ -96,10 +97,7 @@ SECTIONS
 - REFERENCES
 
 
-
-# PROJECT GROUP 7 $UPER AWE$OME GAMES BAM! 🔫🔪💣💥
-
-#website: https://dva232-project-group-7.000webhostapp.com/
+###website: https://dva232-project-group-7.000webhostapp.com/
 
 1. there will be no account or currency or EXP or <add similar things here>
 2. we will have a web server (with database), this is needed to provide bots and
