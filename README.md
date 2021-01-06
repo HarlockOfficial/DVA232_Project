@@ -80,7 +80,7 @@
 	>-- what decisions did we make? -- </br>
 	>-- why we made those decisions? -- </br>
 ### 6. THE APP - ALFONS
-- (functionality)
+- functionality
 - screenshots of the app/activities
 - games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
 ### 7. DISCUSSION - ZYLAN
