@@ -16,7 +16,7 @@
 		}else if($game_code == "rps"){
 			$arr[':position'] = 0;
 			$arr[':move'] = $move;
-		}else if($game_code == "dices"){
+		}else if(strpos($game_code, "dices") == 0){
 			$arr[':position'] = $move;
 			$arr[':move'] = "";
 		}else if($game_code == "blow"){
