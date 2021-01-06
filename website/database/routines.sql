@@ -12,6 +12,8 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
     declare _game_id int;
 	declare _field_tmp varchar(100);
 	declare player2 varchar(20);
+	declare _condition int default 0;
+	select 1 into _condition where _gameCode like "dices%";
     if _gameCode = "ttt" then
         select field, player_code_2, COUNT(1) into _field, player2, _affected_rows from current_matches where game_code='ttt' and player_code_1=_playerCode;
 		if _affected_rows > 0 then
@@ -21,7 +23,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 			return "ok";
         end if;
         return "request parameter not valid";
-    elseif _gameCode LIKE "dices%" then
+    elseif _condition != 0 then
         set _affected_rows = 0;
         select id, count(1) into _game_id, _affected_rows from current_matches where game_code='dices' and (player_code_1=_playerCode or player_code_2=_playerCode);
         if _affected_rows > 0 then
