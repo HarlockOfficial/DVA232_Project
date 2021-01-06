@@ -61,7 +61,7 @@
 - IDE (why, benefits)
 - APIs (why, benefits)
 - Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
-### 5. DESIGN
+### 5. PROJECT DESIGN
 - requirements (rephrase content from document that we sent to afshin)
 - how the app will be used
 	- use cases
