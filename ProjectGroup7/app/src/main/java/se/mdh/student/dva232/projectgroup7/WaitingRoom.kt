@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -122,16 +123,27 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         throw NotImplementedError("Impossible that quit gets called in waiting room")
     }
 
+    override var mService: MusicService? = null
+
     override fun onPause() {
         Log.e("WatingRoom", "onPause started\n")
         Pinger.stop()
         super.onPause()
+        mService?.pauseMusic()
     }
 
     override fun onResume() {
         Log.e("WaitingRoom", "onResume started\n")
         Pinger.changeContext(this, gameCode)
         super.onResume()
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
     }
 
     override fun onBackPressed() {

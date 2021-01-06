@@ -1,6 +1,7 @@
 package se.mdh.student.dva232.projectgroup7
 
 import android.animation.Animator
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -17,7 +18,7 @@ import kotlin.random.Random
  *      heads == true,
  *      tails == false
  * */
-class FlipACoinActivity : AppCompatActivity() {
+class FlipACoinActivity : AppCompatActivity(), ActivityInterface {
     private var userChoice=true;
     /**
      * Initializes FlipACoinActivity by adding onClick listeners on the buttons.
@@ -101,4 +102,28 @@ class FlipACoinActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
+
+    override fun onResume() {
+        super.onResume()
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mService?.pauseMusic()
+    }
+
+    override fun quit() {
+        TODO("Not yet implemented")
+        //Quit cannot be called, impossible
+    }
+
+    override var mService: MusicService? = null
 }

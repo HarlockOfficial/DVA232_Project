@@ -1,5 +1,7 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.media.MediaRecorder.AudioSource.MIC
@@ -190,15 +192,26 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
         TODO("Tell user it's over")
     }
 
+    override var mService: MusicService? = null
+
     //this has to be the same
     override fun onPause() {
         Pinger.stop()
         super.onPause()
+        mService?.pauseMusic()
     }
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
         Pinger.changeContext(this, GameType.BLOW)
         super.onResume()
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
     }
 
 

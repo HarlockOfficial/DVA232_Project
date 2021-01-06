@@ -169,16 +169,27 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
             //-------------------------------------------------
             //change this function ↑ accordingly to archieve the same result
         }
-    }
-    //this has to be the same
+    }override var mService: MusicService? = null
+
+
+                            //this has to be the same
     override fun onPause() {
         Pinger.stop()
         super.onPause()
+                                mService?.pauseMusic()
     }
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
         Pinger.changeContext(this, GameType.ROCK_PAPER_SCISSORS)
         super.onResume()
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
     }
 
     override fun onBackPressed() {

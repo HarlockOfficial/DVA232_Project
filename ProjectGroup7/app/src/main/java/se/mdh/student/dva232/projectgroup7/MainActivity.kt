@@ -39,6 +39,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
+
         findViewById<Button>(R.id.open_RPS).setOnClickListener {
             //openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
             openPop(GameType.ROCK_PAPER_SCISSORS)
@@ -87,12 +96,13 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if(isBackgroundEnabled(applicationContext)){
             //startService(Intent(this, MusicService::class.java))
-            Intent(this, MusicService::class.java).also { intent ->
-                bindService(intent, connection, Context.BIND_AUTO_CREATE)
-                startService(intent)
-                //mService?.resumeMusic()
-            }
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
         }
+
     }
 
     override fun onPause() {

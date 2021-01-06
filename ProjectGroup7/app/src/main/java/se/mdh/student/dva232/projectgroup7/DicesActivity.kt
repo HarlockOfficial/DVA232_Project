@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -59,12 +60,21 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
         Pinger.changeContext(this, GameType.DICES)
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
         Pinger.stop()
+        mService?.pauseMusic()
     }
 
     //sets dice map and applies results from
@@ -137,6 +147,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         //TODO finish
     }
 
+    override var mService: MusicService? = null
     override fun onBackPressed() {
         Pinger.stop()
         val intent = Intent(this, MainActivity::class.java)
