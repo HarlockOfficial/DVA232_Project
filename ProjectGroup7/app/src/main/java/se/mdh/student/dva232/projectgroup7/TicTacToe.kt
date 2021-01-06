@@ -185,4 +185,10 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
         Pinger.stop()
         super.onPause()
     }
+
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }

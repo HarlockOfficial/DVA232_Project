@@ -102,4 +102,9 @@ class PopUp : AppCompatActivity() {                                     //Inform
         intent.putExtra("GAME_CODE", game.name)
         startActivity(intent)
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }

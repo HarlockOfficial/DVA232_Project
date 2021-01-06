@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -133,8 +134,13 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     override fun quit() {
         //Notify user that game is over
         // Runs on disconnection
-
+        //TODO finish
     }
 
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 
 }

@@ -1,6 +1,7 @@
 package se.mdh.student.dva232.projectgroup7
 
 import android.animation.Animator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -96,4 +97,8 @@ class FlipACoinActivity : AppCompatActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }
