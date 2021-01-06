@@ -29,12 +29,11 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             out = "Tic Tac Toe"
             TicTacToe::class.java
         } else if (gameCode == GameType.DICES) {
-            out = "Tic Tac Toe"
+            out = "Dices"
             DicesActivity::class.java
-        } else if (gameCode == GameType.FLIP_A_COIN) {
-            out = "Flip A Coin"
-            // TODO: Coin::class.java
-            null
+        } else if (gameCode == GameType.BLOW) {
+            out = "Blow"
+            BlowActivity::class.java
         } else {  //TODO: if game not present add "else if" here
             out = "Unrecognized Game"
             null
@@ -71,15 +70,16 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                     return ""
                 }
             }    // TODO: when created add here the correct data Implementation
-        } else if (gameCode == GameType.FLIP_A_COIN) {
+        }  else if (gameCode == GameType.BLOW) {
             object : Data {
                 override val game: GameType
-                    get() = GameType.FLIP_A_COIN
+                    get() = GameType.BLOW
 
                 override fun moveToCsv(): String {
                     return ""
                 }
             }     // TODO: when created add here the correct data Implementation
+
         } else {
             object : Data {
                 override val game: GameType
@@ -112,6 +112,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         findViewById<Button>(R.id.leave_queue_btn).setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 CommunicationLayer.delPlayerFromMultiplayerQueue(data)
+                onBackPressed()
             }
         }
     }
@@ -131,5 +132,11 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         Log.e("WaitingRoom", "onResume started\n")
         Pinger.changeContext(this, gameCode)
         super.onResume()
+    }
+
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
