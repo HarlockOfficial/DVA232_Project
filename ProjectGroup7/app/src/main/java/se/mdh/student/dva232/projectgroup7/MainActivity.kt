@@ -4,13 +4,49 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import android.content.ComponentName
+import android.content.Context
+import android.content.ServiceConnection
+import android.os.IBinder
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.preference.PreferenceManager
+
 
 // TODO: guide how to make Hamburger Menu -> https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
-
 class MainActivity : AppCompatActivity() {
+
+    //---------------------------------------------------------------------------------------//
+    private var mService: MusicService? = null
+    private var mBound: Boolean = false
+
+    private val connection = object : ServiceConnection {
+
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            val binder = service as MusicService.ServiceBinder
+            mService = binder.getService()
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            mBound = false
+        }
+    }
+    //---------------------------------------------------------------------------------------//
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
 
         findViewById<Button>(R.id.open_RPS).setOnClickListener {
             //openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
@@ -40,16 +76,59 @@ class MainActivity : AppCompatActivity() {
         // TODO: after adding a open_flip_a_coin, give the open_flip_a_coin an ID and do like ↑
     }
 
-    private fun openWaitingRoom(game: GameType) {
-        val intent = Intent(this, WaitingRoom::class.java)
-        intent.putExtra("GAME_CODE", game.name)
-        startActivity(intent)
-    }
-
     private fun openPop(game: GameType){
         val intent = Intent(this, PopUp::class.java)
         intent.putExtra("GAME", game.name)
         startActivity(intent)
     }
 
+    override fun onStop() {
+        super.onStop()
+        if(mBound) {
+            unbindService(connection)
+            mBound = false
+        }
+
+    }
+    //---------------------------------------------------------------------------------------//
+
+    override fun onResume() {
+        super.onResume()
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mService?.pauseMusic()
+        //stopService(Intent(this, MusicService::class.java))
+    }
+
+    fun isBackgroundEnabled(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(("switch_preference_music"), false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menuitem, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings -> {
+                this.startActivity(Intent(this, Settings::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

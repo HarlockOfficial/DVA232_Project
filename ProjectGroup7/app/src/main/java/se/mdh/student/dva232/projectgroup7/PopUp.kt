@@ -1,21 +1,48 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.util.DisplayMetrics
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.preference.PreferenceManager
 import org.w3c.dom.Text
 
 class PopUp : AppCompatActivity() {                                     //Information about pop ups from : https://www.youtube.com/watch?v=fn5OlqQuOCk
 
    lateinit var game: GameType
     lateinit var quantity: String
+
+    private var mService : MusicService? = null
+
+    fun isBackgroundEnabled(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(("switch_preference_music"), false)
+    }
+        private val connection =  object : ServiceConnection {
+
+            private var mBound: Boolean = false
+
+            override fun onServiceConnected(className: ComponentName, service: IBinder) {
+                val binder = service as MusicService.ServiceBinder
+                mService = binder.getService()
+                mBound = true
+            }
+
+            override fun onServiceDisconnected(arg0: ComponentName) {
+                mBound = false
+            }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +125,25 @@ class PopUp : AppCompatActivity() {                                     //Inform
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mService?.pauseMusic()
+        //stopService(Intent(this, MusicService::class.java))
     }
 
     private fun openWaitingRoom(game: GameType){
