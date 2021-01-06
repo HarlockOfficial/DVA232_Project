@@ -25,7 +25,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
         return "request parameter not valid";
     elseif _condition != 0 then
         set _affected_rows = 0;
-        select id, count(1) into _game_id, _affected_rows from current_matches where game_code='dices' and (player_code_1=_playerCode or player_code_2=_playerCode);
+        select id, count(1) into _game_id, _affected_rows from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
         if _affected_rows > 0 then
             set _affected_rows = 0;
             select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
