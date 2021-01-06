@@ -30,7 +30,7 @@
 ### 1. ABSTRACT
 ### 2. INTRODUCTION 
 - a brief summary
-### 3. IDEA - MARKO
+### 3. IDEA - ```diff + MARKO ```
 - brainstorming process {
 	how did we come up with the idea?
 	what was the first idea?
