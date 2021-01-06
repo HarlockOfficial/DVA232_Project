@@ -30,7 +30,7 @@ SECTIONS
 - INTRODUCTION {
 	a brief summary
 }
-- IDEA
+- IDEA - MARKO
 	- brainstorming process {
 		how did we come up with the idea?
 		what was the first idea?
@@ -51,7 +51,7 @@ SECTIONS
 		- insert  picture figure 1. first draft how we imagine the system
 	}
 	- comparison to other games on the appstore
-- WORKFLOW
+- WORKFLOW - MARKO
 	- ways of working
 	- group communication (what tools did we use to communicate: whatsapp, git-trello, git: commit comments)
 	- timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
@@ -61,30 +61,30 @@ SECTIONS
 	- frameworks (why, benefits)
 	- IDE (why, benefits)
 	- APIs (why, benefits)
-	- Kotlin, Python, SQL, PHP (why, benefits)
+	- Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
 - DESIGN
 	- requirements (rephrase content from document that we sent to afshin)
 	- how the app will be used
 		- use cases
 		- use case diagram
 		- user experience
-	- user interface
+	- user interface - ERNEST
 		- activity diagram
 		-- what decisions did we make? --
 		-- why we made those decisions? --
 		- user experience
 	- system
-		- overview with components diagram
-		- bots (functionality and user experience)
-		- database and ER diagram
+		- overview with components diagram - MICHAL
+		- bots (functionality and user experience) - FRANCESCO
+		- database and ER diagram - FRANCESCO
 		-- what decisions did we make? --
 		-- why we made those decisions? --
 		- user experience
-- THE APP
+- THE APP - ALFONS
 	- (functionality)
 	- screenshots of the app/activities
 	- games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
-- DISCUSSION
+- DISCUSSION - ZYLAN
 	-- user tests, their feedback and how that affected your design --
 	- future upgrades
 		- put less stress on server (lower ping)
