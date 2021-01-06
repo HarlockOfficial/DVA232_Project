@@ -28,7 +28,7 @@
 
 ## SECTIONS
 ### 1. ABSTRACT
-### 1. INTRODUCTION {
+### 2. INTRODUCTION {
 	a brief summary
 }
 - IDEA - MARKO
@@ -52,7 +52,7 @@
 		- insert  picture figure 1. first draft how we imagine the system
 	}
 	- comparison to other games on the appstore
-### 1. WORKFLOW - MARKO
+### 3. WORKFLOW - MARKO
 	- ways of working
 	- group communication (what tools did we use to communicate: whatsapp, git-trello, git: commit comments)
 	- timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
@@ -63,7 +63,7 @@
 	- IDE (why, benefits)
 	- APIs (why, benefits)
 	- Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
-### 1. DESIGN
+### 4. DESIGN
 	- requirements (rephrase content from document that we sent to afshin)
 	- how the app will be used
 		- use cases
@@ -81,11 +81,11 @@
 		-- what decisions did we make? --
 		-- why we made those decisions? --
 		- user experience
-### 1. THE APP - ALFONS
+### 5. THE APP - ALFONS
 	- (functionality)
 	- screenshots of the app/activities
 	- games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
-### 1. DISCUSSION - ZYLAN
+### 6. DISCUSSION - ZYLAN
 	-- user tests, their feedback and how that affected your design --
 	- future upgrades
 		- put less stress on server (lower ping)
@@ -93,8 +93,8 @@
 		- less data bandwidth
 		- more games
 		- more functionaliteis (removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal))
-### 1. GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
-### 1. REFERENCES
+### 7. GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
+### 8. REFERENCES
 
 
 ### website: https://dva232-project-group-7.000webhostapp.com/
