@@ -21,7 +21,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 			return "ok";
         end if;
         return "request parameter not valid";
-    elseif _gameCode = "dices" then
+    elseif _gameCode LIKE "dices%" then
         set _affected_rows = 0;
         select id, count(1) into _game_id, _affected_rows from current_matches where game_code='dices' and (player_code_1=_playerCode or player_code_2=_playerCode);
         if _affected_rows > 0 then
@@ -70,7 +70,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 						return "match is already over";
 					end if;
 					select convert(_field_tmp, signed) into _dice_sum;
-					update current_matches set field=_temporary+(_position-_dice_sum) where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+					update current_matches set field=_temporary+((_position-_dice_sum)/10) where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
 					select field into _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
 					return _field;
 				end if;
