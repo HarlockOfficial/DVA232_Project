@@ -15,6 +15,8 @@ import org.json.JSONObject
 
 class WaitingRoom : AppCompatActivity(), ActivityInterface {
     private lateinit var gameCode: GameType
+    var isBackPressed: Boolean = false
+    lateinit var data: Data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         val label = findViewById<TextView>(R.id.waiting_room_label)
         label.text = getString(R.string.waiting_room, out)
 
-        val data = if (gameCode == GameType.ROCK_PAPER_SCISSORS) {
+        data = if (gameCode == GameType.ROCK_PAPER_SCISSORS) {
             RockPaperScissorsData("")
         } else if (gameCode == GameType.TIC_TAC_TOE) {
             object : Data {
@@ -100,8 +102,12 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                 do {
                     delay(10)
                     ret = CommunicationLayer.checkMultiplayerQueue(data)
+                    if (isBackPressed) {
+                        return@launch
+                    }
                 } while (ret["response"] == "in_queue")
             }
+            Log.e("THIS ONE SIR", ret.toString())
             ret = JSONObject(ret["response"] as String)
 
             val intent = Intent(this@WaitingRoom, gameClass)
@@ -111,7 +117,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         }
         findViewById<Button>(R.id.leave_queue_btn).setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
-                CommunicationLayer.delPlayerFromMultiplayerQueue(data)
                 onBackPressed()
             }
         }
@@ -135,6 +140,10 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
     }
 
     override fun onBackPressed() {
+        isBackPressed = true
+        GlobalScope.launch {
+            CommunicationLayer.delPlayerFromMultiplayerQueue(data)
+        }
         Pinger.stop()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
