@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -122,7 +123,7 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
         val winner = JSONObject(response["response"] as String)["winner"]
         if (winner == "") {
             return false
-        } else if (winner == this.symbol) {
+        } else if (winner == this.symbol.symbol) {
             // TODO visualize win
             runOnUiThread {
                 result.text = getString(R.string.win)
@@ -176,13 +177,40 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
         }
     }
 
+    override var mService: MusicService? = null
+
+
     override fun onResume() {
-        Pinger.changeContext(this, GameType.TIC_TAC_TOE)
+        var data : Data = object:Data{
+            override val game: GameType
+                get() = GameType.TIC_TAC_TOE
+
+            override fun moveToCsv(): String {
+                return ""
+            }
+
+        }
+        Pinger.changeContext(this, data)
         super.onResume()
+        if(isBackgroundEnabled(applicationContext)){
+            //startService(Intent(this, MusicService::class.java))
+            val intent =  Intent(this, MusicService::class.java)
+            bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
+            startService(intent)
+            //mService?.resumeMusic()
+
+        }
     }
 
     override fun onPause() {
         Pinger.stop()
         super.onPause()
+        mService?.pauseMusic()
+    }
+
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }

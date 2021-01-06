@@ -16,8 +16,11 @@
 		}else if($game_code == "rps"){
 			$arr[':position'] = 0;
 			$arr[':move'] = $move;
-		}else if($game_code == "dices"){
+		}else if(strpos($game_code, "dices") == 0){
 			$arr[':position'] = $move;
+			$arr[':move'] = "";
+		}else if($game_code == "blow"){
+			$arr[':position'] = $move; //normalized value of player blow strength
 			$arr[':move'] = "";
 		}else{
 			return json_encode(["response"=>"request parameter not valid, unknown game code"]);
@@ -25,7 +28,7 @@
 		$ret = query($sql, $arr)->fetch(PDO::FETCH_ASSOC)['move'];
 		return json_encode(["response"=>$ret]);
 	}
-function get_move($player_code, $game_code){
+	function get_move($player_code, $game_code){
 		require "query.php";
 		$sql = "select get_move(:player, :game) as move";
 		$arr[':player']=$player_code;

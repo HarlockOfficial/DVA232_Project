@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,10 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectGroup7">
+        <activity android:name=".PopUp" android:theme="@style/Theme.AppCompat.PopTheme" />
+        <activity android:name=".BlowActivity" />
         <activity android:name=".DicesActivity" />
+        <activity android:name=".Settings" />
+        <service android:name=".MusicService" android:enabled="true" android:exported="true"/>
         <activity android:name=".WaitingRoom" />
-        <activity android:name=".TicTacToe"/>
+        <activity android:name=".TicTacToe" />
         <activity android:name=".RockPaperScissors" />
+        <activity android:name=".FlipACoinActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

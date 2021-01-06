@@ -16,6 +16,9 @@
 		case 'get_queue':	//get status (if still in multiplayer queue or not)
 			echo get_player($player_code, $game_code);
 			break;
+		case 'del_queue':
+			echo del_player($player_code, $game_code);
+			break;
 		case 'add_move':	//insert player move
 			if(!isset($_GET['move']) || empty($_GET['move'])){
 				echo json_encode(["response"=>"request parameter not valid"]);

@@ -17,4 +17,14 @@
         $ret = $ret['json'];
 		return json_encode(["response"=>$ret]);
 	}
+	function del_player($player_code, $game_code){
+		require_once("query.php");
+		$sql = "select del_player(:player, :code) as json";
+		$arr[':player']=$player_code;
+		$arr[':code']=$game_code;
+		$ret = query($sql, $arr);
+		$ret = $ret->fetch(PDO::FETCH_ASSOC);
+        $ret = $ret['json'];
+		return json_encode(["response"=>$ret]);
+	}
 ?>
