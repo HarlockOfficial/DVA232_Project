@@ -35,8 +35,8 @@ object CommunicationLayer {
      */
     var uuid = createUUID()
         private set
-    private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
-    //private const val url: String = "http://192.168.1.195/"
+    //private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
+    private const val url: String = "http://192.168.1.195/"
 
     /**
      * function used to add a player to the waiting queue should be called before the user reaches
@@ -55,8 +55,8 @@ object CommunicationLayer {
     suspend fun addPlayerToMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
             uuid = createUUID()
-            Log.e("yo", uuid)
-            val temp =  URL("$url?player=$uuid&action=add_queue&game=${data.game.code}").readText()
+            Log.e("yo", "$url?player=$uuid&action=add_queue&game=${data.game.code}${data.moveToCsv()}")
+            val temp =  URL("$url?player=$uuid&action=add_queue&game=${data.game.code}${data.moveToCsv()}").readText()
             Log.e("AAAAAAAAAAAH",temp)
             return@withContext JSONObject( temp
             )
@@ -80,7 +80,7 @@ object CommunicationLayer {
     suspend fun checkMultiplayerQueue(data: Data): JSONObject{
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("$url?player=$uuid&action=get_queue&game=${data.game.code}").readText()
+                    URL("$url?player=$uuid&action=get_queue&game=${data.game.code}${data.moveToCsv()}").readText()
             )
         }
     }
@@ -100,7 +100,7 @@ object CommunicationLayer {
     suspend fun addPlayerMove(data: Data):JSONObject {
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("$url?player=$uuid&action=add_move&game=${data.game.code}&move=${data.moveToCsv()}").readText()
+                    URL("$url?player=$uuid&action=add_move&game=${data.game.code}${data.moveToCsv()}&move=${data.moveToCsv()}").readText()
             )
         }
     }
@@ -129,14 +129,14 @@ object CommunicationLayer {
     suspend fun getOpponentMove(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("$url?player=$uuid&action=get_move&game=${data.game.code}").readText()
+                    URL("$url?player=$uuid&action=get_move&game=${data.game.code}${data.moveToCsv()}").readText()
             )
         }
     }
     suspend fun delPlayerFromMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("$url?player=$uuid&action=del_queue&game=${data.game.code}").readText()
+                    URL("$url?player=$uuid&action=del_queue&game=${data.game.code}${data.moveToCsv()}").readText()
             )
         }
     }/**
@@ -147,7 +147,7 @@ object CommunicationLayer {
     suspend fun ping(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
             return@withContext JSONObject(
-                    URL("${url}ping.php?player=$uuid&game=${data.game.code}").readText()
+                    URL("${url}ping.php?player=$uuid&game=${data.game.code}${data.moveToCsv()}").readText()
             )
         }
     }

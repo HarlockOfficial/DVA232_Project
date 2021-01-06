@@ -15,6 +15,7 @@ import org.w3c.dom.Text
 class PopUp : AppCompatActivity() {                                     //Information about pop ups from : https://www.youtube.com/watch?v=fn5OlqQuOCk
 
    lateinit var game: GameType
+    lateinit var quantity: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +55,9 @@ class PopUp : AppCompatActivity() {                                     //Inform
             field.isVisible = true
             amntDicesText.isVisible = true
 
+
             startButton.setOnClickListener {
+                quantity = field.text.toString()
                 openWaitingRoom(GameType.DICES)
             }
         }  else if (game == GameType.TIC_TAC_TOE) {
@@ -100,6 +103,9 @@ class PopUp : AppCompatActivity() {                                     //Inform
     private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)
         intent.putExtra("GAME_CODE", game.name)
+        if (game == GameType.DICES) {
+            intent.putExtra("DICE_QUANTITY", quantity)
+        }
         startActivity(intent)
     }
 

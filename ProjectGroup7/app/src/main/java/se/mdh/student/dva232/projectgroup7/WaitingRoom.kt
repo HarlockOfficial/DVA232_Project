@@ -17,12 +17,16 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
     private lateinit var gameCode: GameType
     var isBackPressed: Boolean = false
     lateinit var data: Data
+    lateinit var quantity : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("WaitingRoom", "onCreate started\n")
         setContentView(R.layout.waiting_room)
         gameCode = GameType.valueOf(intent.getStringExtra("GAME_CODE")!!)
+        if (gameCode == GameType.DICES) {
+            quantity = intent.getStringExtra("DICE_QUANTITY")!!
+        }
         lateinit var out: String
         val gameClass = if (gameCode == GameType.ROCK_PAPER_SCISSORS) {
             out = "Rock Paper Scissors"
@@ -64,12 +68,15 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                 }
             }
         } else if (gameCode == GameType.DICES) {
+
+            Log.e("quantity", quantity)
             object : Data {
                 override val game: GameType
                     get() = GameType.DICES
 
                 override fun moveToCsv(): String {
-                    return ""
+                    Log.e("quantity", quantity)
+                    return quantity
                 }
             }    // TODO: when created add here the correct data Implementation
         }  else if (gameCode == GameType.BLOW) {
@@ -93,6 +100,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             }     // TODO: when created add here the correct data Implementation
         }
         GlobalScope.launch(Dispatchers.IO) {
+            Log.e("data from foo", data.moveToCsv())
             var ret: JSONObject = CommunicationLayer.addPlayerToMultiplayerQueue(data)
             Pinger.isPlayerAdded = true
             Log.e("WaitingRoom Coroutine", "Player added to queue")
@@ -113,6 +121,9 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
             val intent = Intent(this@WaitingRoom, gameClass)
             intent.putExtra("isStarting", ret["starting_player"] == uuid)
             intent.putExtra("field", ret["field"].toString())
+            if (gameCode == GameType.DICES) {
+                intent.putExtra("DICE_COUNT", quantity)
+            }
             startActivity(intent)
         }
         findViewById<Button>(R.id.leave_queue_btn).setOnClickListener {
@@ -129,13 +140,27 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
 
     override fun onPause() {
         Log.e("WatingRoom", "onPause started\n")
+        isBackPressed = true
+        GlobalScope.launch {
+            CommunicationLayer.delPlayerFromMultiplayerQueue(data)
+        }
         Pinger.stop()
         super.onPause()
+
     }
 
     override fun onResume() {
         Log.e("WaitingRoom", "onResume started\n")
-        Pinger.changeContext(this, gameCode)
+        var data : Data = object:Data{
+            override val game: GameType
+                get() = gameCode
+
+            override fun moveToCsv(): String {
+                return ""
+            }
+
+        }
+        Pinger.changeContext(this, data)
         super.onResume()
     }
 

@@ -51,17 +51,10 @@ object Pinger {
         stop()
     }
 
-    fun changeContext(newContext: ActivityInterface, gameType: GameType) {
+    fun changeContext(newContext: ActivityInterface, data: Data) {
         this.stop()
         this.currentActivity = newContext
-        this.currentData = object : Data {
-            override val game: GameType
-                get() = gameType
-
-            override fun moveToCsv(): String {
-                return ""
-            }
-        }
+        currentData = data
         Log.e("Pinger", "Asigned data: " + (this.currentData as Data).game.code)
         Log.e("Pinger", "Asigned game type: " + (this.currentData as Data).game.code)
         this.start()

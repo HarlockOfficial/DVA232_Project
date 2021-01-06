@@ -246,7 +246,16 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
     }
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
-        Pinger.changeContext(this, GameType.BLOW)
+        var blowData : Data = object:Data{
+            override val game: GameType
+                get() = GameType.BLOW
+
+            override fun moveToCsv(): String {
+               return ""
+            }
+
+        }
+        Pinger.changeContext(this, blowData)
         super.onResume()
     }
 
