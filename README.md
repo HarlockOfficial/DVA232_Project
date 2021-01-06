@@ -84,7 +84,7 @@
 - screenshots of the app/activities
 - games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
 ### 7. DISCUSSION - ZYLAN
--- user tests, their feedback and how that affected your design --
+- -- user tests, their feedback and how that affected your design --
 - future upgrades
 	- put less stress on server (lower ping)
 	- let real users test the app and fix the app according to user feedback
