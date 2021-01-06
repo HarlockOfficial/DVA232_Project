@@ -28,9 +28,9 @@
 
 ## SECTIONS
 ### 1. ABSTRACT
-### 2. INTRODUCTION 
+### 1. INTRODUCTION 
 - a brief summary
-### 3. IDEA - MARKO
+### 1. IDEA - MARKO
 - brainstorming process {
 	how did we come up with the idea?
 	what was the first idea?
@@ -51,7 +51,7 @@
 	- insert  picture figure 1. first draft how we imagine the system
 }
 - comparison to other games on the appstore
-### 4. WORKFLOW - MARKO
+### 1. WORKFLOW - MARKO
 - ways of working
 - group communication (what tools did we use to communicate: whatsapp, git-trello, git: commit comments)
 - timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
@@ -62,7 +62,7 @@
 - IDE (why, benefits)
 - APIs (why, benefits)
 - Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
-### 5. DESIGN
+### 1. DESIGN
 - requirements (rephrase content from document that we sent to afshin)
 - how the app will be used
 	- use cases
@@ -80,11 +80,11 @@
 	-- what decisions did we make? --
 	-- why we made those decisions? --
 	- user experience
-### 6. THE APP - ALFONS
+### 1. THE APP - ALFONS
 - (functionality)
 - screenshots of the app/activities
 - games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
-### 7. DISCUSSION - ZYLAN
+### 1. DISCUSSION - ZYLAN
 -- user tests, their feedback and how that affected your design --
 - future upgrades
 	- put less stress on server (lower ping)
@@ -92,8 +92,8 @@
 	- less data bandwidth
 	- more games
 	- more functionaliteis (removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal))
-### 8. GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
-### 9. REFERENCES
+### 1. GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
+### 1. REFERENCES
 
 
 ### website: https://dva232-project-group-7.000webhostapp.com/
