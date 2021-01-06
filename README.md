@@ -30,15 +30,15 @@
 ### 1. ABSTRACT
 ### 2. INTRODUCTION 
 - a brief summary
-### 3. IDEA - ```diff + MARKO ```
-- brainstorming process {
-	how did we come up with the idea?
-	what was the first idea?
-	-- the goals of the project --
-	why was the first idea discarded?
-	what choices were made?
-	what was the focus?
-}
+### 3. IDEA - MARKO
+- brainstorming process
+	> how did we come up with the idea?
+	> what was the first idea?
+	> -- the goals of the project --
+	> why was the first idea discarded?
+	> what choices were made?
+	> what was the focus?
+
 - choice of games {
 	what games were chosen?
 	why we chose those games? (use of sensors, learning about sensors)
