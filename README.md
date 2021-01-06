@@ -2,7 +2,102 @@
 
 # Link to latex document
 
-# <ADD NAME HERE>
+PROJECT REPORT checklist:
+- The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”.
+- The format of the report should follow ACM journal guidelines. Pick any ACM journal that you like.
+- The minimum size for the paper is 3000 words. Use as much figures, tables, etc. as you need.
+- Don’t ask: “How many references we must have?” Just don’t.
+- Are there dictation/grammatical mistakes?
+- Is the information presented in a coherent way?
+- Are the correct writing templates followed?
+- Is the content relevant?
+- Does the content miss any of the required points?
+
+
+PROJECT REPORT REQUIREMENTS
+- The goals of the project.
+- The tools that you used for developing the project.
+- The design process of the interface and reasoning behind the design choices.
+- User tests, their feedback and how that affected your design.
+- The development process and choices that you made and reasons for them.
+- The final achievements of your work.
+- A discussion about the development process and next steps to improve the result.
+
+
+
+SECTIONS
+- ABSTRACT
+- INTRODUCTION {
+	a brief summary
+}
+- IDEA
+	- brainstorming process {
+		how did we come up with the idea?
+		what was the first idea?
+		-- the goals of the project --
+		why was the first idea discarded?
+		what choices were made?
+		what was the focus?
+	}
+	- choice of games {
+		what games were chosen?
+		why we chose those games? (use of sensors, learning about sensors)
+	}
+	- high quality criteria {
+		Why we chose this idea?
+		Why we chose these games?
+	}
+	- first sketch of the system {
+		- insert  picture figure 1. first draft how we imagine the system
+	}
+	- comparison to other games on the appstore
+- WORKFLOW
+	- ways of working
+	- group communication (what tools did we use to communicate: whatsapp, git-trello, git: commit comments)
+	- timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
+	- meeting scheduling and general meeting agendas
+		- meetings with supervisors (how often, sprints, what we discussed, what it looked like, what we did in general)
+		- meetings within group (how often, sprints, what we discussed, what it looked like, what we did in general)
+	- frameworks (why, benefits)
+	- IDE (why, benefits)
+	- APIs (why, benefits)
+	- Kotlin, Python, SQL, PHP (why, benefits)
+- DESIGN
+	- requirements (rephrase content from document that we sent to afshin)
+	- how the app will be used
+		- use cases
+		- use case diagram
+		- user experience
+	- user interface
+		- activity diagram
+		-- what decisions did we make? --
+		-- why we made those decisions? --
+		- user experience
+	- system
+		- overview with components diagram
+		- bots (functionality and user experience)
+		- database and ER diagram
+		-- what decisions did we make? --
+		-- why we made those decisions? --
+		- user experience
+- THE APP
+	- (functionality)
+	- screenshots of the app/activities
+	- games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
+- DISCUSSION
+	-- user tests, their feedback and how that affected your design --
+	- future upgrades
+		- put less stress on server (lower ping)
+		- let real users test the app and fix the app according to user feedback
+		- less data bandwidth
+		- more games
+		- more functionaliteis (removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal))
+- GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
+- REFERENCES
+
+
+
+# PROJECT GROUP 7 $UPER AWE$OME GAMES BAM! 🔫🔪💣💥
 
 #website: https://dva232-project-group-7.000webhostapp.com/
 
@@ -29,3 +124,4 @@
 	- landscape
    each of them have to be for the home screen,
    for every one of the games and one for settings
+
