@@ -1,7 +1,7 @@
 # DVA232_Project_Group_7
 
 ### PROJECT GROUP 7 $UPER AWE$OME GAMES BAM! 🔫🔪💣💥
-#### https://www.overleaf.com/read/pbyrtqhvntxm
+#### [project documentation](https://www.overleaf.com/read/pbyrtqhvntxm)
 
 ### PROJECT REPORT checklist:
 - The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”.
@@ -30,15 +30,14 @@
 ### 1. ABSTRACT
 ### 2. INTRODUCTION 
 - a brief summary
-### 3. IDEA - MARKO
+### 3. IDEA - @MARKO
 - brainstorming process
-	> how did we come up with the idea?
-	> what was the first idea?
-	> -- the goals of the project --
-	> why was the first idea discarded?
-	> what choices were made?
-	> what was the focus?
-
+	> how did we come up with the idea? </br>
+	> what was the first idea? </br>
+	> -- the goals of the project -- </br>
+	> why was the first idea discarded? </br>
+	> what choices were made? </br>
+	> what was the focus? </br>
 - choice of games {
 	what games were chosen?
 	why we chose those games? (use of sensors, learning about sensors)
