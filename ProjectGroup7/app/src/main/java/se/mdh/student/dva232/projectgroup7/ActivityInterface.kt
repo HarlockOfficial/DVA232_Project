@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.ServiceConnection
@@ -7,6 +8,7 @@ import android.os.IBinder
 import androidx.preference.PreferenceManager
 
 interface ActivityInterface {
+
     fun quit()
 
     var mService : MusicService?
@@ -31,5 +33,4 @@ interface ActivityInterface {
             }
         }
     }
-
 }

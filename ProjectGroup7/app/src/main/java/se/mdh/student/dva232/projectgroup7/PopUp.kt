@@ -3,6 +3,7 @@ package se.mdh.student.dva232.projectgroup7
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,7 @@ import org.w3c.dom.Text
 class PopUp : AppCompatActivity() {                                     //Information about pop ups from : https://www.youtube.com/watch?v=fn5OlqQuOCk
 
    lateinit var game: GameType
+    lateinit var quantity: String
 
     private var mService : MusicService? = null
 
@@ -67,7 +69,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
 
             header.text = "BLOW GAME"
             infoText.text = "This is the blow game temporary info text"
-            //image                 set image, look up
+            image.setImageResource(R.drawable.ic_tumbleweed)
 
             startButton.setOnClickListener {
                 openWaitingRoom(GameType.BLOW)
@@ -76,11 +78,13 @@ class PopUp : AppCompatActivity() {                                     //Inform
 
             header.text = "DICE GAME"
             infoText.text = "This is the dice game temporary info text"
-            //image                 set image, look up
+            image.setImageResource(R.drawable.ic_dice)         //set image, look up
             field.isVisible = true
             amntDicesText.isVisible = true
 
+
             startButton.setOnClickListener {
+                quantity = field.text.toString()
                 openWaitingRoom(GameType.DICES)
             }
         }  else if (game == GameType.TIC_TAC_TOE) {
@@ -145,6 +149,9 @@ class PopUp : AppCompatActivity() {                                     //Inform
     private fun openWaitingRoom(game: GameType){
         val intent = Intent(this, WaitingRoom::class.java)
         intent.putExtra("GAME_CODE", game.name)
+        if (game == GameType.DICES) {
+            intent.putExtra("DICE_QUANTITY", quantity)
+        }
         startActivity(intent)
     }
 

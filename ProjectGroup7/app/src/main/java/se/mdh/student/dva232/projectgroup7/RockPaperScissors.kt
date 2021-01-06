@@ -180,7 +180,16 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     }
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
-        Pinger.changeContext(this, GameType.ROCK_PAPER_SCISSORS)
+        var data : Data = object:Data{
+            override val game: GameType
+                get() = GameType.ROCK_PAPER_SCISSORS
+
+            override fun moveToCsv(): String {
+                return ""
+            }
+
+        }
+        Pinger.changeContext(this, data)
         super.onResume()
         if(isBackgroundEnabled(applicationContext)){
             //startService(Intent(this, MusicService::class.java))

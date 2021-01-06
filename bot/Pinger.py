@@ -9,6 +9,7 @@ import requests
 class Pinger(Thread):
     def __init__(self, game_code: str, uuid: str):
         super().__init__()
+        #self.__url = "http://localhost/ping.php?game=" + game_code + \
         self.__url = "http://dva232-project-group-7.atwebpages.com/ping.php?game=" + game_code + \
                      "&player=" + uuid
         self.__playing = True

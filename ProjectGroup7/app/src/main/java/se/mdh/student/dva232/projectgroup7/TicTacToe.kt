@@ -181,7 +181,16 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
 
 
     override fun onResume() {
-        Pinger.changeContext(this, GameType.TIC_TAC_TOE)
+        var data : Data = object:Data{
+            override val game: GameType
+                get() = GameType.TIC_TAC_TOE
+
+            override fun moveToCsv(): String {
+                return ""
+            }
+
+        }
+        Pinger.changeContext(this, data)
         super.onResume()
         if(isBackgroundEnabled(applicationContext)){
             //startService(Intent(this, MusicService::class.java))
