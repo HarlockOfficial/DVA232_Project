@@ -30,7 +30,7 @@
 ### 1. ABSTRACT
 ### 2. INTRODUCTION 
 - a brief summary
-### 3. IDEA - @MARKO
+### 3. IDEA - MARKO
 - brainstorming process
 	> how did we come up with the idea? </br>
 	> what was the first idea? </br>
@@ -38,21 +38,20 @@
 	> why was the first idea discarded? </br>
 	> what choices were made? </br>
 	> what was the focus? </br>
-- choice of games {
-	what games were chosen?
-	why we chose those games? (use of sensors, learning about sensors)
-}
-- high quality criteria {
-	Why we chose this idea?
-	Why we chose these games?
-}
-- first sketch of the system {
+- choice of games
+	> what games were chosen? </br>
+	> why we chose those games? (use of sensors, learning about sensors) </br>
+- high quality criteria
+	> why we chose this idea? </br>
+	> why we chose these games? </br>
+- first sketch of the system
 	- insert  picture figure 1. first draft how we imagine the system
-}
 - comparison to other games on the appstore
 ### 4. WORKFLOW - MARKO
 - ways of working
-- group communication (what tools did we use to communicate: whatsapp, git-trello, git: commit comments)
+- group communication
+	> what tools did we use to communicate: </br>
+	> whatsapp, git-trello, git: commit comments </br>
 - timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
 - meeting scheduling and general meeting agendas
 	- meetings with supervisors (how often, sprints, what we discussed, what it looked like, what we did in general)
@@ -90,7 +89,8 @@
 	- let real users test the app and fix the app according to user feedback
 	- less data bandwidth
 	- more games
-	- more functionaliteis (removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal))
+	- more functionaliteis
+	> removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal)
 ### 8. GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
 ### 9. REFERENCES
 
