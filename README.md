@@ -68,15 +68,15 @@
 	- user experience
 - user interface - ERNEST
 	- activity diagram
-	-- what decisions did we make? --
-	-- why we made those decisions? --
+	> -- what decisions did we make? -- </br>
+	> -- why we made those decisions? -- </br>
 	- user experience
 - system
 	- overview with components diagram - MICHAL
 	- bots (functionality and user experience) - FRANCESCO
 	- database and ER diagram - FRANCESCO
-	-- what decisions did we make? --
-	-- why we made those decisions? --
+	>-- what decisions did we make? -- </br>
+	>-- why we made those decisions? -- </br>
 	- user experience
 ### 6. THE APP - ALFONS
 - (functionality)
