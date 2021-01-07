@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -22,6 +23,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private var thrown = false
+    private lateinit var quantity: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +33,12 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         val accelerometer: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
-
+        quantity = intent.getStringExtra("DICE_COUNT")!!
 
         val button = findViewById<Button>(R.id.button_rtd)
         button.setOnClickListener {
             Log.e("Log00", "aaaaa")
-            displayResult(4)
+            displayResult()
 
 
         }
@@ -47,7 +49,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
             if (event.values[0] > 5 || event.values[1] > 10 || event.values[2] > 1)
-                displayResult(4)
+                displayResult()
         }
 
     }
@@ -58,13 +60,23 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     override fun onResume() { //No idea if this is working properly
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
-        Pinger.changeContext(this, GameType.DICES)
+        var data : Data = object:Data{
+            override val game: GameType
+                get() = GameType.DICES
+
+            override fun moveToCsv(): String {
+                return quantity
+            }
+
+        }
+        Pinger.changeContext(this, data)
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
         Pinger.stop()
+        mService?.pauseMusic()
     }
 
     //sets dice map and applies results from
@@ -78,7 +90,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
 
 
     //Displays the sum of all dices. This is the only visual change for the user. https://developer.android.com/guide/topics/sensors/sensors_motion for sensors. Sensor calibration? 
-    private fun displayResult(amount: Int) {
+    private fun displayResult() {
         if (!thrown) {
             val ownsumView = findViewById<TextView>(R.id.resulttext)
             val winnerView = findViewById<TextView>(R.id.winnertext)
@@ -91,7 +103,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
 
 
             GlobalScope.launch {
-                val diceData = DicesData(amount)
+                val diceData = DicesData(quantity.toInt())
                 var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
 
                 Log.e("Log00", ret.getString("response"));
@@ -137,6 +149,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         //TODO finish
     }
 
+    override var mService: MusicService? = null
     override fun onBackPressed() {
         Pinger.stop()
         val intent = Intent(this, MainActivity::class.java)

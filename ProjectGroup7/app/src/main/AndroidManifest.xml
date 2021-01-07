@@ -15,9 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectGroup7">
-        <activity android:name=".PopUp" android:theme="@style/Theme.AppCompat.PopTheme"></activity>
+        <activity android:name=".PopUp" android:theme="@style/Theme.AppCompat.PopTheme" />
         <activity android:name=".BlowActivity" />
         <activity android:name=".DicesActivity" />
+        <activity android:name=".Settings" />
+        <service android:name=".MusicService" android:enabled="true" android:exported="true"/>
         <activity android:name=".WaitingRoom" />
         <activity android:name=".TicTacToe" />
         <activity android:name=".RockPaperScissors" />

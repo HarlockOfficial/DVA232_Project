@@ -20,7 +20,6 @@ class MusicService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
 
-        //return null
         return mBinder
     }
 
@@ -31,7 +30,8 @@ class MusicService : Service() {
     override fun onCreate() {
         super.onCreate()
         player = MediaPlayer.create(this, R.raw.bkgrdmusic)
-        player.setLooping(true)
+        player.isLooping = true
+        player.setVolume(1f,1f)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -47,15 +47,15 @@ class MusicService : Service() {
 
 
    fun pauseMusic(){
-        if(player.isPlaying())
+        if(player.isPlaying)
         {
             player.pause()
-            length= player.getCurrentPosition()
+            length= player.currentPosition
         }
     }
 
     fun resumeMusic() {
-        if(!player.isPlaying())
+        if(!player.isPlaying)
         {
             player.seekTo(length);
             player.start();
