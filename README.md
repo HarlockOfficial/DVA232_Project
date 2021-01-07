@@ -2,6 +2,7 @@
 
 ### PROJECT GROUP 7 $UPER AWE$OME GAMES BAM! 🔫🔪💣💥
 #### [project documentation](https://www.overleaf.com/read/pbyrtqhvntxm)
+###### [temporary link to editable documentation](https://www.overleaf.com/project/5fda128759085f43cd4840fd)
 
 ### PROJECT REPORT checklist:
 - The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”.
