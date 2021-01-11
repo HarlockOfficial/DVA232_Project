@@ -9,23 +9,25 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.rock_paper_scissors.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-                        // Must implement interface ↓
+// Must implement interface ↓
 class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     private lateinit var myChoice: ImageView
     private lateinit var opponentChoice: ImageView
     private lateinit var context: Context
     private lateinit var result: TextView
     private val clickListener = View.OnClickListener { v ->
-        GlobalScope.launch(Dispatchers.IO){
+        GlobalScope.launch(Dispatchers.IO) {
             val choice: String = v.tag as String
             val rpsData = RockPaperScissorsData(choice)
-            if(CommunicationLayer.addPlayerMove(rpsData).getString("response") == "ok"){
+            val temp = CommunicationLayer.addPlayerMove(rpsData).getString("response")
+            if (temp == "ok") {
                 runOnUiThread {
                     val drawable = (v as ImageView).drawable
                     myChoice.setImageDrawable(drawable)
@@ -34,9 +36,10 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                 do {
                     delay(10)
                     ret = CommunicationLayer.getOpponentMove(rpsData)
-                    Log.e("eee", ret.toString())
-                }while(ret.get("response")==null)   //TODO check, not sure if NULL is accepted as string like this
-                when {
+                    Log.e("Return value RPS", ret.toString())
+                } while (ret.get("response") == null)   //TODO check, not sure if NULL is accepted as string like this
+                Log.e("response value", ret.get("response").toString())
+                /* when {
                     ret.getString("response") == "rock" -> {
                         runOnUiThread {
                             opponentChoice.setImageResource(R.mipmap.rock)
@@ -62,7 +65,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                             }
                             else -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move)+"case 1", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -92,7 +95,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                             }
                             else -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move)+"case 2", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -108,7 +111,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                                     result.visibility = View.VISIBLE
                                 }
                             }
-                            "rockr" -> {
+                            "rock" -> {
                                 runOnUiThread {
                                     result.text=getString(R.string.win)
                                     result.visibility = View.VISIBLE
@@ -122,7 +125,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                             }
                             else -> {
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move)+"case 3", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -135,11 +138,94 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                 }
             }else{
                 runOnUiThread {
-                    Toast.makeText(context, context.getString(R.string.error_while_sending_move), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.error_while_sending_move)+"case 4", Toast.LENGTH_SHORT).show()
                 }
+
+                 */
+
+                if (ret.get("response").toString() == "rock") {
+                    runOnUiThread {
+                        opponentChoice.setImageResource(R.mipmap.rock)
+                    }
+                    if (choice == "rock") {
+                        runOnUiThread {
+                            result.text = getString(R.string.draw)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else if (choice == "paper") {
+                        runOnUiThread {
+                            result.text = getString(R.string.win)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else if (choice == "scissors") {
+                        runOnUiThread {
+                            result.text = getString(R.string.lose)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else {
+                        Log.e("Opponent Choice", ret.get("response").toString())
+                        Log.e("Your Choice", choice)
+                    }
+
+                } else if (ret.get("response").toString() == "paper") {
+                    runOnUiThread {
+                        opponentChoice.setImageResource(R.mipmap.paper)
+                    }
+                    if (choice == "rock") {
+                        runOnUiThread {
+                            result.text = getString(R.string.lose)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else if (choice == "paper") {
+                        runOnUiThread {
+                            result.text = getString(R.string.draw)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else if (choice == "scissors") {
+                        runOnUiThread {
+                            result.text = getString(R.string.win)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else {
+                        Log.e("Opponent Choice", ret.get("response").toString())
+                        Log.e("Your Choice", choice)
+                    }
+
+                } else if (ret.get("response").toString() == "scissors") {
+                    runOnUiThread {
+                        opponentChoice.setImageResource(R.mipmap.scissors)
+                    }
+                    if (choice == "rock") {
+                        runOnUiThread {
+                            result.text = getString(R.string.win)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else if (choice == "paper") {
+                        runOnUiThread {
+                            result.text = getString(R.string.lose)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else if (choice == "scissors") {
+                        runOnUiThread {
+                            result.text = getString(R.string.draw)
+                            result.visibility = View.VISIBLE
+                        }
+                    } else {
+                        Log.e("Opponent Choice", ret.get("response").toString())
+                        Log.e("Your Choice", choice)
+                    }
+
+                } else {
+                    Log.e("Opponent Choice", ret.get("response").toString())
+                    Log.e("Your Choice", choice)
+                }
+            } else {
+                Log.e("Error",temp)
             }
         }
+
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rock_paper_scissors)
@@ -151,7 +237,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
         opponentChoice = findViewById(R.id.opponent_choice)
 
         result = findViewById(R.id.result)
-        result.setOnClickListener{
+        result.setOnClickListener {
             startActivity(Intent(context, MainActivity::class.java))
         }
 
@@ -164,23 +250,26 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     override fun quit() {
         runOnUiThread {
             //blocks the player from playing more
-            result.text=getString(R.string.opponent_left)
+            result.text = getString(R.string.opponent_left)
             result.visibility = View.VISIBLE
             //-------------------------------------------------
             //change this function ↑ accordingly to archieve the same result
         }
-    }override var mService: MusicService? = null
+    }
+
+    override var mService: MusicService? = null
 
 
-                            //this has to be the same
+    //this has to be the same
     override fun onPause() {
         Pinger.stop()
         super.onPause()
-                                mService?.pauseMusic()
+        mService?.pauseMusic()
     }
+
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
-        var data : Data = object:Data{
+        var data: Data = object : Data {
             override val game: GameType
                 get() = GameType.ROCK_PAPER_SCISSORS
 
@@ -191,9 +280,9 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
         }
         Pinger.changeContext(this, data)
         super.onResume()
-        if(isBackgroundEnabled(applicationContext)){
+        if (isBackgroundEnabled(applicationContext)) {
             //startService(Intent(this, MusicService::class.java))
-            val intent =  Intent(this, MusicService::class.java)
+            val intent = Intent(this, MusicService::class.java)
             bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
             startService(intent)
             //mService?.resumeMusic()

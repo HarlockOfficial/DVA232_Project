@@ -12,7 +12,8 @@ class TicTacToeBot(Thread):
     def __init__(self):
         super().__init__()
         self.__uuid = "bot_"+"".join(random.choices(ascii_letters + digits + "_", k=14))
-        self.__url = "http://dva232-project-group-7.atwebpages.com/?game=ttt&player=" + self.__uuid
+       # self.__url = "http://dva232-project-group-7.atwebpages.com/?game=ttt&player=" + self.__uuid
+        self.__url = "http://localhost/?game=ttt&player=" + self.__uuid
         self.__field = []
         self.__sign = None
         self.__pinger = Pinger("ttt", self.__uuid)

@@ -18,7 +18,8 @@ class RockPaperScissorsBot(Thread):
     def __init__(self):
         super().__init__()
         self.__uuid = "bot_"+"".join(random.choices(ascii_letters + digits + "_", k=14))
-        self.__url = "http://dva232-project-group-7.atwebpages.com/?game=rps&player=" + self.__uuid
+        #self.__url = "http://dva232-project-group-7.atwebpages.com/?game=rps&player=" + self.__uuid
+        self.__url = "http://localhost/?game=rps&player=" + self.__uuid
         self.__pinger = Pinger("rps", self.__uuid)
 
     def run(self) -> None:

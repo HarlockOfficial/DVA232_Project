@@ -99,9 +99,16 @@ object CommunicationLayer {
      */
     suspend fun addPlayerMove(data: Data):JSONObject {
         return withContext(Dispatchers.IO) {
-            return@withContext JSONObject(
+            if (data.game.code == "dices") {
+                return@withContext JSONObject(
                     URL("$url?player=$uuid&action=add_move&game=${data.game.code}${data.moveToCsv()}&move=${data.moveToCsv()}").readText()
-            )
+                )
+            } else {
+               return@withContext JSONObject(
+                   URL("$url?player=$uuid&action=add_move&game=${data.game.code}&move=${data.moveToCsv()}").readText()
+               )
+           }
+
         }
     }
     /**
