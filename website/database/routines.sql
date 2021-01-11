@@ -38,7 +38,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 				select convert(_field_tmp, signed) into _dice_sum;
 				set _temporary = _temporary+(_position-_dice_sum);
 				select convert(_temporary, varchar(17)) into _field;
-				update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and id=_game_id;
+				update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
 				select field into _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
 				return _field;
 			end if;
