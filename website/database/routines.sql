@@ -24,7 +24,8 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 			return "ok";
         end if;
         return "request parameter not valid";
-    elseif _gameCode = "blow" then
+    end if;
+	if _gameCode = "blow" then
 		set _affected_rows = 0;
 		select id, field, player_code_2, count(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows>0 then
@@ -47,7 +48,8 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 			return_field;
 		end if;
 		return "request parameter not valid";
-	elseif _gameCode = "rps" then
+	end if;
+	if _gameCode = "rps" then
         set _affected_rows = 0;
         select id, count(1) into _game_id, _affected_rows from current_matches where game_code='rps' and (player_code_1=_playerCode or player_code_2=_playerCode);
         if _affected_rows > 0 then
@@ -59,7 +61,8 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
             return "cannot add more than one move";
         end if;
         return "request parameter not valid";
-	elseif _gameCode like "dices%" then
+	end if;
+	if _gameCode like "dices%" then
         set _affected_rows = 0;
         select id, count(1) into _game_id, _affected_rows from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
         if _affected_rows > 0 then
