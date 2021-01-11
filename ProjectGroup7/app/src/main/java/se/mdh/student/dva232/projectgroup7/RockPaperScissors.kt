@@ -41,7 +41,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                     delay(10)
                     ret = CommunicationLayer.getOpponentMove(rpsData)
                     Log.e("eee", ret.toString())
-                }while(ret.get("response")==null)   //TODO check, not sure if NULL is accepted as string like this
+                }while(ret.get("response")==null)
                 when {
                     ret.getString("response") == "rock" -> {
                         runOnUiThread {

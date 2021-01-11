@@ -42,7 +42,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
                 mBound = false
             }
         }
-
+//TODO("PUT ALL STRING IN STRINGS")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,7 +112,8 @@ class PopUp : AppCompatActivity() {                                     //Inform
             //image                 set image, look up
 
             startButton.setOnClickListener {
-                openWaitingRoom(GameType.FLIP_A_COIN)
+                val intent3 = Intent(this, FlipACoinActivity::class.java) //Only for now
+                startActivity(intent3)
             }
         } else {
 

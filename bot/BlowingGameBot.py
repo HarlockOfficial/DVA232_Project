@@ -1,3 +1,4 @@
+import os
 from threading import Thread
 import requests
 from string import ascii_letters, digits
@@ -20,7 +21,6 @@ class BlowingGameBot(Thread):
 
     def run(self) -> None:
         r = requests.get(self.__url + "&action=add_queue")
-        print(r.text)
         self.__pinger.start()
         if r.json()['response'] == "in_queue":
             print("Blowing Game Bot In Queue")
@@ -39,6 +39,7 @@ class BlowingGameBot(Thread):
         self.__field = int(ret['field'])
 
         while 0 < self.__field < 200:
+            time.sleep(0.5)
             while True:
                 move = random.randint(0, 20)
                 r = requests.get(self.__url + "&action=add_move&move=" + str(move))
@@ -47,20 +48,26 @@ class BlowingGameBot(Thread):
                 try:
                     val = int(r.json()["response"])
                     self.__field = val
+                    print(self.__field)
                     break
                 except ValueError as e:
-                    print("set move", e, r.text)
+                    print(e)
+                    time.sleep(0.1)
+            time.sleep(0.1)
             while True: 
                 r = requests.get(self.__url + "&action=get_move")
                 try:
                     val = int(r.json()["response"])
                     self.__field = val
+                    print(self.__field)
                     break
                 except ValueError as e:
-                    print("get move",e, r.text)
+                    print(e)
+                time.sleep(0.1)
 
         print("in the end the field is:", self.__field)
         if (self.__limit == 200 and self.__field >= self.__limit) or (self.__limit == 0 and self.__field <= self.__limit):
             print("winner")
         else:
-            print("looser")
+            print("loser")
+        os._exit(0)

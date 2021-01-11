@@ -16,5 +16,7 @@
     <string name="leave_queue">Leave the Waiting Queue</string>
     <string name="start_game">Start Game</string>
     <string name="back">Go Back</string>
+    <string name="random">Random Game</string>
+    <string name="open_fac">Flip a Coin</string>
 
 </resources>
