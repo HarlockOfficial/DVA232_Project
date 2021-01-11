@@ -13,19 +13,54 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 	declare _field_tmp varchar(100);
 	declare player2 varchar(20);
     if _gameCode = "ttt" then
-        select field, player_code_2, COUNT(1) into _field, player2, _affected_rows from current_matches where game_code='ttt' and player_code_1=_playerCode;
+        select field, player_code_2, COUNT(1) into _field, player2, _affected_rows from current_matches where game_code='ttt' and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows > 0 then
+			if _playerCode = player2 then
+				return "is not your turn";
+			end if;
             select insert(_field, _position, 1, _move) into _field_tmp;
 			set _field = _field_tmp;
 			update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and player_code_1=_playerCode;
 			return "ok";
         end if;
         return "request parameter not valid";
-    elseif _gameCode like "dices%" then
+    elseif _gameCode = "blow" then
+		set _affected_rows = 0;
+		select id, field, player_code_2, count(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
+		if _affected_rows>0 then
+			if _playerCode = player2 then
+				return "is not your turn";
+			end if;
+			select `move`, count(1) into _field_tmp, _affected_rows from last_move where game_id=_game_id and player_code!=_playerCode; 
+			if _affected_rows > 0 then
+				delete from last_move where game_id=_game_id and player_code!=_playerCode; 
+				select convert(_field, signed) into _temporary;
+				select convert(_field_tmp, signed) into _dice_sum;
+				update current_matches set field=_temporary+(_position-_dice_sum), player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+				select field into _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+				return _field;
+			end if;
+			insert into last_move(game_id, player_code, `move`) values (_game_id, _playerCode, _position);
+			select field into _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+			return_field;
+		end if;
+		return "request parameter not valid";
+	elseif _gameCode = "rps" then
         set _affected_rows = 0;
-        select id, count(1) into _game_id, _affected_rows from current_matches where game_code='dices' and (player_code_1=_playerCode or player_code_2=_playerCode);
+        select id, count(1) into _game_id, _affected_rows from current_matches where game_code='rps' and (player_code_1=_playerCode or player_code_2=_playerCode);
         if _affected_rows > 0 then
-            set _affected_rows = 0;
+            select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
+            if _affected_rows = 0 then
+                insert into last_move(game_id, player_code, move) values (_game_id, _playerCode, _move);
+                return "ok";
+            end if;
+            return "cannot add more than one move";
+        end if;
+        return "request parameter not valid";
+	elseif _gameCode like "dices%" then
+        set _affected_rows = 0;
+        select id, count(1) into _game_id, _affected_rows from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+        if _affected_rows > 0 then
             select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
             if _affected_rows = 0 then
                 start_cicle: loop
@@ -43,44 +78,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
             return "cannot add more than one move";
         end if;
         return "request parameter not valid";
-    elseif _gameCode = "rps" then
-        set _affected_rows = 0;
-        select id, count(1) into _game_id, _affected_rows from current_matches where game_code='rps' and (player_code_1=_playerCode or player_code_2=_playerCode);
-        if _affected_rows > 0 then
-            set _affected_rows = 0;
-            select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
-            if _affected_rows = 0 then
-                insert into last_move(game_id, player_code, move) values (_game_id, _playerCode, _move);
-                return "ok";
-            end if;
-            return "cannot add more than one move";
-        end if;
-        return "request parameter not valid";
-    elseif _gameCode = "blow" then
-		set _affected_rows = 0;
-		select id, field, player_code_2, count(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
-		if _affected_rows>0 then
-            select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
-			if _affected_rows <= 0 then
-				select `move`, count(1) into _field_tmp, _affected_rows from last_move where game_id=_game_id and player_code!=_playerCode; 
-				if _affected_rows > 0 then
-					delete from last_move where game_id=_game_id and player_code!=_playerCode; 
-					select convert(_field, signed) into _temporary;
-					if _temporary<=0 or _temporary>=200 then
-						return "match is already over";
-					end if;
-					select convert(_field_tmp, signed) into _dice_sum;
-					update current_matches set field=_temporary+(_position-_dice_sum), player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and player_code_1=_playerCode;
-					select field into _field from current_matches where game_code=_gameCode and player_code_1=player2 and player_code_2=_playerCode;
-					return _field;
-				end if;
-				insert into last_move(game_id, player_code, `move`) values (_game_id, _playerCode, _position);
-				return "waiting for opponent move";
-			end if;
-			return "cannot add more than one move";
-		end if;
-		return "request parameter not valid";
-	end if;
+    end if;
     return "request parameter not valid";
 END$$
 
