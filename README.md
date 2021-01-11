@@ -28,10 +28,10 @@
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## SECTIONS
-### [ ] 1. ABSTRACT
-### [ ] 2. INTRODUCTION 
+### 1. ABSTRACT
+### 2. INTRODUCTION 
 - a brief summary
-### [ ] 3. IDEA - MARKO
+### 3. IDEA - MARKO
 - [ ] brainstorming process
 	> how did we come up with the idea? </br>
 	> what was the first idea? </br>
@@ -80,11 +80,11 @@
 	- [ ] user experience
 	>-- what decisions did we make? -- </br>
 	>-- why we made those decisions? -- </br>
-### [ ] 6. THE APP - ALFONS
+### 6. THE APP - ALFONS
 - [ ] functionality
 - [ ] screenshots of the app/activities
 - [ ] games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
-### [ ] 7. DISCUSSION - ZYLAN
+### 7. DISCUSSION - ZYLAN
 - [ ] -- user tests, their feedback and how that affected your design --
 - [ ] future upgrades
 	- put less stress on server (lower ping)
@@ -94,7 +94,7 @@
 	- more functionaliteis
 		- removing vibrations, animations, dark mode, landscape, sending user feedback (see project proposal)
 ### 8. GLOSSARY (?) (preferably, if we have lots of pictures it wouod be nice to be able to ship to sections)
-### [x] 9. REFERENCES - FRANCESCO
+### 9. REFERENCES - FRANCESCO
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
