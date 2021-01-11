@@ -27,11 +27,8 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
     end if;
 	if _gameCode = "blow" then
 		set _affected_rows = 0;
-		select id, field, player_code_2, count(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code="blow" and (player_code_1=_playerCode or player_code_2=_playerCode);
+		select id, field, count(1) into _game_id, _field, _affected_rows from current_matches where game_code="blow" and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows>0 then
-			if _playerCode = player2 then
-				return "is not your turn";
-			end if;
 			select `move`, count(1) into _field_tmp, _affected_rows from last_move where game_id=_game_id and player_code!=_playerCode; 
 			if _affected_rows > 0 then
 				delete from last_move where game_id=_game_id and player_code!=_playerCode; 
@@ -39,7 +36,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 				select convert(_field_tmp, signed) into _dice_sum;
 				set _temporary = _temporary+(_position-_dice_sum);
 				select convert(_temporary, char(17)) into _field;
-				update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+				update current_matches set field=_field where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
 				return _field;
 			end if;
 			insert into last_move(game_id, player_code, `move`) values (_game_id, _playerCode, _position);
