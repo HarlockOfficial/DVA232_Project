@@ -27,7 +27,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
     end if;
 	if _gameCode = "blow" then
 		set _affected_rows = 0;
-		select id, field, player_code_2, count(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
+		select id, field, player_code_2, count(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code="blow" and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows>0 then
 			if _playerCode = player2 then
 				return "is not your turn";
