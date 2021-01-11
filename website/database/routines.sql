@@ -38,14 +38,13 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 				select convert(_field, signed) into _temporary;
 				select convert(_field_tmp, signed) into _dice_sum;
 				set _temporary = _temporary+(_position-_dice_sum);
-				select convert(_temporary, varchar(17)) into _field;
+				select convert(_temporary, char(17)) into _field;
 				update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
-				select field into _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
 				return _field;
 			end if;
 			insert into last_move(game_id, player_code, `move`) values (_game_id, _playerCode, _position);
 			select field into _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
-			return_field;
+			return _field;
 		end if;
 		return "request parameter not valid";
 	end if;
@@ -54,8 +53,8 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
         select id, count(1) into _game_id, _affected_rows from current_matches where game_code='rps' and (player_code_1=_playerCode or player_code_2=_playerCode);
         if _affected_rows > 0 then
             select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
-            if _affected_rows = 0 then
-                insert into last_move(game_id, player_code, move) values (_game_id, _playerCode, _move);
+            if _affected_rows = 0 then 
+                insert into last_move(game_id, player_code, `move`) values (_game_id, _playerCode, _move);
                 return "ok";
             end if;
             return "cannot add more than one move";
@@ -77,7 +76,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
                     end if;
                     leave start_cicle;
                 end loop start_cicle;
-                insert into last_move(game_id, player_code, move) values (_game_id, _playerCode, _dice_sum);
+                insert into last_move(game_id, player_code, `move`) values (_game_id, _playerCode, _dice_sum);
                 return _dice_sum;
             end if;
             return "cannot add more than one move";

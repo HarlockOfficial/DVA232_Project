@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -80,13 +81,16 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
 
     private suspend fun handleMove(response: JSONObject) {
         if (response["response"] == "ok") {
-            println("Received OK")
+           Log.e("TTT Move Response","Received OK")
             gameState[data.move - 1] = symbol.symbol
             updateGameField()
 
             waitForOpponentsMove()
         } else if (response["response"] == "error") {
+            Log.e("TTT Move Response","Error")
             // TODO show move is invalid
+        } else {
+          Log.e("TTT Move Response", response["response"].toString())
         }
 
     }
