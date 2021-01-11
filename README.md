@@ -5,88 +5,88 @@
 ###### [temporary link to editable documentation](https://www.overleaf.com/project/5fda128759085f43cd4840fd)
 
 ### PROJECT REPORT checklist:
-[x] The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”. (The document already has the correct title)
-[x] The format of the report should follow ACM journal guidelines. Pick any ACM journal that you like. (the LaTeX document already is in ACM format)
-[] The minimum size for the paper is 3000 words. Use as much figures, tables, etc. as you need.
-[] Don’t ask: “How many references we must have?” Just don’t.
-[] Are there dictation/grammatical mistakes? (TODO check the document into Grammarly)
-[] Is the information presented in a coherent way?
-[] Are the correct writing templates followed?
-[] Is the content relevant?
-[] Does the content miss any of the required points?
+- [x] The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”. (The document already has the correct title)
+- [x] The format of the report should follow ACM journal guidelines. Pick any ACM journal that you like. (the LaTeX document already is in ACM format)
+- [ ] The minimum size for the paper is 3000 words. Use as much figures, tables, etc. as you need.
+- [ ] Don’t ask: “How many references we must have?” Just don’t.
+- [ ] Are there dictation/grammatical mistakes? (TODO check the document into Grammarly)
+- [ ] Is the information presented in a coherent way?
+- [ ] Are the correct writing templates followed?
+- [ ] Is the content relevant?
+- [ ] Does the content miss any of the required points?
 
 
 ### PROJECT REPORT REQUIREMENTS
-[] The goals of the project.
-[] The tools that you used for developing the project.
-[] The design process of the interface and reasoning behind the design choices.
-[] User tests, their feedback and how that affected your design.
-[]- The development process and choices that you made and reasons for them.
-[] The final achievements of your work.
-[] A discussion about the development process and next steps to improve the result.
+- [ ] The goals of the project.
+- [ ] The tools that you used for developing the project.
+- [ ] The design process of the interface and reasoning behind the design choices.
+- [ ] User tests, their feedback and how that affected your design.
+- [ ] The development process and choices that you made and reasons for them.
+- [ ] The final achievements of your work.
+- [ ] A discussion about the development process and next steps to improve the result.
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## SECTIONS
-### [] 1. ABSTRACT
-### [] 2. INTRODUCTION 
+### [ ] 1. ABSTRACT
+### [ ] 2. INTRODUCTION 
 - a brief summary
-### [] 3. IDEA - MARKO
-- [] brainstorming process
+### [ ] 3. IDEA - MARKO
+- [ ] brainstorming process
 	> how did we come up with the idea? </br>
 	> what was the first idea? </br>
 	> -- the goals of the project -- </br>
 	> why was the first idea discarded? </br>
 	> what choices were made? </br>
 	> what was the focus? </br>
-- [] choice of games
+- [ ] choice of games
 	> what games were chosen? </br>
 	> why we chose those games? (use of sensors, learning about sensors) </br>
-- [] high quality criteria
+- [ ] high quality criteria
 	> why we chose this idea? </br>
 	> why we chose these games? </br>
-- [] first sketch of the system
+- [ ] first sketch of the system
 	> how we imagine the system at first?
 	> insert  picture figure 1. first draft
-- [] comparison to other games on the appstore
+- [ ] comparison to other games on the appstore
 ### 4. WORKFLOW - MARKO
-- [] ways of working
-- [] group communication
+- [ ] ways of working
+- [ ] group communication
 	> what tools did we use to communicate: </br>
 	> whatsapp, git-trello, git: commit comments </br>
-- [] timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
-- [] meeting scheduling and general meeting agendas
+- [ ] timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
+- [ ] meeting scheduling and general meeting agendas
 	- meetings with supervisors (how often, sprints, what we discussed, what it looked like, what we did in general)
 	- meetings within group (how often, sprints, what we discussed, what it looked like, what we did in general)
-- [] frameworks (why, benefits)
-- [] IDE (why, benefits)
-- [] APIs (why, benefits)
-- [] Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
+- [ ] frameworks (why, benefits)
+- [ ] IDE (why, benefits)
+- [ ] APIs (why, benefits)
+- [ ] Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
 ### 5. PROJECT DESIGN
-- [] requirements (rephrase content from document that we sent to afshin)
-- [] how the app will be used
+- [ ] requirements (rephrase content from document that we sent to afshin)
+- [ ] how the app will be used
 	- use cases
 	- use case diagram
 	- user experience
-- [] user interface - ERNEST
+- [ ] user interface - ERNEST
 	- activity diagram
 	- user experience
 	> -- what decisions did we make? -- </br>
 	> -- why we made those decisions? -- </br>
-- [] system
-	- [] overview with components diagram - MICHAL
-	- [] bots (functionality and user experience) - FRANCESCO
-	- [] database and ER diagram - FRANCESCO
-	- [] user experience
+- [ ] system
+	- [ ] overview with components diagram - MICHAL
+	- [ ] bots (functionality and user experience) - FRANCESCO
+	- [ ] database and ER diagram - FRANCESCO
+	- [ ] user experience
 	>-- what decisions did we make? -- </br>
 	>-- why we made those decisions? -- </br>
-### [] 6. THE APP - ALFONS
-- [] functionality
-- [] screenshots of the app/activities
-- [] games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
-### [] 7. DISCUSSION - ZYLAN
-- [] -- user tests, their feedback and how that affected your design --
-- [] future upgrades
+### [ ] 6. THE APP - ALFONS
+- [ ] functionality
+- [ ] screenshots of the app/activities
+- [ ] games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
+### [ ] 7. DISCUSSION - ZYLAN
+- [ ] -- user tests, their feedback and how that affected your design --
+- [ ] future upgrades
 	- put less stress on server (lower ping)
 	- let real users test the app and fix the app according to user feedback
 	- less data bandwidth
