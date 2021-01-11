@@ -35,8 +35,8 @@ object CommunicationLayer {
      */
     var uuid = createUUID()
         private set
-    //private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
-    private const val url: String = "http://192.168.1.195/"
+    private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
+//    private const val url: String = "http://192.168.1.195/"
 
     /**
      * function used to add a player to the waiting queue should be called before the user reaches

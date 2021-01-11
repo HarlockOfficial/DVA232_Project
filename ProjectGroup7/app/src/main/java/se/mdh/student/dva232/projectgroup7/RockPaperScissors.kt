@@ -26,8 +26,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
         GlobalScope.launch(Dispatchers.IO) {
             val choice: String = v.tag as String
             val rpsData = RockPaperScissorsData(choice)
-            val temp = CommunicationLayer.addPlayerMove(rpsData).getString("response")
-            if (temp == "ok") {
+            if(CommunicationLayer.addPlayerMove(rpsData).getString("response") == "ok"){
                 runOnUiThread {
                     val drawable = (v as ImageView).drawable
                     myChoice.setImageDrawable(drawable)
@@ -36,10 +35,9 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                 do {
                     delay(10)
                     ret = CommunicationLayer.getOpponentMove(rpsData)
-                    Log.e("Return value RPS", ret.toString())
-                } while (ret.get("response") == null)   //TODO check, not sure if NULL is accepted as string like this
-                Log.e("response value", ret.get("response").toString())
-                /* when {
+                    Log.e("eee", ret.toString())
+                }while(ret.get("response")==null)   //TODO check, not sure if NULL is accepted as string like this
+                when {
                     ret.getString("response") == "rock" -> {
                         runOnUiThread {
                             opponentChoice.setImageResource(R.mipmap.rock)
@@ -140,92 +138,9 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                 runOnUiThread {
                     Toast.makeText(context, context.getString(R.string.error_while_sending_move)+"case 4", Toast.LENGTH_SHORT).show()
                 }
-
-                 */
-
-                if (ret.get("response").toString() == "rock") {
-                    runOnUiThread {
-                        opponentChoice.setImageResource(R.mipmap.rock)
-                    }
-                    if (choice == "rock") {
-                        runOnUiThread {
-                            result.text = getString(R.string.draw)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else if (choice == "paper") {
-                        runOnUiThread {
-                            result.text = getString(R.string.win)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else if (choice == "scissors") {
-                        runOnUiThread {
-                            result.text = getString(R.string.lose)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else {
-                        Log.e("Opponent Choice", ret.get("response").toString())
-                        Log.e("Your Choice", choice)
-                    }
-
-                } else if (ret.get("response").toString() == "paper") {
-                    runOnUiThread {
-                        opponentChoice.setImageResource(R.mipmap.paper)
-                    }
-                    if (choice == "rock") {
-                        runOnUiThread {
-                            result.text = getString(R.string.lose)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else if (choice == "paper") {
-                        runOnUiThread {
-                            result.text = getString(R.string.draw)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else if (choice == "scissors") {
-                        runOnUiThread {
-                            result.text = getString(R.string.win)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else {
-                        Log.e("Opponent Choice", ret.get("response").toString())
-                        Log.e("Your Choice", choice)
-                    }
-
-                } else if (ret.get("response").toString() == "scissors") {
-                    runOnUiThread {
-                        opponentChoice.setImageResource(R.mipmap.scissors)
-                    }
-                    if (choice == "rock") {
-                        runOnUiThread {
-                            result.text = getString(R.string.win)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else if (choice == "paper") {
-                        runOnUiThread {
-                            result.text = getString(R.string.lose)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else if (choice == "scissors") {
-                        runOnUiThread {
-                            result.text = getString(R.string.draw)
-                            result.visibility = View.VISIBLE
-                        }
-                    } else {
-                        Log.e("Opponent Choice", ret.get("response").toString())
-                        Log.e("Your Choice", choice)
-                    }
-
-                } else {
-                    Log.e("Opponent Choice", ret.get("response").toString())
-                    Log.e("Your Choice", choice)
-                }
-            } else {
-                Log.e("Error",temp)
             }
         }
-
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rock_paper_scissors)
