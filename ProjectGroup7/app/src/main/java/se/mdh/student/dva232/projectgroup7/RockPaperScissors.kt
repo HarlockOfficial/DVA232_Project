@@ -22,7 +22,12 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     private lateinit var opponentChoice: ImageView
     private lateinit var context: Context
     private lateinit var result: TextView
+    private var isClicked: Boolean = false
     private val clickListener = View.OnClickListener { v ->
+        if (isClicked) {
+            return@OnClickListener
+        }
+        isClicked = true
         GlobalScope.launch(Dispatchers.IO) {
             val choice: String = v.tag as String
             val rpsData = RockPaperScissorsData(choice)

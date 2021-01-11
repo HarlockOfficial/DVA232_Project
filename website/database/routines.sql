@@ -13,7 +13,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 	declare _field_tmp varchar(100);
 	declare player2 varchar(20);
     if _gameCode = "ttt" then
-        select id, field, player_code_2, COUNT(1) into game_id, _field, player2, _affected_rows from current_matches where game_code='ttt' and (player_code_1=_playerCode or player_code_2=_playerCode);
+        select id, field, player_code_2, COUNT(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code='ttt' and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows > 0 then
 			if _playerCode = player2 then
 				return "is not your turn";
@@ -62,7 +62,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
         return "request parameter not valid";
 	end if;
 	set _affected_rows = 0;
-	select 1 into _affected_rows where (lower(title) LIKE "dices%");
+	select 1 into _affected_rows where _gameCode LIKE "dices%";
 	if _affected_rows>0 then
         set _affected_rows = 0;
         select id, count(1) into _game_id, _affected_rows from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
