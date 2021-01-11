@@ -59,9 +59,9 @@
 	- meetings with supervisors (how often, sprints, what we discussed, what it looked like, what we did in general)
 	- meetings within group (how often, sprints, what we discussed, what it looked like, what we did in general)
 - [ ] frameworks (why, benefits)
-- [ ] IDE (why, benefits)
 - [ ] APIs (why, benefits)
 - [ ] Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
+- [ ] IDE (why, benefits)
 ### 5. PROJECT DESIGN
 - [ ] requirements (rephrase content from document that we sent to afshin)
 - [ ] how the app will be used
