@@ -58,7 +58,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
         return "request parameter not valid";
     elseif _gameCode = "blow" then
 		set _affected_rows = 0;
-		select id, field, count(1) into _game_id, _field, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
+		select id, field, player_code_2, count(1) into _game_id, _field, player2, _affected_rows from current_matches where game_code='blow' and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows>0 then
             select count(1) into _affected_rows from last_move where game_id=_game_id and player_code=_playerCode;
 			if _affected_rows <= 0 then
@@ -70,8 +70,8 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 						return "match is already over";
 					end if;
 					select convert(_field_tmp, signed) into _dice_sum;
-					update current_matches set field=_temporary+(_position-_dice_sum) where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
-					select field into _field from current_matches where game_code=_gameCode and (player_code_1=_playerCode or player_code_2=_playerCode);
+					update current_matches set field=_temporary+(_position-_dice_sum), player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and player_code_1=_playerCode;
+					select field into _field from current_matches where game_code=_gameCode and player_code_1=player2 and player_code_2=_playerCode;
 					return _field;
 				end if;
 				insert into last_move(game_id, player_code, `move`) values (_game_id, _playerCode, _position);
