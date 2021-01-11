@@ -13,14 +13,14 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 	declare _field_tmp varchar(100);
 	declare player2 varchar(20);
     if _gameCode = "ttt" then
-        select field, player_code_2, COUNT(1) into _field, player2, _affected_rows from current_matches where game_code='ttt' and (player_code_1=_playerCode or player_code_2=_playerCode);
+        select id, field, player_code_2, COUNT(1) into game_id, _field, player2, _affected_rows from current_matches where game_code='ttt' and (player_code_1=_playerCode or player_code_2=_playerCode);
 		if _affected_rows > 0 then
 			if _playerCode = player2 then
 				return "is not your turn";
 			end if;
             select insert(_field, _position, 1, _move) into _field_tmp;
 			set _field = _field_tmp;
-			update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and player_code_1=_playerCode;
+			update current_matches set field=_field, player_code_1=player2, player_code_2=_playerCode where game_code=_gameCode and id=_game_id;
 			return "ok";
         end if;
         return "request parameter not valid";
