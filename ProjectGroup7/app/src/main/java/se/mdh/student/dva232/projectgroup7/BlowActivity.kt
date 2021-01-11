@@ -106,94 +106,54 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
             GlobalScope.launch {
                 var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData) //Our data is sent
                     Log.e("Our new data:", ret.getString("response"))
+                while (true) {
+                    try {
+                        retValue = ret.getString("response").toInt()        //We get our new data
+                        if (isPlayerTurn) {
+                            if (retValue >= 200) {
+                                Log.e("Game is over:", ("Player wins"))
+                                endGame(mediaRecorder, timer, true)
+                            }
+                            else if (retValue <= 0) {
+                                Log.e("Game is over:", ("Player loses"))
+                                endGame(mediaRecorder, timer, false)
+                            } else {
+                                runOnUiThread{
 
-                try {
-                    retValue = ret.getString("response").toInt()        //We get our new data
-                    if (isPlayerTurn) {
-                        if (retValue >= 200) {
-                            Log.e("Game is over:", ("Player wins"))
-                            endGame(mediaRecorder, timer, true)
-                        }
-                        else if (retValue <= 0) {
-                            Log.e("Game is over:", ("Player loses"))
-                            endGame(mediaRecorder, timer, false)
+                                    val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                    val set = ConstraintSet()
+                                    set.clone(constraintLayout)
+                                    set.setVerticalBias(R.id.ball, 1-(retValue/200f))
+                                    set.applyTo(constraintLayout)
+
+                                }
+                            }
                         } else {
-                            runOnUiThread{
+                            if (retValue <= 0) {
+                                Log.e("Game is over:", ("Player wins"))
+                                endGame(mediaRecorder, timer, true)
+                            }
+                            else if (retValue >= 200) {
+                                Log.e("Game is over:", ("Player loses"))
+                                endGame(mediaRecorder, timer, false)
+                            } else {
+                                runOnUiThread{
 
-                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
-                                val set = ConstraintSet()
-                                set.clone(constraintLayout)
-                                set.setVerticalBias(R.id.ball, 1-(retValue/200f))
-                                set.applyTo(constraintLayout)
+                                    val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                    val set = ConstraintSet()
+                                    set.clone(constraintLayout)
+                                    set.setVerticalBias(R.id.ball, retValue/200f)
+                                    set.applyTo(constraintLayout)
 
+                                }
                             }
                         }
-                    } else {
-                        if (retValue <= 0) {
-                            Log.e("Game is over:", ("Player wins"))
-                            endGame(mediaRecorder, timer, true)
-                        }
-                        else if (retValue >= 200) {
-                            Log.e("Game is over:", ("Player loses"))
-                            endGame(mediaRecorder, timer, false)
-                        } else {
-                            runOnUiThread{
-
-                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
-                                val set = ConstraintSet()
-                                set.clone(constraintLayout)
-                                set.setVerticalBias(R.id.ball, retValue/200f)
-                                set.applyTo(constraintLayout)
-
-                            }
-                        }
+                        break
+                    } catch (e: NumberFormatException) {
+                        ret = CommunicationLayer.getOpponentMove(blowData)
+                        Log.e("Opponents new data:", ret.getString("response"))
+                        continue
                     }
-                }
-                catch (e: NumberFormatException) {
-                    Log.e("AAA:", ("ENTERED THE CATCH"))
-                    ret = CommunicationLayer.getOpponentMove(blowData)
-                    Log.e("Opponents new data:", ret.getString("response"))
-                    oppValue = ret.getString("response").toInt()        //We get the opponents data
-                    if (isPlayerTurn) {
-                        if (oppValue >= 200) {
-                            Log.e("Game is over:", ("Player wins"))
-                            endGame(mediaRecorder, timer, true)
-                        }
-                        else if (oppValue <= 0) {
-                            Log.e("Game is over:", ("Player loses"))
-                            endGame(mediaRecorder, timer, false)
-                        }  else {
-                            runOnUiThread{
-
-                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
-                                val set = ConstraintSet()
-                                set.clone(constraintLayout)
-                                set.setVerticalBias(R.id.ball, 1-(oppValue/200f))
-                                set.applyTo(constraintLayout)
-
-                            }
-                        }
-                    } else {
-                        if (oppValue <= 0) {
-                            Log.e("Game is over:", ("Player wins"))
-                            endGame(mediaRecorder, timer, true)
-                        }
-                        else if (oppValue >= 200) {
-                            Log.e("Game is over:", ("Player loses"))
-                            endGame(mediaRecorder, timer, false)
-                        }  else {
-                            runOnUiThread{
-
-                                val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
-                                val set = ConstraintSet()
-                                set.clone(constraintLayout)
-                                set.setVerticalBias(R.id.ball, oppValue/200f)
-                                set.applyTo(constraintLayout)
-
-                            }
-                        }
-                    }
-
                 }
 
             }
