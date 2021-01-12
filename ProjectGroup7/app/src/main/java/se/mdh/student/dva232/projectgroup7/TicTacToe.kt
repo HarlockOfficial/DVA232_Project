@@ -77,7 +77,9 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
 
             waitForOpponentsMove()
         } else {
-            Toast.makeText(baseContext, R.string.error_while_sending_move, Toast.LENGTH_SHORT).show()
+            runOnUiThread{
+                Toast.makeText(baseContext, R.string.error_while_sending_move, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -23,8 +23,8 @@
 
     <Button
         android:id="@+id/button_start"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="105dp"
         android:layout_marginBottom="16dp"
@@ -40,7 +40,7 @@
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:text="@string/back"
         android:textColor="@color/text_gray"

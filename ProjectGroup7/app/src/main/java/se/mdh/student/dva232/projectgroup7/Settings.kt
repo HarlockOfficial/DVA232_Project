@@ -5,11 +5,18 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.provider.Settings
+import android.text.Editable
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class Settings : AppCompatActivity() {
@@ -18,9 +25,23 @@ class Settings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        setTitle("Settings")
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        title = "Settings"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        findViewById<Button>(R.id.button_send).setOnClickListener{
+            val text = findViewById<EditText>(R.id.edit_feedback).text.toString()
+            GlobalScope.launch {
+                CommunicationLayer.addFeedback(text)
+                findViewById<EditText>(R.id.edit_feedback).setText("")
+                runOnUiThread {
+                    Toast.makeText(this@Settings, R.string.sent_feedback, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        findViewById<Button>(R.id.button_clear).setOnClickListener{
+            findViewById<EditText>(R.id.edit_feedback).setText("")
+
+        }
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings_container, SettingsFragment())
@@ -63,6 +84,8 @@ class Settings : AppCompatActivity() {
                 }
                 true
             }
+
+
         }
 
         override fun onPause() {

@@ -38,8 +38,8 @@ interface ActivityInterface {
         Pinger.stop()
 
         val intent = Intent(context, ResultScreen::class.java)
-        intent.putExtra("GAME", gameType.code)
-        intent.putExtra("RESULT", matchResult.value)
+        intent.putExtra("GAME", gameType.name)
+        intent.putExtra("RESULT", matchResult.name)
         intent.putExtra("DICES_COUNT", diceCount.toString())
         context.startActivity(intent)
     }

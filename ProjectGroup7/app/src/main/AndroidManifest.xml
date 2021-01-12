@@ -24,6 +24,7 @@
         <activity android:name=".TicTacToe" />
         <activity android:name=".RockPaperScissors" />
         <activity android:name=".FlipACoinActivity" />
+        <activity android:name=".ResultScreen" android:theme="@style/Theme.AppCompat.PopTheme"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

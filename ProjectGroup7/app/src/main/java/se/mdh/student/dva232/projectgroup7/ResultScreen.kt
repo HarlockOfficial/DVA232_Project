@@ -21,6 +21,7 @@ class ResultScreen :
     private lateinit var game: GameType
     private lateinit var result: MatchResult
     lateinit var quantity: String
+    private val map = HashMap<GameType, Int>()
 
     private var mService: MusicService? = null
 
@@ -48,6 +49,12 @@ class ResultScreen :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pop_up)
 
+        map[GameType.TIC_TAC_TOE] = R.mipmap.ttt_round
+        map[GameType.DICES] = R.drawable.ic_dice
+        map[GameType.BLOW] = R.drawable.ic_tumbleweed
+        map[GameType.ROCK_PAPER_SCISSORS] = R.mipmap.rps
+        map[GameType.FLIP_A_COIN] = R.drawable.ic_shiny_coin3
+
         game = GameType.valueOf(intent.getStringExtra("GAME")!!)
         result = MatchResult.valueOf(intent.getStringExtra("RESULT")!!)
         if (game == GameType.DICES) {
@@ -68,7 +75,8 @@ class ResultScreen :
 
         field.visibility = View.GONE
         amntDicesText.visibility = View.GONE
-        image.visibility = View.GONE
+        image.visibility = View.VISIBLE
+        image.setImageResource(map[game]!!)
         infoText.visibility = View.GONE
         header.text = if (result == MatchResult.DRAW) {
             getString(R.string.draw)

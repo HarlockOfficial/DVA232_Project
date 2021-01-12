@@ -75,8 +75,8 @@ class PopUp : AppCompatActivity() {                                     //Inform
             header.text = getString(R.string.dices_name)
             infoText.text = getString(R.string.dices_desc)
             image.setImageResource(R.drawable.ic_dice)         //set image, look up
-            field.visibility = View.GONE
-            amntDicesText.visibility = View.GONE
+            field.visibility = View.VISIBLE
+            amntDicesText.visibility = View.VISIBLE
 
             startButton.setOnClickListener {
                 quantity = field.text.toString()
@@ -101,6 +101,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
         } else if (game == GameType.FLIP_A_COIN) {
             header.text = getString(R.string.flip_a_coin_name)
             infoText.text = getString(R.string.flip_a_coin_desc)
+            image.setImageResource(R.drawable.ic_shiny_coin3)
 
             startButton.setOnClickListener {
                 val intent3 = Intent(this, FlipACoinActivity::class.java)
