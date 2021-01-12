@@ -63,8 +63,8 @@
 - [x] Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
 - [x] IDE (why, benefits) - FRANCESCO
 ### 5. PROJECT DESIGN
-- [ ] requirements (rephrase content from document that we sent to afshin)
-- [ ] how the app will be used
+- [ ] requirements (rephrase content from document that we sent to afshin) -MARKO
+- [ ] how the app will be used -ALFONS
 	- use cases
 	- use case diagram
 	- user experience
