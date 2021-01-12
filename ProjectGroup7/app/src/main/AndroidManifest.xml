@@ -18,7 +18,7 @@
         <activity android:name=".PopUp" android:theme="@style/Theme.AppCompat.PopTheme" />
         <activity android:name=".BlowActivity" />
         <activity android:name=".DicesActivity" />
-        <activity android:name=".Settings" />
+        <activity android:name=".Settings" android:parentActivityName=".MainActivity"/>
         <service android:name=".MusicService" android:enabled="true" android:exported="true"/>
         <activity android:name=".WaitingRoom" />
         <activity android:name=".TicTacToe" />
