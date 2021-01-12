@@ -82,8 +82,8 @@
 	>-- why we made those decisions? -- </br>
 ### 6. THE APP - ALFONS
 - [ ] functionality
-- [ ] screenshots of the app/activities
-- [ ] games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
+- [x] screenshots of the app/activities
+- [x] games (tic-tac-toe, rock-paper-scissors, blowing game, dices, flip a coin)
 ### 7. DISCUSSION - ZYLAN
 - [ ] -- user tests, their feedback and how that affected your design --
 - [ ] future upgrades
