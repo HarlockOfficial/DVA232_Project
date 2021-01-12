@@ -8,86 +8,101 @@
 
     <TextView
         android:id="@+id/name_header"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/primary_green"
+        android:gravity="center"
         android:text="@string/app_name"
+        android:textColor="@color/light_gray"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_start"
-        android:layout_width="119dp"
-        android:layout_height="47dp"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="105dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/primary_green"
         android:text="@string/start_game"
+        android:textColor="@color/light_gray"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_back"
+        app:layout_constraintHorizontal_bias="0.264"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="140dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="40dp"
         android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="@color/text_gray"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_start" />
 
     <TextView
         android:id="@+id/text_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="288dp"
+        android:layout_width="178dp"
+        android:layout_height="159dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
         android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/field_numDices"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.713"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toEndOf="@+id/image_game"
+        app:layout_constraintTop_toTopOf="@+id/image_game"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/image_game"
         android:layout_width="149dp"
         android:layout_height="156dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
         android:adjustViewBounds="true"
+        android:background="#FFFFFF"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_info"
-        app:layout_constraintHorizontal_bias="0.252"
+        app:layout_constraintBottom_toTopOf="@+id/button_start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38"
+        app:layout_constraintTop_toBottomOf="@+id/name_header"
+        app:layout_constraintVertical_bias="0.163"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
         android:id="@+id/field_numDices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="240dp"
+        android:layout_width="88dp"
+        android:layout_height="39dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/text_amnt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.756"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_info"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toEndOf="@+id/text_amnt"
+        app:layout_constraintTop_toTopOf="@+id/text_amnt" />
 
     <TextView
         android:id="@+id/text_amnt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="252dp"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:background="@color/primary_green"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
         android:text="Amount of dices:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/field_numDices"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent" />
+
+        android:textColor="@color/light_gray"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_game"
+        app:layout_constraintVertical_bias="0.513" />
 </androidx.constraintlayout.widget.ConstraintLayout>

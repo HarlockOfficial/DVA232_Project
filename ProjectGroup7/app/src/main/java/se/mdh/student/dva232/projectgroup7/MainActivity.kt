@@ -11,6 +11,8 @@ import android.os.IBinder
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import androidx.preference.PreferenceManager
 
 
@@ -18,6 +20,7 @@ import androidx.preference.PreferenceManager
 class MainActivity : AppCompatActivity() {
 
     //---------------------------------------------------------------------------------------//
+
     private var mService: MusicService? = null
     private var mBound: Boolean = false
 
@@ -76,14 +79,19 @@ class MainActivity : AppCompatActivity() {
         // TODO: after adding a open_flip_a_coin, give the open_flip_a_coin an ID and do like ↑
     }
 
+
     private fun openPop(game: GameType){
         val intent = Intent(this, PopUp::class.java)
         intent.putExtra("GAME", game.name)
+
+        findViewById<ImageView>(R.id.background_tint).visibility = View.VISIBLE
         startActivity(intent)
+
     }
 
     override fun onStop() {
         super.onStop()
+
         if(mBound) {
             unbindService(connection)
             mBound = false

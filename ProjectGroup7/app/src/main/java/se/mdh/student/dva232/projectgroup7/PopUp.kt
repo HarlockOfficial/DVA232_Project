@@ -5,14 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.content.ServiceConnection
+import android.graphics.Color
+import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
 import android.util.DisplayMetrics
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import org.w3c.dom.Text
@@ -45,12 +47,14 @@ class PopUp : AppCompatActivity() {                                     //Inform
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pop_up)
         game = GameType.valueOf(intent.getStringExtra("GAME")!!)
         val dm = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(dm)
-        window.setLayout((dm.widthPixels*0.9).toInt(), (dm.heightPixels*0.75).toInt())
+        window.setLayout((dm.widthPixels*0.9).toInt(), (dm.heightPixels*0.6).toInt())
+
 
         var startButton = findViewById<Button>(R.id.button_start)
         findViewById<Button>(R.id.button_back).setOnClickListener {
@@ -68,7 +72,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
         if (game == GameType.BLOW) {
 
             header.text = "BLOW GAME"
-            infoText.text = "This is the blow game temporary info text"
+            infoText.text = "Blow into your microphone and push the ball the furthest!"
             image.setImageResource(R.drawable.ic_tumbleweed)
 
             startButton.setOnClickListener {
@@ -77,7 +81,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
         } else if (game == GameType.DICES) {                    //Set Dices amount
 
             header.text = "DICE GAME"
-            infoText.text = "This is the dice game temporary info text"
+            infoText.text = "Roll custom number of dice and let the fate decide!"
             image.setImageResource(R.drawable.ic_dice)         //set image, look up
             field.isVisible = true
             amntDicesText.isVisible = true
@@ -90,8 +94,8 @@ class PopUp : AppCompatActivity() {                                     //Inform
         }  else if (game == GameType.TIC_TAC_TOE) {
 
             header.text = "TIC TAC TOE"
-            infoText.text = "This is the Tic Tac Toe game temporary info text"
-            //image                 set image, look up
+            infoText.text = "Check your cognitive skills by playing tic-tac-toe!"
+            image.setImageResource(R.mipmap.ttt_round)         //set image, look up
 
             startButton.setOnClickListener {
                 openWaitingRoom(GameType.TIC_TAC_TOE)
@@ -99,8 +103,8 @@ class PopUp : AppCompatActivity() {                                     //Inform
         } else if (game == GameType.ROCK_PAPER_SCISSORS) {
 
             header.text = "Rock Paper Scissors"
-            infoText.text = "This is the Rock Paper Scissors game temporary info text"
-            //image                 set image, look up
+            infoText.text = "Play Rock Paper Scissors and test yourself!"
+            image.setImageResource(R.mipmap.rps_round)
 
             startButton.setOnClickListener {
                 openWaitingRoom(GameType.ROCK_PAPER_SCISSORS)
@@ -108,7 +112,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
         } else if (game == GameType.FLIP_A_COIN) {
 
             header.text = "Flip a Coin"
-            infoText.text = "This is the Flip a coin game temporary info text"
+            infoText.text = "Simply flip a coin. Maybe you win, maybe you lose - who knows?"
             //image                 set image, look up
 
             startButton.setOnClickListener {

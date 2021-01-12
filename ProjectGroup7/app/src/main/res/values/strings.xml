@@ -6,15 +6,16 @@
     <string name="draw">Draw</string>
     <string name="win">Win</string>
     <string name="lose">Lose</string>
-    <string name="open_rps">Open Rock Paper Scissors</string>
-    <string name="open_dices">Open Dices Game</string>
-    <string name="open_tic_tac_toe">Open Tic Tac Toe Game</string>
-    <string name="open_blow">Open BlowGame</string>
+    <string name="open_rps">Rock Paper Scissors</string>
+    <string name="open_dices">Dice</string>
+    <string name="open_tic_tac_toe">Tic Tac Toe</string>
+    <string name="open_blow">Blow the Ball</string>
     <string name="waiting_room">Please wait here, we are searching a game room for: %1$s</string>
     <string name="waiting_room_game_error">Unknown Error while opening the game</string>
     <string name="opponent_left">Opponent left the game, you win</string>
     <string name="leave_queue">Leave the Waiting Queue</string>
     <string name="start_game">Start Game</string>
     <string name="back">Go Back</string>
+    <string name="random_game">Or play a random game</string>
 
 </resources>
