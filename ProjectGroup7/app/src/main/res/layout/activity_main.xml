@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/open_random"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="24dp"
@@ -34,7 +34,7 @@
                 android:layout_marginTop="16dp"
                 android:elevation="2dp"
 
-                android:text="FLIP A COIN"
+                android:text="@string/open_fac"
                 android:textColor="@color/text_gray"
                 android:textSize="18sp"
                 app:backgroundTint="@color/light_gray"
@@ -83,16 +83,6 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/open_RPS"
                 app:layout_constraintTop_toBottomOf="@+id/open_tic_tac_toe" />
-    <Button
-        android:id="@+id/open_random"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="168dp"
-        android:text="@string/random"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.808"
-        app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/open_RPS"
