@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_green"
     tools:context=".TicTacToe">
 
     <TextView
@@ -39,7 +40,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
 
             <Button
                 android:id="@+id/field_2"
@@ -49,7 +50,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
 
             <Button
                 android:id="@+id/field_3"
@@ -59,7 +60,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +76,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
 
             <Button
                 android:id="@+id/field_5"
@@ -85,7 +86,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
 
             <Button
                 android:id="@+id/field_6"
@@ -95,7 +96,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
 
         </LinearLayout>
 
@@ -112,7 +113,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
 
             <Button
                 android:id="@+id/field_8"
@@ -122,7 +123,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
 
             <Button
                 android:id="@+id/field_9"
@@ -133,7 +134,7 @@
                 android:background="@drawable/tic_tac_toe_blank_field"
                 app:backgroundTintMode="add"
                 app:elevation="0dp"
-                tools:backgroundTint="@android:color/transparent" />
+                tools:backgroundTint="@color/black" />
         </LinearLayout>
 
     </LinearLayout>

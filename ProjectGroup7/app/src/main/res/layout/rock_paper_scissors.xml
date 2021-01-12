@@ -8,30 +8,30 @@
 
     <ImageView
         android:id="@+id/opponent_choice"
-        android:layout_width="281dp"
-        android:layout_height="173dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="74dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="78dp"
-        app:layout_constraintBottom_toTopOf="@+id/my_choice"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:background="@color/primary_green"
+        android:paddingTop="50dp"
+        android:paddingBottom="100dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/unknown" />
+        app:srcCompat="@drawable/ic_outline_help_24_white"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/my_choice"
         android:layout_width="281dp"
         android:layout_height="173dp"
         android:layout_marginStart="65dp"
-        android:layout_marginTop="78dp"
         android:layout_marginEnd="65dp"
+        app:layout_constraintBottom_toTopOf="@+id/paper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/opponent_choice"
-        app:srcCompat="@mipmap/unknown" />
+        app:srcCompat="@drawable/ic_outline_help_24" />
 
     <ImageView
         android:id="@+id/rock"
@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/paper"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@mipmap/rock" />
+        app:srcCompat="@mipmap/rock_round" />
 
     <ImageView
         android:id="@+id/paper"
