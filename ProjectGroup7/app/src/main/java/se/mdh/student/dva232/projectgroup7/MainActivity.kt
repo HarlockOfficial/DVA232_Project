@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         if(mBound) {
+            mService?.stopSelf()
             unbindService(connection)
             mBound = false
         }
