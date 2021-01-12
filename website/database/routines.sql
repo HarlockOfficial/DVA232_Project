@@ -34,7 +34,7 @@ CREATE FUNCTION `add_move` (`_playerCode` VARCHAR(20), `_gameCode` VARCHAR(10), 
 				delete from last_move where game_id=_game_id and player_code!=_playerCode; 
 				select convert(_field, signed) into _temporary;
 				select convert(_field_tmp, signed) into _dice_sum;
-				set _temporary = _temporary+(_position-_dice_sum);
+				set _temporary = _temporary+(_position-_dice_sum)*0.1;
 				update current_matches set field=_temporary where game_code=_gameCode and id=_game_id;
 				return _temporary;
 			end if;

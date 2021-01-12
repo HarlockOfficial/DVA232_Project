@@ -70,20 +70,7 @@ private lateinit var result: TextView
         mediaRecorder.setAudioEncodingBitRate(48000)
         mediaRecorder.prepare()
 
-
-        findViewById<Button>(R.id.record_start).setOnClickListener{
-            if (!started) {
-                startGame(mediaRecorder, timer)
-                //temporary()
-            }
-
-        }
-
-        findViewById<Button>(R.id.record_stop).setOnClickListener{
-            if (started) {
-                endGame(mediaRecorder, timer, false)
-            }
-        }
+        startGame(mediaRecorder, timer)
 
 
 
@@ -167,7 +154,7 @@ private lateinit var result: TextView
 
 
 
-        timer.schedule(task, 1, 500) //Bleh
+        timer.schedule(task, 1, 50) //Bleh
                     //recording to value
     }
 
@@ -186,6 +173,12 @@ private lateinit var result: TextView
             view.text = getString(R.string.lose)
         }
         
+    }
+
+    override fun onBackPressed() {
+        Pinger.stop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private var permissionAccepted = false

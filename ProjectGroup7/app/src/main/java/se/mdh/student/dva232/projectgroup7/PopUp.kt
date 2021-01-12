@@ -58,7 +58,7 @@ class PopUp : AppCompatActivity() {                                     //Inform
 
         var startButton = findViewById<Button>(R.id.button_start)
         findViewById<Button>(R.id.button_back).setOnClickListener {
-            finish()
+            onBackPressed()
         }
         var header = findViewById<TextView>(R.id.name_header)
         var infoText = findViewById<TextView>(R.id.text_info)

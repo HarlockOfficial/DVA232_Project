@@ -53,7 +53,7 @@
 	
 	//used for tic tac toe
 	function check_field($field){
-		$is_draw = true
+		$is_draw = true;
 	    for($i=0;$i<9;$i++){
 			if($field[$i] == "-"){
 				$is_draw = false;

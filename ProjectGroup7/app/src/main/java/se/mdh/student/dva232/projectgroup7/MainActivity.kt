@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finish()
+        finishAffinity()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

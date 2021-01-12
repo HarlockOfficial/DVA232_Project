@@ -5,7 +5,7 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="5dp"
-                android:color="@color/light_gray" />
+                android:color="@color/black" />
             <solid android:color="@color/primary_green" />
         </shape>
     </item>
@@ -23,7 +23,7 @@
             <shape android:shape="line">
                 <stroke
                     android:width="5dp"
-                    android:color="@color/light_gray" />
+                    android:color="@color/black" />
             </shape>
         </rotate>
     </item>
@@ -41,7 +41,7 @@
             <shape android:shape="line">
                 <stroke
                     android:width="5dp"
-                    android:color="@color/light_gray" />
+                    android:color="@color/black" />
             </shape>
         </rotate>
     </item>

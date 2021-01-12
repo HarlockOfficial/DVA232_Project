@@ -39,9 +39,9 @@ class BlowingGameBot(Thread):
         self.__field = int(ret['field'])
 
         while 0 < self.__field < 200:
-            time.sleep(0.5)
+            time.sleep(0.05)
             while True:
-                move = random.randint(0, 20)
+                move = random.randint(0, 65)
                 r = requests.get(self.__url + "&action=add_move&move=" + str(move))
                 if "waiting for opponent move" == r.json()["response"]:
                     break
