@@ -18,12 +18,12 @@
     </head>
     <body>
         <?php
-            for($list as $key=>$value){
-                $string = "<form action='".$_SERVER['PHP_SELF']."' method='post'>"
-                $string .= "<p>".$value['message']."</p>"
-                $string .= "<input type='hidden' name='feedback_id' value='".$value['id']."' />"
-                $string .= "<input type='submit' value='Delete the comment' />"
-                $string .= "</form><hr />"
+            foreach($list as $key=>$value){
+                $string = "<form action='".$_SERVER['PHP_SELF']."' method='post'>";
+                $string .= "<p>".$value['message']."</p>";
+                $string .= "<input type='hidden' name='feedback_id' value='".$value['id']."' />";
+                $string .= "<input type='submit' value='Delete the comment' />";
+                $string .= "</form><hr />";
                 echo $string;
             }
         ?>
