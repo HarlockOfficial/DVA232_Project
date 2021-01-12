@@ -32,6 +32,7 @@ class FlipACoinActivity : AppCompatActivity(), ActivityInterface {
         findViewById<Button>(R.id.tails).setOnClickListener{
             flip(false)
         }
+        supportActionBar?.hide()
     }
 
     /**

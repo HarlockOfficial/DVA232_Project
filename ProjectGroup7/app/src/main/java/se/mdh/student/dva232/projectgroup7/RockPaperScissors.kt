@@ -149,7 +149,7 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rock_paper_scissors)
-
+        supportActionBar?.hide()
         // ---------------------------------------------------
         context = baseContext
 

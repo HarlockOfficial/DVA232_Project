@@ -30,7 +30,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dices2)
-
+        supportActionBar?.hide()
         result = findViewById(R.id.result)
         result.setOnClickListener {
             startActivity(Intent(baseContext, MainActivity::class.java))

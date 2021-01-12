@@ -28,7 +28,7 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tic_tac_toe)
-
+        supportActionBar?.hide()
         result = findViewById(R.id.result_tic_tac_toe)
         result.setOnClickListener {
             startActivity(Intent(baseContext, MainActivity::class.java))
