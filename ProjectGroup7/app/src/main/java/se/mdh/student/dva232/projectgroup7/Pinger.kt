@@ -18,9 +18,7 @@ object Pinger {
     }
 
     fun start(){
-        Log.e("Pinger", "Pinger started " + currentActivity.toString())
         if(currentActivity != null && currentData!=null){
-            Log.e("Pinger", "Pinger entered THE IF")
             GlobalScope.launch(Dispatchers.IO) {
                 run = true
                 while (!isPlayerAdded) {
@@ -29,9 +27,7 @@ object Pinger {
 
                 while (run) {
                     try {
-                        Log.e("Pinger", "trying to get response ${(currentData as Data).game.code}")
                         val response = CommunicationLayer.ping(currentData!!).getString("response")
-                        Log.e("Pinger", "response: $response")
                         if(response != "ok") {
                             run = false
                             currentActivity!!.quit()
@@ -42,7 +38,6 @@ object Pinger {
                         continue
                     } catch (e: org.json.JSONException) {
                         delay(1000)
-                        Log.e("Pinger", e.message)
                     }
                 }
             }
@@ -55,8 +50,6 @@ object Pinger {
         this.stop()
         this.currentActivity = newContext
         currentData = data
-        Log.e("Pinger", "Asigned data: " + (this.currentData as Data).game.code)
-        Log.e("Pinger", "Asigned game type: " + (this.currentData as Data).game.code)
         this.start()
     }
 }

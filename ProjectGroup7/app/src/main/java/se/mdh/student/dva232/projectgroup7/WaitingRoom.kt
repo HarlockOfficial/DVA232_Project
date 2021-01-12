@@ -22,7 +22,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("WaitingRoom", "onCreate started\n")
         setContentView(R.layout.waiting_room)
         gameCode = GameType.valueOf(intent.getStringExtra("GAME_CODE")!!)
         if (gameCode == GameType.DICES) {
@@ -69,14 +68,11 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                 }
             }
         } else if (gameCode == GameType.DICES) {
-
-            Log.e("quantity", quantity)
             object : Data {
                 override val game: GameType
                     get() = GameType.DICES
 
                 override fun moveToCsv(): String {
-                    Log.e("quantity", quantity)
                     return quantity
                 }
             }    // TODO: when created add here the correct data Implementation
@@ -112,10 +108,8 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
              }
         }
         GlobalScope.launch(Dispatchers.IO) {
-            Log.e("data from foo", data.moveToCsv())
             var ret: JSONObject = CommunicationLayer.addPlayerToMultiplayerQueue(data)
             Pinger.isPlayerAdded = true
-            Log.e("WaitingRoom Coroutine", "Player added to queue")
             val uuid: String = CommunicationLayer.uuid
 
             if (ret["response"] == "in_queue") {
@@ -127,7 +121,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                     }
                 } while (ret["response"] == "in_queue")
             }
-            Log.e("THIS ONE SIR", ret.toString())
             ret = JSONObject(ret["response"] as String)
 
             val intent = Intent(this@WaitingRoom, gameClass)
@@ -153,7 +146,6 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
     override var mService: MusicService? = null
 
     override fun onPause() {
-        Log.e("WatingRoom", "onPause started\n")
         isBackPressed = true
         GlobalScope.launch {
             CommunicationLayer.delPlayerFromMultiplayerQueue(data)
@@ -163,8 +155,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
     }
 
     override fun onResume() {
-        Log.e("WaitingRoom", "onResume started\n")
-        var data : Data = object:Data{
+        val data : Data = object:Data{
             override val game: GameType
                 get() = gameCode
 
@@ -176,12 +167,9 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
         Pinger.changeContext(this, data)
         super.onResume()
         if(isBackgroundEnabled(applicationContext)){
-            //startService(Intent(this, MusicService::class.java))
             val intent =  Intent(this, MusicService::class.java)
             bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
             startService(intent)
-            //mService?.resumeMusic()
-
         }
     }
 

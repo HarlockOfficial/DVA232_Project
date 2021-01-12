@@ -55,9 +55,7 @@ object CommunicationLayer {
     suspend fun addPlayerToMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
             uuid = createUUID()
-            Log.e("yo", "$url?player=$uuid&action=add_queue&game=${data.game.code}${data.moveToCsv()}")
             val temp =  URL("$url?player=$uuid&action=add_queue&game=${data.game.code}${data.moveToCsv()}").readText()
-            Log.e("AAAAAAAAAAAH",temp)
             return@withContext JSONObject( temp
             )
         }

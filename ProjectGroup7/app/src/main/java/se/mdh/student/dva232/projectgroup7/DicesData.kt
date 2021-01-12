@@ -1,6 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
-class DicesData(private val amountOfDices: Int) : Data {
+class DicesData(val amountOfDices: Int) : Data {
     override val game: GameType
         get() = GameType.DICES
 

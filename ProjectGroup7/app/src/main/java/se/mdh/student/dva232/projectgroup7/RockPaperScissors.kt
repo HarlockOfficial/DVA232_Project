@@ -9,19 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.rock_paper_scissors.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-// Must implement interface ↓
 class RockPaperScissors : AppCompatActivity(), ActivityInterface {
+    override var mService: MusicService? = null
+
     private lateinit var myChoice: ImageView
     private lateinit var opponentChoice: ImageView
     private lateinit var context: Context
-    private lateinit var result: TextView
     private var isClicked: Boolean = false
     private val clickListener = View.OnClickListener { v ->
         if (isClicked) {
@@ -40,7 +39,6 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                 do {
                     delay(10)
                     ret = CommunicationLayer.getOpponentMove(rpsData)
-                    Log.e("eee", ret.toString())
                 }while(ret.get("response")==null)
                 when {
                     ret.getString("response") == "rock" -> {
@@ -49,26 +47,18 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                         }
                         when (choice) {
                             "rock" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.draw)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW)
                             }
                             "paper" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.win)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN)
                             }
                             "scissors" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.lose)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE)
                             }
                             else -> {
+                                // this should't happen
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move)+"case 1", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -79,26 +69,18 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                         }
                         when (choice) {
                             "paper" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.draw)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW)
                             }
                             "scissors" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.win)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN)
                             }
                             "rock" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.lose)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE)
                             }
                             else -> {
+                                // this should't happen
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move)+"case 2", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -109,57 +91,45 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                         }
                         when (choice) {
                             "scissors" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.draw)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW)
                             }
                             "rock" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.win)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN)
                             }
                             "paper" -> {
-                                runOnUiThread {
-                                    result.text=getString(R.string.lose)
-                                    result.visibility = View.VISIBLE
-                                }
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE)
                             }
                             else -> {
+                                // this shouldn't happen
                                 runOnUiThread {
-                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move)+"case 3", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.error_while_getting_move), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
                     }
                     else -> {
+                        // this shouldn't happen
                         runOnUiThread {
                             Toast.makeText(context, context.getString(R.string.error_while_getting_move), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             }else{
+                // this shouldn't happen
                 runOnUiThread {
-                    Toast.makeText(context, context.getString(R.string.error_while_sending_move)+"case 4", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.error_while_sending_move), Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rock_paper_scissors)
-
-        // ---------------------------------------------------
         context = baseContext
 
         myChoice = findViewById(R.id.my_choice)
         opponentChoice = findViewById(R.id.opponent_choice)
-
-        result = findViewById(R.id.result)
-        result.setOnClickListener {
-            startActivity(Intent(context, MainActivity::class.java))
-        }
 
         findViewById<ImageView>(R.id.rock).setOnClickListener(clickListener)
         findViewById<ImageView>(R.id.paper).setOnClickListener(clickListener)
@@ -168,17 +138,8 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
 
     //necessary function that have to be in all games ↓
     override fun quit() {
-        runOnUiThread {
-            //blocks the player from playing more
-            result.text = getString(R.string.opponent_left)
-            result.visibility = View.VISIBLE
-            //-------------------------------------------------
-            //change this function ↑ accordingly to archieve the same result
-        }
+        showGameResult(this, GameType.ROCK_PAPER_SCISSORS, MatchResult.DISCONNECT)
     }
-
-    override var mService: MusicService? = null
-
 
     //this has to be the same
     override fun onPause() {
@@ -189,24 +150,20 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
 
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
-        var data: Data = object : Data {
+        val data: Data = object : Data {
             override val game: GameType
                 get() = GameType.ROCK_PAPER_SCISSORS
 
             override fun moveToCsv(): String {
                 return ""
             }
-
         }
         Pinger.changeContext(this, data)
         super.onResume()
         if (isBackgroundEnabled(applicationContext)) {
-            //startService(Intent(this, MusicService::class.java))
             val intent = Intent(this, MusicService::class.java)
             bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
             startService(intent)
-            //mService?.resumeMusic()
-
         }
     }
 

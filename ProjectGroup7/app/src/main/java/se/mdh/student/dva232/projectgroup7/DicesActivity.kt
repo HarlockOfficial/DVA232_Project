@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 
+import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -7,7 +8,6 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,66 +18,59 @@ import org.json.JSONObject
 
 class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterface {
 
+    override var mService: MusicService? = null
 
-    private var dicesMap: HashMap<String, Int> = HashMap()
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private var thrown = false
     private lateinit var quantity: String
-    private lateinit var result: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dices2)
 
-        result = findViewById(R.id.result)
-        result.setOnClickListener {
-            startActivity(Intent(baseContext, MainActivity::class.java))
-        }
-        findViewById<TextView>(R.id.resulttext).text = "Result pending"
+        findViewById<TextView>(R.id.resulttext).text = getString(R.string.result_pending)
         //Accelerometer
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-        accelerometer= sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
         quantity = intent.getStringExtra("DICE_COUNT")!!
 
         val button = findViewById<Button>(R.id.button_rtd)
         button.setOnClickListener {
-            Log.e("Log00", "aaaaa")
             displayResult()
-
         }
-
-
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
             if (event.values[0] > 30 || event.values[1] > 30 || event.values[2] > 30)
                 displayResult()
-                    Log.e("Sensor", "Accelerometer")
         }
-
-
     }
 
+
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        // we need to have this method empty
     }
 
     override fun onResume() {
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
-        var data: Data = object : Data {
+        val data: Data = object : Data {
             override val game: GameType
                 get() = GameType.DICES
 
             override fun moveToCsv(): String {
                 return quantity
             }
-
         }
         Pinger.changeContext(this, data)
+        if (isBackgroundEnabled(applicationContext)) {
+            val intent = Intent(this, MusicService::class.java)
+            bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
+            startService(intent)
+        }
     }
 
     override fun onPause() {
@@ -87,79 +80,64 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         mService?.pauseMusic()
     }
 
-    //sets dice map and applies results from
-    private fun setDicesMap(noOfDice: Int) {
-        for (e in 0 until noOfDice) {
-            dicesMap["Dice $e"] = (0..6).random()
-        }
-    }
-
-
-    //Displays the sum of all dices. This is the only visual change for the user. https://developer.android.com/guide/topics/sensors/sensors_motion for sensors. Sensor calibration? 
+    //Displays the sum of all dices. This is the only visual change for the user.
+    // https://developer.android.com/guide/topics/sensors/sensors_motion for sensors. Sensor calibration?
     private fun displayResult() {
         if (!thrown) {
             val ownsumView = findViewById<TextView>(R.id.resulttext)
-            val winnerView = findViewById<TextView>(R.id.winnertext)
 
-            var mySum = 0
-            var opponentSum = 0
+            var mySum: Int
+            var opponentSum: Int
             //sendmove -> get the sum back
             //get opponents move -> get opponents sum back
             //compare sums, declare winner
-
 
             GlobalScope.launch {
                 val diceData = DicesData(quantity.toInt())
                 var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
 
-                Log.e("Log00", ret.getString("response"));
-                if (ret.getString("response") != null) {
-                    mySum = ret.getString("response")
-                        .toInt()
-                    Log.e("Log00", ret.getString("response"))
-                    if (ret.getString("response") != null) {
-                        mySum = ret.getString("response")
-                            .toInt()
+                mySum = ret.getString("response").toInt()
 
-                        ret = CommunicationLayer.getOpponentMove(diceData)
-                        delay(10)
-                        opponentSum = ret.getString("response").toInt()
-                        runOnUiThread {
+                ret = CommunicationLayer.getOpponentMove(diceData)
+                delay(10)
+                opponentSum = ret.getString("response").toInt()
+                runOnUiThread {
+                    ownsumView.text = mySum.toString()
 
-
-                            ownsumView.text = mySum.toString()
-
-                            if (opponentSum > mySum) {
-                                winnerView.text = getString(R.string.lose)
-                            }
-                            if (opponentSum < mySum) {
-                                winnerView.text = getString(R.string.win)
-                            }
-                            if (opponentSum == mySum) {
-                                winnerView.text = getString(R.string.draw)
-                            }
-                        }
+                    if (opponentSum > mySum) {
+                        showGameResult(
+                            this@DicesActivity,
+                            GameType.DICES,
+                            MatchResult.LOSE,
+                            diceCount = diceData.amountOfDices
+                        )
                     }
-
+                    if (opponentSum < mySum) {
+                        showGameResult(
+                            this@DicesActivity,
+                            GameType.DICES,
+                            MatchResult.WIN,
+                            diceCount = diceData.amountOfDices
+                        )
+                    }
+                    if (opponentSum == mySum) {
+                        showGameResult(
+                            this@DicesActivity,
+                            GameType.DICES,
+                            MatchResult.DRAW,
+                            diceCount = diceData.amountOfDices
+                        )
+                    }
                 }
             }
-
-
-        }
-        thrown = true
-        runOnUiThread {
-            result.visibility = View.VISIBLE
+            thrown = true
         }
     }
 
     override fun quit() {
-        runOnUiThread{
-            result.visibility = View.VISIBLE
-            result.text = getString(R.string.opponent_left)
-        }
+        showGameResult(this@DicesActivity, GameType.DICES, MatchResult.DRAW, quantity.toInt())
     }
 
-    override var mService: MusicService? = null
     override fun onBackPressed() {
         Pinger.stop()
         val intent = Intent(this, MainActivity::class.java)

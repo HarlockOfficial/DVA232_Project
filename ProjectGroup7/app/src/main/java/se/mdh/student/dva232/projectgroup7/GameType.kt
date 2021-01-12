@@ -5,6 +5,6 @@ enum class GameType(val code: String) {
     ROCK_PAPER_SCISSORS("rps"),
     DICES("dices"),
     FLIP_A_COIN("coin"),
-    BLOW("blow") //Temporary, just so that data class can be completed. Change later.
+    BLOW("blow")
     // TODO: if game not present, add here
 }

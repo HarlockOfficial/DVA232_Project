@@ -100,13 +100,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(isBackgroundEnabled(applicationContext)){
-            //startService(Intent(this, MusicService::class.java))
-            val intent =  Intent(this, MusicService::class.java)
+        if(isBackgroundEnabled(applicationContext)) {
+            val intent = Intent(this, MusicService::class.java)
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
             startService(intent)
-            //mService?.resumeMusic()
-
         }
 
     }

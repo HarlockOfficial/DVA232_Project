@@ -6,8 +6,6 @@ import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +14,6 @@ import androidx.core.app.ActivityCompat
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import org.w3c.dom.Text
 import java.io.File
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -30,50 +27,40 @@ import kotlin.concurrent.timerTask
 //
 //Borrowed request permissions from https://developer.android.com/guide/topics/media/mediarecorder
 
-
 //
 //Get peak value from mic -> save peak value -> send peak value -> retrieve calculated score
 //Normalize the score to a value between 0 and 100? Percentages?
 
-
 //Request permission for mic
-
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
-private var standing: Int = 100
 private var started: Boolean = false
 private var isPlayerTurn: Boolean = false
 
-
 class BlowActivity : AppCompatActivity(), ActivityInterface {
-private lateinit var result: TextView
+
+    override var mService: MusicService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blow)
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
-        result =  findViewById<TextView>(R.id.result)
-        result.setOnClickListener{
-            startActivity(Intent(baseContext, MainActivity::class.java))
-        }
         val timer = Timer()
 
         isPlayerTurn = intent.getBooleanExtra("isStarting", false)
 
-        val mediaRecorder : MediaRecorder = MediaRecorder()
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC) //This mic has some sort of processing on the input.
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4) //Not sure which one to use to be honest
+        val mediaRecorder = MediaRecorder()
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
         val temp = File.createTempFile("audio", "tmp", cacheDir)
-        mediaRecorder.setOutputFile(temp) //Read only file system, permissions to write to "disk"?, requires min API lvl 26, current min is 19
+        //Read only file system, permissions to write to "disk"?, requires min API lvl 26, current min is 19
+        mediaRecorder.setOutputFile(temp)
         mediaRecorder.setAudioSamplingRate(48000)
         mediaRecorder.setAudioEncodingBitRate(48000)
         mediaRecorder.prepare()
 
         startGame(mediaRecorder, timer)
-
-
-
     }
 
     //https://stackoverflow.com/questions/3928202/get-microphone-volume
@@ -82,97 +69,77 @@ private lateinit var result: TextView
         started = true
         mediaRecorder.start()
         //Start timer here, includes updating amplitude, updating value (temp), running the globalscope
-        val view =  findViewById<TextView>(R.id.ball)
-        timer.purge()               //Should not be needed, just in case
+        val view = findViewById<TextView>(R.id.ball)
 
-        var retValue : Int
-        var oppValue : Int
+        //Should not be needed, just in case
+        timer.purge()
+
+        var retValue: Int
         val task = timerTask {
-            val amplitude : Int = (mediaRecorder.maxAmplitude/32762f * 100f).toInt()
-            this@BlowActivity.runOnUiThread(java.lang.Runnable {
+            val amplitude: Int = (mediaRecorder.maxAmplitude / 32762f * 100f).toInt()
+            this@BlowActivity.runOnUiThread {
                 view.text = amplitude.toString()
-            })
+            }
 
-
-            var blowData = BlowData(amplitude)
+            val blowData = BlowData(amplitude)
             GlobalScope.launch {
                 var ret: JSONObject = CommunicationLayer.addPlayerMove(blowData) //Our data is sent
-                    Log.e("Our new data:", ret.getString("response"))
                 while (true) {
                     try {
                         retValue = ret.getString("response").toInt()        //We get our new data
                         if (isPlayerTurn) {
                             if (retValue >= 200) {
-                                Log.e("Game is over:", ("Player wins"))
                                 endGame(mediaRecorder, timer, true)
-                            }
-                            else if (retValue <= 0) {
-                                Log.e("Game is over:", ("Player loses"))
+                            } else if (retValue <= 0) {
                                 endGame(mediaRecorder, timer, false)
                             } else {
-                                runOnUiThread{
-
-                                    val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                runOnUiThread {
+                                    val constraintLayout =
+                                        this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
                                     val set = ConstraintSet()
                                     set.clone(constraintLayout)
-                                    set.setVerticalBias(R.id.ball, 1-(retValue/200f))
+                                    set.setVerticalBias(R.id.ball, 1 - (retValue / 200f))
                                     set.applyTo(constraintLayout)
-
                                 }
                             }
                         } else {
                             if (retValue <= 0) {
-                                Log.e("Game is over:", ("Player wins"))
                                 endGame(mediaRecorder, timer, true)
-                            }
-                            else if (retValue >= 200) {
-                                Log.e("Game is over:", ("Player loses"))
+                            } else if (retValue >= 200) {
                                 endGame(mediaRecorder, timer, false)
                             } else {
-                                runOnUiThread{
-
-                                    val constraintLayout = this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
+                                runOnUiThread {
+                                    val constraintLayout =
+                                        this@BlowActivity.findViewById<TextView>(R.id.ball).parent as ConstraintLayout
                                     val set = ConstraintSet()
                                     set.clone(constraintLayout)
-                                    set.setVerticalBias(R.id.ball, retValue/200f)
+                                    set.setVerticalBias(R.id.ball, retValue / 200f)
                                     set.applyTo(constraintLayout)
-
                                 }
                             }
                         }
                         break
                     } catch (e: NumberFormatException) {
                         ret = CommunicationLayer.getOpponentMove(blowData)
-                        Log.e("Opponents new data:", ret.getString("response"))
                         continue
                     }
                 }
-
             }
-
         }
-
-
-
-        timer.schedule(task, 1, 50) //Bleh
-                    //recording to value
+        timer.schedule(task, 1, 50)
+        //recording to value
     }
 
     //True if a user has won
     private fun endGame(mediaRecorder: MediaRecorder, timer: Timer, standing: Boolean) {
-        runOnUiThread {
-            result.visibility = View.VISIBLE
-        }
         timer.cancel()
         mediaRecorder.stop()
         Pinger.stop()
-        val view =  findViewById<TextView>(R.id.ball)
         if (standing) {
-            view.text = getString(R.string.win)
-        }else {
-            view.text = getString(R.string.lose)
+            showGameResult(this, GameType.BLOW, MatchResult.WIN)
+        } else {
+            showGameResult(this, GameType.BLOW, MatchResult.LOSE)
         }
-        
     }
 
     override fun onBackPressed() {
@@ -182,6 +149,7 @@ private lateinit var result: TextView
     }
 
     private var permissionAccepted = false
+
     private var permissions: Array<String> = arrayOf(android.Manifest.permission.RECORD_AUDIO)
 
     override fun onRequestPermissionsResult(
@@ -199,13 +167,8 @@ private lateinit var result: TextView
     }
 
     override fun quit() {
-        runOnUiThread{
-            result.visibility = View.VISIBLE
-            result.text = getString(R.string.opponent_left)
-        }
+        showGameResult(this, GameType.BLOW, MatchResult.DISCONNECT)
     }
-
-    override var mService: MusicService? = null
 
     //this has to be the same
     override fun onPause() {
@@ -213,26 +176,24 @@ private lateinit var result: TextView
         super.onPause()
         mService?.pauseMusic()
     }
+
     //here ↓ you have to change the data class to the correct one
     override fun onResume() {
-        var blowData : Data = object:Data{
+        val blowData: Data = object : Data {
             override val game: GameType
                 get() = GameType.BLOW
 
             override fun moveToCsv(): String {
-               return ""
+                return ""
             }
 
         }
         Pinger.changeContext(this, blowData)
         super.onResume()
-        if(isBackgroundEnabled(applicationContext)){
-            //startService(Intent(this, MusicService::class.java))
-            val intent =  Intent(this, MusicService::class.java)
+        if (isBackgroundEnabled(applicationContext)) {
+            val intent = Intent(this, MusicService::class.java)
             bindService(intent, getConnection(), Context.BIND_AUTO_CREATE)
             startService(intent)
-            //mService?.resumeMusic()
-
         }
     }
 

@@ -19,5 +19,21 @@
     <string name="random">Random Game</string>
     <string name="open_fac">Flip a Coin</string>
     <string name="random_game">Or play a random game</string>
+    <string name="button_replay">Replay</string>
+    <string name="button_back_to_main">Return to main</string>
+    <string name="blowing_game_name">BLOW GAME</string>
+    <string name="blowing_game_desc">Blow into your microphone and push the ball the furthest!</string>
+    <string name="dices_name">DICE GAME</string>
+    <string name="dices_desc">Roll custom number of dice and let the fate decide!</string>
+    <string name="tic_tac_toe_name">TIC TAC TOE</string>
+    <string name="tic_tac_toe_desc">Check your cognitive skills by playing tic-tac-toe!</string>
+    <string name="rock_pape_scissors_name">Rock Paper Scissors</string>
+    <string name="rock_paper_scissors_desc">Play Rock Paper Scissors and test yourself!</string>
+    <string name="flip_a_coin_name">Flip a Coin</string>
+    <string name="flip_a_coin_desc">Simply flip a coin. Maybe you win, maybe you lose - who knows?</string>
+    <string name="unknown_game_error_name">Something went wrong</string>
+    <string name="unknown_game_error_desc">You should not be seeing this</string>
+    <string name="result_pending">Result pending</string>
+    <string name="warning_not_your_turn">It is not your turn.</string>
 
 </resources>

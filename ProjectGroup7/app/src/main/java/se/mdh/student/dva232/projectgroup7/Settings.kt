@@ -1,5 +1,6 @@
 package se.mdh.student.dva232.projectgroup7
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
@@ -51,7 +52,7 @@ class Settings : AppCompatActivity() {
             getActivity()?.bindService(Intent(getActivity(), MusicService::class.java), connection, BIND_AUTO_CREATE)
 
             val myPref = preferenceScreen.findPreference<SwitchPreferenceCompat>("switch_preference_music")
-            myPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+            myPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
 
                 val isChecked = newValue as? Boolean ?: false
                 if (isChecked) {
@@ -72,8 +73,7 @@ class Settings : AppCompatActivity() {
         override fun onResume() {
             super.onResume()
 
-            if(PreferenceManager.getDefaultSharedPreferences(requireActivity()).getBoolean("switch_preference_music", true))
-            {
+            if(PreferenceManager.getDefaultSharedPreferences(requireActivity()).getBoolean("switch_preference_music", true)) {
                 requireActivity().startService(Intent(activity, MusicService::class.java))
             }
         }
