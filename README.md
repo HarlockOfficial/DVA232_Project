@@ -7,8 +7,8 @@
 ### PROJECT REPORT checklist:
 - [x] The final report paper’s name should consist of group name, followed by a ‘-‘, then initials for all the authors followed by a ‘-‘ and the topic they have chosen. For example: “Group 1 - AA, BA – Growing Tomato’s on Martian Soil”. (The document already has the correct title)
 - [x] The format of the report should follow ACM journal guidelines. Pick any ACM journal that you like. (the LaTeX document already is in ACM format)
-- [ ] The minimum size for the paper is 3000 words. Use as much figures, tables, etc. as you need.
-- [ ] Don’t ask: “How many references we must have?” Just don’t.
+- [x] The minimum size for the paper is 3000 words. Use as much figures, tables, etc. as you need.
+- [x] Don’t ask: “How many references we must have?” Just don’t.
 - [ ] Are there dictation/grammatical mistakes? (TODO check the document into Grammarly)
 - [ ] Is the information presented in a coherent way?
 - [ ] Are the correct writing templates followed?
@@ -32,36 +32,36 @@
 ### 2. INTRODUCTION 
 - a brief summary
 ### 3. IDEA - MARKO
-- [ ] brainstorming process
+- [x] brainstorming process
 	> how did we come up with the idea? </br>
 	> what was the first idea? </br>
 	> -- the goals of the project -- </br>
 	> why was the first idea discarded? </br>
 	> what choices were made? </br>
 	> what was the focus? </br>
-- [ ] choice of games
+- [x] choice of games
 	> what games were chosen? </br>
 	> why we chose those games? (use of sensors, learning about sensors) </br>
-- [ ] high quality criteria
+- [x] high quality criteria
 	> why we chose this idea? </br>
 	> why we chose these games? </br>
-- [ ] first sketch of the system
+- [x] first sketch of the system
 	> how we imagine the system at first?
 	> insert  picture figure 1. first draft
-- [ ] comparison to other games on the appstore
+- [x] comparison to other games on the appstore
 ### 4. WORKFLOW - MARKO
-- [ ] ways of working
-- [ ] group communication
+- [x] ways of working
+- [x] group communication
 	> what tools did we use to communicate: </br>
 	> whatsapp, git-trello, git: commit comments </br>
-- [ ] timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
-- [ ] meeting scheduling and general meeting agendas
+- [x] timeplan (what was the task schedulling, mention project due dates from canvas guidelines)
+- [x] meeting scheduling and general meeting agendas
 	- meetings with supervisors (how often, sprints, what we discussed, what it looked like, what we did in general)
 	- meetings within group (how often, sprints, what we discussed, what it looked like, what we did in general)
-- [ ] frameworks (why, benefits)
-- [ ] APIs (why, benefits)
-- [ ] Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
-- [ ] IDE (why, benefits) - FRANCESCO
+- [x] frameworks (why, benefits)
+- [x] APIs (why, benefits)
+- [x] Kotlin, Python, SQL, PHP (why, benefits) - FRANCESCO
+- [x] IDE (why, benefits) - FRANCESCO
 ### 5. PROJECT DESIGN
 - [ ] requirements (rephrase content from document that we sent to afshin)
 - [ ] how the app will be used
