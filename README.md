@@ -75,8 +75,8 @@
 	> -- why we made those decisions? -- </br>
 - [ ] system
 	- [ ] overview with components diagram - MICHAL
-	- [ ] bots (functionality and user experience) - FRANCESCO
-	- [ ] database and ER diagram - FRANCESCO
+	- [x] bots (functionality and user experience) - FRANCESCO
+	- [x] database and ER diagram - FRANCESCO
 	- [ ] user experience
 	>-- what decisions did we make? -- </br>
 	>-- why we made those decisions? -- </br>
