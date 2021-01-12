@@ -35,10 +35,10 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         result.setOnClickListener {
             startActivity(Intent(baseContext, MainActivity::class.java))
         }
-
+        findViewById<TextView>(R.id.resulttext).text = "Result pending"
         //Accelerometer
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-        val accelerometer: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        accelerometer= sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
         quantity = intent.getStringExtra("DICE_COUNT")!!
 
@@ -54,8 +54,9 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
-            if (event.values[0] > 5 || event.values[1] > 10 || event.values[2] > 1)
+            if (event.values[0] > 30 || event.values[1] > 30 || event.values[2] > 30)
                 displayResult()
+                    Log.e("Sensor", "Accelerometer")
         }
 
 
@@ -64,7 +65,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
     }
 
-    override fun onResume() { //No idea if this is working properly
+    override fun onResume() {
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
         var data: Data = object : Data {
@@ -91,8 +92,6 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         for (e in 0 until noOfDice) {
             dicesMap["Dice $e"] = (0..6).random()
         }
-
-        //Might be redundant, we just get a sum value
     }
 
 
@@ -114,13 +113,13 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
                 var ret: JSONObject = CommunicationLayer.addPlayerMove(diceData)
 
                 Log.e("Log00", ret.getString("response"));
-                if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
+                if (ret.getString("response") != null) {
                     mySum = ret.getString("response")
-                        .toInt()                                                        //Is this really right? Redundant toInt?
+                        .toInt()
                     Log.e("Log00", ret.getString("response"))
-                    if (ret.getString("response") != null) {                                                             //Any way to just check the errors?
+                    if (ret.getString("response") != null) {
                         mySum = ret.getString("response")
-                            .toInt()                                                        //Is this really right? Redundant toInt?
+                            .toInt()
 
                         ret = CommunicationLayer.getOpponentMove(diceData)
                         delay(10)

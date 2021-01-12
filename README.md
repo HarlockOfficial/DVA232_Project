@@ -65,9 +65,9 @@
 ### 5. PROJECT DESIGN
 - [ ] requirements (rephrase content from document that we sent to afshin) -MARKO
 - [ ] how the app will be used -ALFONS
-	- use cases
-	- use case diagram
-	- user experience
+	- [x]use cases
+	- [x]use case diagram
+	- [x]user experience
 - [ ] user interface - ERNEST
 	- activity diagram
 	- user experience
@@ -75,8 +75,8 @@
 	> -- why we made those decisions? -- </br>
 - [ ] system
 	- [ ] overview with components diagram - MICHAL
-	- [ ] bots (functionality and user experience) - FRANCESCO
-	- [ ] database and ER diagram - FRANCESCO
+	- [x] bots (functionality and user experience) - FRANCESCO
+	- [x] database and ER diagram - FRANCESCO
 	- [ ] user experience
 	>-- what decisions did we make? -- </br>
 	>-- why we made those decisions? -- </br>
