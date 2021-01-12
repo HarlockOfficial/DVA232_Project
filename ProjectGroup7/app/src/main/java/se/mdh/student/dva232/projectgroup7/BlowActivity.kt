@@ -43,7 +43,7 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blow)
-
+        supportActionBar?.hide()
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
         val timer = Timer()
 

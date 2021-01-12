@@ -24,6 +24,7 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tic_tac_toe)
+        supportActionBar?.hide()
 
         isPlayersTurn = intent.getBooleanExtra("isStarting", false)
 

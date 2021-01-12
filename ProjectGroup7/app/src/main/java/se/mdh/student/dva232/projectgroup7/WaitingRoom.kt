@@ -22,6 +22,7 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.waiting_room)
         gameCode = GameType.valueOf(intent.getStringExtra("GAME_CODE")!!)
         if (gameCode == GameType.DICES) {

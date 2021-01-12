@@ -30,6 +30,9 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
         setContentView(R.layout.activity_dices2)
 
         findViewById<TextView>(R.id.resulttext).text = getString(R.string.result_pending)
+        supportActionBar?.hide()
+
+        findViewById<TextView>(R.id.resulttext).text = "Result pending"
         //Accelerometer
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
