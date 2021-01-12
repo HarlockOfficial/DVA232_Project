@@ -53,7 +53,11 @@
 	
 	//used for tic tac toe
 	function check_field($field){
+		$is_draw = true
 	    for($i=0;$i<9;$i++){
+			if($field[$i] == "-"){
+				$is_draw = false;
+			}
 	        $field[$i] = $field[$i]=="-"?"":$field[$i];
 	    }
 		for($i=0;$i<3;$i++){
@@ -73,6 +77,9 @@
 		//check anti-diagonal
 		if($field[2]!="" && $field[4]!="" && $field[6]!="" && $field[2]==$field[4] && $field[4]==$field[6]){
 			return $field[2];
+		}
+		if($is_draw){
+			return "draw";
 		}
 		return "ok";
 	}

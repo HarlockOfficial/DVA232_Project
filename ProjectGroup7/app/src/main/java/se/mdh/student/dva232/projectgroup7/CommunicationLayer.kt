@@ -179,6 +179,14 @@ object CommunicationLayer {
 
         }
     }
+    suspend fun addFeedback(message: String): String {
+        if(message.length > 1000){
+            return "message should be shorter then 1000 cheracters";
+        }
+        return withContext(Dispatchers.IO){
+            JSONObject(URL("${url}add_feedback.php?message=$message").readText()).getString("response")
+        }
+    }
     /**
      * private function, non necessary for the games, used to generate a 20character UUID
      */
