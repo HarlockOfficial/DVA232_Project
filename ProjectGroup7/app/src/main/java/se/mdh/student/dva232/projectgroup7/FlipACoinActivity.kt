@@ -121,7 +121,7 @@ class FlipACoinActivity : AppCompatActivity(), ActivityInterface {
     }
 
     override fun quit() {
-        TODO("Not yet implemented")
+        onBackPressed()
         //Quit cannot be called, impossible
     }
 

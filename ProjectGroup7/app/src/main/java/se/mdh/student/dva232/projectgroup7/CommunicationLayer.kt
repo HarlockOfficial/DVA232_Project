@@ -35,8 +35,8 @@ object CommunicationLayer {
      */
     var uuid = createUUID()
         private set
-//    private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
-    private const val url: String = "http://192.168.0.101/"
+//  private const val url: String = "http://dva232-project-group-7.atwebpages.com/"
+    private const val url: String = "http://192.168.1.195/"
 
     /**
      * function used to add a player to the waiting queue should be called before the user reaches
@@ -135,16 +135,30 @@ object CommunicationLayer {
      */
     suspend fun getOpponentMove(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
-            return@withContext JSONObject(
+            if (data.game.code == "dices") {
+
+                return@withContext JSONObject(
+
                     URL("$url?player=$uuid&action=get_move&game=${data.game.code}${data.moveToCsv()}").readText()
-            )
+            )} else {
+                return@withContext JSONObject(
+
+                    URL("$url?player=$uuid&action=get_move&game=${data.game.code}").readText()
+                )
+            }
         }
     }
     suspend fun delPlayerFromMultiplayerQueue(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
-            return@withContext JSONObject(
+            if (data.game.code == "dices") {
+                return@withContext JSONObject(
                     URL("$url?player=$uuid&action=del_queue&game=${data.game.code}${data.moveToCsv()}").readText()
-            )
+                )
+            } else {
+                return@withContext JSONObject(
+                    URL("$url?player=$uuid&action=del_queue&game=${data.game.code}").readText())
+            }
+
         }
     }/**
      * function used to let the server know that user is still online.
@@ -153,9 +167,16 @@ object CommunicationLayer {
      */
     suspend fun ping(data: Data): JSONObject {
         return withContext(Dispatchers.IO) {
-            return@withContext JSONObject(
+            if (data.game.code == "dices") {
+                return@withContext JSONObject(
                     URL("${url}ping.php?player=$uuid&game=${data.game.code}${data.moveToCsv()}").readText()
-            )
+                )
+            } else {
+                return@withContext JSONObject(
+                    URL("${url}ping.php?player=$uuid&game=${data.game.code}").readText()
+                )
+            }
+
         }
     }
     /**

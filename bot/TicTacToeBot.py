@@ -27,7 +27,7 @@ class TicTacToeBot(Thread):
                 r = requests.get(self.__url + "&action=get_queue")
                 if r is not None and r.json()['response'] != "in_queue":
                     break
-                time.sleep(0.01)
+                time.sleep(0.5)
         print("Tic Tac Toe Bot playing")
         ret = json.loads(r.json()['response'])
         self.__sign = 'x'
@@ -85,4 +85,5 @@ class TicTacToeBot(Thread):
                     self.__field = tmp
                     changed = True
                     break
+            time.sleep(1.0)
         self.__set_move()

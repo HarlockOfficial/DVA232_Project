@@ -1,6 +1,5 @@
 package se.mdh.student.dva232.projectgroup7
 
-import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -8,6 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -24,10 +24,17 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     private var accelerometer: Sensor? = null
     private var thrown = false
     private lateinit var quantity: String
+    private lateinit var result: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dices2)
+
+        result = findViewById(R.id.result)
+        result.setOnClickListener {
+            startActivity(Intent(baseContext, MainActivity::class.java))
+        }
 
         //Accelerometer
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -40,7 +47,6 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
             Log.e("Log00", "aaaaa")
             displayResult()
 
-
         }
 
 
@@ -52,6 +58,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
                 displayResult()
         }
 
+
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
@@ -60,7 +67,7 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
     override fun onResume() { //No idea if this is working properly
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
-        var data : Data = object:Data{
+        var data: Data = object : Data {
             override val game: GameType
                 get() = GameType.DICES
 
@@ -141,12 +148,16 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
 
         }
         thrown = true
+        runOnUiThread {
+            result.visibility = View.VISIBLE
+        }
     }
 
     override fun quit() {
-        //Notify user that game is over
-        // Runs on disconnection
-        //TODO finish
+        runOnUiThread{
+            result.visibility = View.VISIBLE
+            result.text = getString(R.string.opponent_left)
+        }
     }
 
     override var mService: MusicService? = null

@@ -17,7 +17,6 @@ class TicTacToeData(symbol: PlayersSymbol) : Data {
         return if ((symbol != null) && (move in 0..FIELD_SIZE)) {
             String.format("%d,%s", move, symbol!!.symbol)
         } else {
-            // TODO make check here or in the function above
             ""
         }
 

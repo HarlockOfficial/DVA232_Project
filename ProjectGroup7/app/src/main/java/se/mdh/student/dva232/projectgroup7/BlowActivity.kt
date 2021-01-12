@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import org.w3c.dom.Text
 import java.io.File
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -43,14 +45,17 @@ private var isPlayerTurn: Boolean = false
 
 
 class BlowActivity : AppCompatActivity(), ActivityInterface {
-
+private lateinit var result: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blow)
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
-
+        result =  findViewById<TextView>(R.id.result)
+        result.setOnClickListener{
+            startActivity(Intent(baseContext, MainActivity::class.java))
+        }
         val timer = Timer()
 
         isPlayerTurn = intent.getBooleanExtra("isStarting", false)
@@ -168,14 +173,17 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
 
     //True if a user has won
     private fun endGame(mediaRecorder: MediaRecorder, timer: Timer, standing: Boolean) {
+        runOnUiThread {
+            result.visibility = View.VISIBLE
+        }
         timer.cancel()
         mediaRecorder.stop()
         Pinger.stop()
         val view =  findViewById<TextView>(R.id.ball)
         if (standing) {
-            view.text = "You won!"
+            view.text = getString(R.string.win)
         }else {
-            view.text = "You lost..."
+            view.text = getString(R.string.lose)
         }
         
     }
@@ -198,7 +206,10 @@ class BlowActivity : AppCompatActivity(), ActivityInterface {
     }
 
     override fun quit() {
-        TODO("Tell user it's over")
+        runOnUiThread{
+            result.visibility = View.VISIBLE
+            result.text = getString(R.string.opponent_left)
+        }
     }
 
     override var mService: MusicService? = null

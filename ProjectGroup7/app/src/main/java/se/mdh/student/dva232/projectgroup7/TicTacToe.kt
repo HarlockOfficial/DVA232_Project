@@ -45,7 +45,6 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
             TicTacToeData.PlayersSymbol.CROSS
         }
 
-        // TODO do a catch clause
         data = TicTacToeData(symbol)
 
 
@@ -88,7 +87,6 @@ class TicTacToe : AppCompatActivity(), ActivityInterface {
             waitForOpponentsMove()
         } else if (response["response"] == "error") {
             Log.e("TTT Move Response","Error")
-            // TODO show move is invalid
         } else {
           Log.e("TTT Move Response", response["response"].toString())
         }

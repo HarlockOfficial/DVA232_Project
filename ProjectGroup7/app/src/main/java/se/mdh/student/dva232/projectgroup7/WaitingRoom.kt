@@ -90,15 +90,26 @@ class WaitingRoom : AppCompatActivity(), ActivityInterface {
                 }
             }     // TODO: when created add here the correct data Implementation
 
-        } else {
+        } else if (gameCode == GameType.FLIP_A_COIN) {
             object : Data {
                 override val game: GameType
-                    get() = GameType.FLIP_A_COIN //??????
+                    get() = GameType.FLIP_A_COIN
 
                 override fun moveToCsv(): String {
                     return ""
                 }
-            }     // TODO: when created add here the correct data Implementation
+            }
+        } else {
+            onBackPressed()
+             object: Data {
+                 override val game: GameType
+                     get() = TODO("Impossible Game")
+
+                 override fun moveToCsv(): String {
+                     TODO("Impossible Game")
+                 }
+
+             }
         }
         GlobalScope.launch(Dispatchers.IO) {
             Log.e("data from foo", data.moveToCsv())
