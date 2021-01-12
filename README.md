@@ -65,9 +65,9 @@
 ### 5. PROJECT DESIGN
 - [ ] requirements (rephrase content from document that we sent to afshin) -MARKO
 - [ ] how the app will be used -ALFONS
-	- use cases
-	- use case diagram
-	- user experience
+	- [x]use cases
+	- [x]use case diagram
+	- [x]user experience
 - [ ] user interface - ERNEST
 	- activity diagram
 	- user experience
