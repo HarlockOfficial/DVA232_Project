@@ -47,13 +47,13 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                         }
                         when (choice) {
                             "rock" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW, own = R.mipmap.rock, opp = R.mipmap.rock)
                             }
                             "paper" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN, own = R.mipmap.rock, opp = R.mipmap.paper)
                             }
                             "scissors" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE, own = R.mipmap.rock, opp = R.mipmap.scissors)
                             }
                             else -> {
                                 // this should't happen
@@ -69,13 +69,13 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                         }
                         when (choice) {
                             "paper" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW, own = R.mipmap.paper, opp = R.mipmap.paper)
                             }
                             "scissors" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN, own = R.mipmap.paper, opp = R.mipmap.scissors)
                             }
                             "rock" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE, own = R.mipmap.paper, opp = R.mipmap.rock)
                             }
                             else -> {
                                 // this should't happen
@@ -91,13 +91,13 @@ class RockPaperScissors : AppCompatActivity(), ActivityInterface {
                         }
                         when (choice) {
                             "scissors" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.DRAW,own = R.mipmap.scissors, opp = R.mipmap.scissors)
                             }
                             "rock" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.WIN, own = R.mipmap.scissors, opp = R.mipmap.rock)
                             }
                             "paper" -> {
-                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE)
+                                showGameResult(this@RockPaperScissors, GameType.ROCK_PAPER_SCISSORS, MatchResult.LOSE, own = R.mipmap.scissors, opp = R.mipmap.paper)
                             }
                             else -> {
                                 // this shouldn't happen

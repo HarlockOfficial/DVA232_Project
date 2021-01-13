@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.media.Image
 import android.os.Bundle
 import android.os.IBinder
 import android.util.DisplayMetrics
@@ -64,15 +65,25 @@ class ResultScreen :
         val image = findViewById<ImageView>(R.id.image_game)
         val field = findViewById<EditText>(R.id.field_numDices)
         val amntDicesText = findViewById<TextView>(R.id.text_amnt)
+        val imagerps = findViewById<ImageView>(R.id.rps_result)
+
+
 
         game = GameType.valueOf(intent.getStringExtra("GAME")!!)
         result = MatchResult.valueOf(intent.getStringExtra("RESULT")!!)
         infoText.visibility = View.GONE
+        image.setImageResource(map[game]!!)
         if (game == GameType.DICES) {
             infoText.visibility = View.VISIBLE
             quantity = intent.getStringExtra("DICES_COUNT")!!
             infoText.text = "You scored: " + intent.getStringExtra("DICES_SCORE_OWN") + "\nThe opponent scored: " + intent.getStringExtra("DICES_SCORE_OPP")
         }
+        if (game == GameType.ROCK_PAPER_SCISSORS) {
+            imagerps.setImageResource(intent.getStringExtra("DICES_SCORE_OWN").toInt())
+            image.setImageResource(intent.getStringExtra("DICES_SCORE_OPP").toInt())
+            imagerps.visibility = View.VISIBLE
+        }
+
 
         val dm = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(dm)
@@ -82,7 +93,7 @@ class ResultScreen :
         field.visibility = View.GONE
         amntDicesText.visibility = View.GONE
         image.visibility = View.VISIBLE
-        image.setImageResource(map[game]!!)
+
 
         header.text = if (result == MatchResult.DRAW) {
             getString(R.string.draw)
