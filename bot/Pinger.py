@@ -17,7 +17,6 @@ class Pinger(Thread):
     def run(self) -> None:
         while self.__playing:
             r = requests.get(self.__url)
-            sys.stderr.write("pingsent")
             if r.json()["response"] != "ok":
                 print("Enemy ping stopped, exiting")
                 os._exit(1)
