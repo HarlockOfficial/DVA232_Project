@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -55,15 +56,6 @@ class ResultScreen :
         map[GameType.ROCK_PAPER_SCISSORS] = R.mipmap.rps
         map[GameType.FLIP_A_COIN] = R.drawable.ic_shiny_coin3
 
-        game = GameType.valueOf(intent.getStringExtra("GAME")!!)
-        result = MatchResult.valueOf(intent.getStringExtra("RESULT")!!)
-        if (game == GameType.DICES) {
-            quantity = intent.getStringExtra("DICES_COUNT")!!
-        }
-
-        val dm = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(dm)
-        window.setLayout((dm.widthPixels * 0.9).toInt(), (dm.heightPixels * 0.75).toInt())
 
         val startButton = findViewById<Button>(R.id.button_start)
         val backButton = findViewById<Button>(R.id.button_back)
@@ -73,11 +65,25 @@ class ResultScreen :
         val field = findViewById<EditText>(R.id.field_numDices)
         val amntDicesText = findViewById<TextView>(R.id.text_amnt)
 
+        game = GameType.valueOf(intent.getStringExtra("GAME")!!)
+        result = MatchResult.valueOf(intent.getStringExtra("RESULT")!!)
+        infoText.visibility = View.GONE
+        if (game == GameType.DICES) {
+            infoText.visibility = View.VISIBLE
+            quantity = intent.getStringExtra("DICES_COUNT")!!
+            infoText.text = "You scored: " + intent.getStringExtra("DICES_SCORE_OWN") + "\nThe opponent scored: " + intent.getStringExtra("DICES_SCORE_OPP")
+        }
+
+        val dm = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(dm)
+        window.setLayout((dm.widthPixels * 0.9).toInt(), (dm.heightPixels * 0.75).toInt())
+
+
         field.visibility = View.GONE
         amntDicesText.visibility = View.GONE
         image.visibility = View.VISIBLE
         image.setImageResource(map[game]!!)
-        infoText.visibility = View.GONE
+
         header.text = if (result == MatchResult.DRAW) {
             getString(R.string.draw)
         } else if (result == MatchResult.WIN) {

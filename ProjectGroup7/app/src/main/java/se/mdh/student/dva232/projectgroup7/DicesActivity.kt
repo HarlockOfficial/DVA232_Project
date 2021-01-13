@@ -112,7 +112,9 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
                             this@DicesActivity,
                             GameType.DICES,
                             MatchResult.LOSE,
-                            diceCount = diceData.amountOfDices
+                            diceCount = diceData.amountOfDices,
+                            own = mySum,
+                           opp = opponentSum
                         )
                     }
                     if (opponentSum < mySum) {
@@ -120,7 +122,9 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
                             this@DicesActivity,
                             GameType.DICES,
                             MatchResult.WIN,
-                            diceCount = diceData.amountOfDices
+                            diceCount = diceData.amountOfDices,
+                            own = mySum,
+                            opp = opponentSum
                         )
                     }
                     if (opponentSum == mySum) {
@@ -128,7 +132,9 @@ class DicesActivity : AppCompatActivity(), SensorEventListener, ActivityInterfac
                             this@DicesActivity,
                             GameType.DICES,
                             MatchResult.DRAW,
-                            diceCount = diceData.amountOfDices
+                            diceCount = diceData.amountOfDices,
+                            own = mySum,
+                            opp = opponentSum
                         )
                     }
                 }

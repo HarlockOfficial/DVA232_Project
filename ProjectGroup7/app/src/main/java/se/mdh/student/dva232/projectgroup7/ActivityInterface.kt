@@ -34,13 +34,15 @@ interface ActivityInterface {
         }
     }
 
-    fun showGameResult(context: Context, gameType: GameType, matchResult: MatchResult, diceCount:Int = 0) {
+    fun showGameResult(context: Context, gameType: GameType, matchResult: MatchResult, diceCount:Int = 0, own : Int = 0, opp : Int = 0) {
         Pinger.stop()
 
         val intent = Intent(context, ResultScreen::class.java)
         intent.putExtra("GAME", gameType.name)
         intent.putExtra("RESULT", matchResult.name)
         intent.putExtra("DICES_COUNT", diceCount.toString())
+        intent.putExtra("DICES_SCORE_OWN", own.toString())
+        intent.putExtra("DICES_SCORE_OPP", opp.toString())
         context.startActivity(intent)
     }
 }
